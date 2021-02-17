@@ -23,6 +23,8 @@ namespace Metro_Asset_System.Context
         public DbSet<Asset> Assets { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<RequestDetail> RequestDetails { get; set; }
+
          protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();

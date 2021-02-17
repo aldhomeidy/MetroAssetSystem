@@ -38,3 +38,44 @@ C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\net
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.Client.exe
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.Client.deps.json
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.Client.runtimeconfig.json
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.Client.runtimeconfig.dev.json
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.Client.dll
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.Client.pdb
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.Client.Views.dll
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.Client.Views.pdb
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.csprojAssemblyReference.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.AssemblyInfoInputs.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.AssemblyInfo.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.csproj.CoreCompileInputs.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.RazorAssemblyInfo.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.RazorAssemblyInfo.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\staticwebassets\MAS.Client.StaticWebAssets.Manifest.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\staticwebassets\MAS.Client.StaticWebAssets.xml
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\scopedcss\bundle\MAS.Client.styles.css
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.TagHelpers.input.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.TagHelpers.output.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.RazorCoreGenerate.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.RazorTargetAssemblyInfo.cache
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.RazorTargetAssemblyInfo.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.Views.pdb
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.csproj.CopyComplete
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.dll
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.pdb
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.genruntimeconfig.cache

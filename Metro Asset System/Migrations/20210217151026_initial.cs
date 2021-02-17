@@ -2,7 +2,7 @@
 
 namespace Metro_Asset_System.Migrations
 {
-    public partial class addModel : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace Metro_Asset_System.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace Metro_Asset_System.Migrations
                 name: "TB_M_Asset",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 10, nullable: false),
+                    Id = table.Column<string>(maxLength: 7, nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     AssetStatus = table.Column<int>(nullable: false),
                     LoanStatus = table.Column<int>(nullable: false),
@@ -94,7 +94,7 @@ namespace Metro_Asset_System.Migrations
                     MiddlePinalty = table.Column<long>(nullable: false),
                     HighPinalty = table.Column<long>(nullable: false),
                     LostPinalty = table.Column<long>(nullable: false),
-                    AssetId = table.Column<string>(maxLength: 10, nullable: false)
+                    AssetId = table.Column<string>(maxLength: 7, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,6 +134,7 @@ namespace Metro_Asset_System.Migrations
                     Id = table.Column<string>(maxLength: 10, nullable: false),
                     LoanDate = table.Column<string>(nullable: false),
                     ReturnDate = table.Column<string>(nullable: false),
+                    RequestDate = table.Column<string>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     RequestStatus = table.Column<int>(nullable: false),
                     RequesterId = table.Column<string>(maxLength: 7, nullable: false)
@@ -185,8 +186,8 @@ namespace Metro_Asset_System.Migrations
                     Id = table.Column<string>(maxLength: 8, nullable: false),
                     Status = table.Column<int>(nullable: false),
                     InvoiceDate = table.Column<string>(nullable: false),
-                    RequestId = table.Column<string>(nullable: true),
-                    ProcurementEmployeeId = table.Column<string>(nullable: false)
+                    RequestId = table.Column<string>(maxLength: 10, nullable: true),
+                    ProcurementEmployeeId = table.Column<string>(maxLength: 7, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,7 +213,7 @@ namespace Metro_Asset_System.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RequestId = table.Column<string>(maxLength: 10, nullable: false),
-                    AssetId = table.Column<string>(maxLength: 10, nullable: false)
+                    AssetId = table.Column<string>(maxLength: 7, nullable: false)
                 },
                 constraints: table =>
                 {

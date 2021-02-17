@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metro_Asset_System.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20210216085323_addModel")]
-    partial class addModel
+    [Migration("20210217151026_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,8 +46,8 @@ namespace Metro_Asset_System.Migrations
             modelBuilder.Entity("Metro_Asset_System.Models.Asset", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasColumnType("nvarchar(7)")
+                        .HasMaxLength(7);
 
                     b.Property<int>("AssetStatus")
                         .HasColumnType("int");
@@ -83,7 +83,8 @@ namespace Metro_Asset_System.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
 
                     b.HasKey("Id");
 
@@ -169,10 +170,12 @@ namespace Metro_Asset_System.Migrations
 
                     b.Property<string>("ProcurementEmployeeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(7)");
+                        .HasColumnType("nvarchar(7)")
+                        .HasMaxLength(7);
 
                     b.Property<string>("RequestId")
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -197,8 +200,8 @@ namespace Metro_Asset_System.Migrations
 
                     b.Property<string>("AssetId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasColumnType("nvarchar(7)")
+                        .HasMaxLength(7);
 
                     b.Property<string>("RequestId")
                         .IsRequired()
@@ -223,8 +226,8 @@ namespace Metro_Asset_System.Migrations
 
                     b.Property<string>("AssetId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasColumnType("nvarchar(7)")
+                        .HasMaxLength(7);
 
                     b.Property<long>("HighPinalty")
                         .HasColumnType("bigint");
@@ -276,6 +279,10 @@ namespace Metro_Asset_System.Migrations
                         .HasMaxLength(10);
 
                     b.Property<string>("LoanDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestDate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

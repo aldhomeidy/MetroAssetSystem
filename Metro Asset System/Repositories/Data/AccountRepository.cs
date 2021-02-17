@@ -120,5 +120,31 @@ namespace Metro_Asset_System.Repositories.Data
             var result = myContext.SaveChanges();
             return result;
         }
+
+        public int ChangePassword(string NIK, string password)
+        {
+            Account acc = myContext.Accounts.Where(a => a.NIK == NIK).FirstOrDefault();
+            acc.Password = this.HashPassword(password);
+            myContext.Entry(acc).State = EntityState.Modified;
+            var result = myContext.SaveChanges();
+            return result;
+        }
+
+        public int ForgotPassword(string email)
+        {
+            Employee emp = myContext.Employees.Where(e => e.Email == email).FirstOrDefault();
+            string NIK = emp.NIK;
+
+            Account acc = myContext.Accounts.Where(a => a.NIK == NIK).FirstOrDefault();
+            string newPassword = Guid.NewGuid().ToString();
+
+            acc.Password = this.HashPassword(newPassword);
+            myContext.Entry(acc).State = EntityState.Modified;
+
+            //sendEmail.Send(email, newPassword);
+
+            var result = myContext.SaveChanges();
+            return result;
+        }
     }
 }

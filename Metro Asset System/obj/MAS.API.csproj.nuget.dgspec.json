@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj": {}
+    "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj": {}
   },
   "projects": {
-    "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj": {
+    "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj",
+        "projectUniqueName": "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj",
         "projectName": "MAS.API",
-        "projectPath": "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj",
-        "packagesPath": "C:\\Users\\Aldho Meidy\\.nuget\\packages\\",
-        "outputPath": "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\obj\\",
+        "projectPath": "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj",
+        "packagesPath": "C:\\Users\\Edward\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Aldho Meidy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Edward\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],

@@ -6,15 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20210216083546_addModel.cs" />
-    <Compile Remove="Migrations\20210216083546_addModel.Designer.cs" />
-    <Compile Remove="Migrations\20210216084456_addModel.cs" />
-    <Compile Remove="Migrations\20210216084456_addModel.Designer.cs" />
-    <Compile Remove="Migrations\20210216084600_addModel.cs" />
-    <Compile Remove="Migrations\20210216084600_addModel.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
