@@ -71,16 +71,16 @@ namespace Metro_Asset_System.Controllers
             }
         }
 
-        [HttpPut("ChangePassword/{NIK}")]
-        public ActionResult ChangePassword(string NIK, ChangePasswordVM changePasswordVM)
+        [HttpPut("ChangePassword")]
+        public ActionResult ChangePassword(ChangePasswordVM changePasswordVM)
         {
-            var acc = accountRepository.Get(NIK);
+            var acc = accountRepository.Get(changePasswordVM.NIK);
             if (acc != null)
             {
                 if (BCrypt.Net.BCrypt.Verify(changePasswordVM.OldPassword, acc.Password))
                 {
-                    var data = accountRepository.ChangePassword(NIK, changePasswordVM.NewPassword);
-                    return Ok(data);
+                    var data = accountRepository.ChangePassword(changePasswordVM.NIK, changePasswordVM.NewPassword);
+                    return Ok(new { status = "Change Password Successed..." });
                 }
                 else
                 {
