@@ -107,41 +107,29 @@ namespace Metro_Asset_System.Controllers
         [HttpPut("ManageRequest")]
         public ActionResult ManageRequest(ManageRequestVM manageRequestVM)
         {
-            if (manageRequestVM.RequestDetailStatus == "1")
-            {
-                var data = requestDetailRepository.AcceptRequest(manageRequestVM.RequestId);
-                if (data > 0)
-                {
-                    return Ok(new { data = data, status = "Accept Request Successed..." });
-                }
-                else
-                {
-                    return StatusCode(500, new { data = data, status = "Internal server error..." });
-                }
-            }
-            else if (manageRequestVM.RequestDetailStatus == "2")
-            {
-                var data = requestDetailRepository.RejectRequest(manageRequestVM.RequestId);
-                if (data > 0)
-                {
-                    return Ok(new { data = data, status = "Reject Request Successed..." });
-                }
-                else
-                {
-                    return StatusCode(500, new { data = data, status = "Internal server error..." });
-                }
+            bool accepted = true;
+            string notif = "Accept";
 
+            if (manageRequestVM.RequestDetailStatus == "2")
+            {
+                accepted = false;
+                notif = "Reject";
+            }
+            var data = requestDetailRepository.ManageRequest(accepted, manageRequestVM);
+            if (data > 0)
+            {
+                return Ok(new { data = data, status = notif + " Request Successed..." });
             }
             else
             {
-                return StatusCode(500, new { status = "Internal server error..." });
+                return StatusCode(500, new { data = data, status = "Internal server error..." });
             }
         }
 
         [HttpPut("CreateRequestDetail")]
-        public ActionResult CreateRequestDetail(CreateRequestDetailVM createRequestDetailVM)
+        public ActionResult CreateRequestDetail(ManageRequestVM manageRequestVM)
         {
-            var data = requestDetailRepository.CreateRequestDetail(createRequestDetailVM);
+            var data = requestDetailRepository.CreateRequestDetail(manageRequestVM);
             if (data > 0)
             {
                 return Ok(new { data = data, status = "Create Request Detail Successed..." });
@@ -150,6 +138,12 @@ namespace Metro_Asset_System.Controllers
             {
                 return StatusCode(500, new { data = data, status = "Internal server error..." });
             }
+        }
+
+        [HttpPost("CreateInvoice")]
+        public ActionResult CreateInvoice(CreateInvoiceVM createInvoiceVM) 
+        {
+            return Ok();
         }
     }
 }

@@ -25,5 +25,11 @@ namespace Metro_Asset_System.Handler
             int next = num + 1;
             return "RQT" + DateTime.Now.ToString("yy") + next;
         }
+
+        public string GenerateInvoiceId(int num) 
+        {
+            int next = num + 1;
+            return "INV" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy") + next;
+        }
     }
 }

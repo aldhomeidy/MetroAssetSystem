@@ -141,14 +141,17 @@ namespace Metro_Asset_System.Repositories.Data
             acc.Password = this.HashPassword(newPassword);
             myContext.Entry(acc).State = EntityState.Modified;
 
-            var subject = "Forgot Password MetroAssets Account";
-            var emailString = email;
-            var message = "<h3>Hello " + emp.FirstName + ", </h3>";
-                message += "<br><p>Your MetroAssets Account has password has been changed to " + newPassword + ". </p>";
-                message += "<br><p>Please login with your new password.</p>";
-
-            var data = new[] { emailString, subject, message };
             var result = myContext.SaveChanges();
+
+            //prepare email requirement
+            var subject = "Reset Password";
+            var message = "<h3>Hello " + emp.FirstName + ", </h3>";
+            message += "<p>Your password has been successfully reseted.</p>";
+            message += "<p>Here is your new password : <b>" + newPassword + "</b></p>";
+            message += "<p>Please don't tell anyone about your new password, including all Metro Assets Staff</p>";
+            message += "<br><p>Best Regards, <b>Metro Asset Staff</b></p>";
+            //set email requirement
+            var data = new[] { email, subject, message };
 
             if (result > 0)
             {

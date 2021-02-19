@@ -13,6 +13,10 @@ namespace Metro_Asset_System.ViewModels
         [Required]
         public string RequestDetailStatus { get; set; }
 
-        public string Notes { get; set; }
+        public string Status { get; set; }
+        [Required]
+        public string Note { get; set; }
+        [Required]
+        public string EmployeeId { get; set; }
     }
 }
