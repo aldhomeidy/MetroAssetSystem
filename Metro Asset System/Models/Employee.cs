@@ -18,7 +18,7 @@ namespace Metro_Asset_System.Models
         public string LastName { get; set; }
         [Required, DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-        public string Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         [Required, RegularExpression(@"^08[0-9]{9,10}$", ErrorMessage = "Harus berupa angka diawali 08"), MaxLength(12, ErrorMessage = "Maksimal 12 karakter"), MinLength(11, ErrorMessage = "Minimal 11 karakter")]
         public string Phone { get; set; }
         [Required, EmailAddress(ErrorMessage ="Masukan format email yang valid"), MaxLength(100, ErrorMessage = "Maksimal 100 karakter")]
@@ -27,6 +27,9 @@ namespace Metro_Asset_System.Models
         public string? ManagerId { get; set; }
         [Required(ErrorMessage = "Tidak boleh kosong"), MaxLength(4, ErrorMessage = "Maksimal 4 karakter")]
         public string DepartmentId { get; set; }
+        [Required]
+        public Gender Gender { get; set; }
+        [Required]
         public EmployeeRole Role { get; set; }
 
         public virtual Employee Manager { get; set; }
@@ -47,5 +50,12 @@ namespace Metro_Asset_System.Models
         Procurement_Manager = 2,
         [Display(Name = "Procurement Employee")]
         Procurement_Employee = 3
+    }
+    public enum Gender 
+    { 
+        [Display(Name ="Male")]
+        Male = 0,
+        [Display(Name = "Female")]
+        Female =1
     }
 }

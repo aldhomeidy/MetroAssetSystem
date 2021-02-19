@@ -67,7 +67,7 @@ namespace Metro_Asset_System.Repositories.Data
             var requestDetail = new RequestDetail()
             {
                 Note = createRequestDetailVM.Note,
-                Date = Convert.ToString(DateTime.Now.Date),
+                Date =DateTime.Now.Date,
                 RequestId = createRequestDetailVM.RequestId,
                 EmployeeId = createRequestDetailVM.EmployeeId
             };

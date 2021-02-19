@@ -18,7 +18,7 @@ namespace Metro_Asset_System.Models
         public string? Note { get; set; }
         [Required(ErrorMessage = "Tidak boleh kosong"), DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         //[Required]
         [ MaxLength(10,ErrorMessage ="Maksimal berisi 10 karakter")]
         public string RequestId { get; set; }

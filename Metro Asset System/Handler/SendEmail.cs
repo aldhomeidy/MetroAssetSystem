@@ -9,6 +9,7 @@ namespace Metro_Asset_System.Handler
 {
     public class SendEmail
     {
+
         public void Send(string[] data)
         {
             var time24 = DateTime.Now.ToString("dd/MM/yy");
@@ -27,7 +28,7 @@ namespace Metro_Asset_System.Handler
                 Host = "smtp.gmail.com",
                 EnableSsl = true
             };
-            NetworkCredential NetworkCred = new NetworkCredential("aldhomeidy.bussiness@gmail.com", "rahasiadong");
+            NetworkCredential NetworkCred = new NetworkCredential("aldhomeidy.bussiness@gmail.com", "ssss");
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = NetworkCred;
             smtp.Port = 587;

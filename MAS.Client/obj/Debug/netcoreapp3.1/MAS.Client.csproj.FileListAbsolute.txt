@@ -79,3 +79,4 @@ C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\De
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.dll
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.pdb
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.genruntimeconfig.cache
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.csprojAssemblyReference.cache

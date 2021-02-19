@@ -8,7 +8,7 @@ namespace Metro_Asset_System.ViewModels
 {
     public class LoginVM
     {
-        [Required(ErrorMessage = "Tidak boleh kosong"), MaxLength(10, ErrorMessage = "Maksimal 10 karakter")]
+        [Required(ErrorMessage = "Tidak boleh kosong")]
         public string Password { get; set; }
         [Required(ErrorMessage = "Tidak boleh kosong")]
         public string Username { get; set; }

@@ -32,11 +32,11 @@ namespace Metro_Asset_System.Controllers
             var data = accountRepository.Register(registerVM);
             if (data > 0)
             {
-                return Ok(new {data=data, status = "Registration Successed..." });
+                return Ok(new {status = "Registration Successed..." });
             }
             else
             {
-                return StatusCode(500, new { data = data, status = "Internal server error..." });
+                return StatusCode(500, new {status = "Internal server error..." });
             }
         }
 
@@ -71,16 +71,16 @@ namespace Metro_Asset_System.Controllers
             }
         }
 
-        [HttpPut("ChangePassword/{NIK}")]
-        public ActionResult ChangePassword(string NIK, ChangePasswordVM changePasswordVM)
+        [HttpPut("ChangePassword")]
+        public ActionResult ChangePassword(ChangePasswordVM changePasswordVM)
         {
-            var acc = accountRepository.Get(NIK);
+            var acc = accountRepository.Get(changePasswordVM.NIK);
             if (acc != null)
             {
                 if (BCrypt.Net.BCrypt.Verify(changePasswordVM.OldPassword, acc.Password))
                 {
-                    var data = accountRepository.ChangePassword(NIK, changePasswordVM.NewPassword);
-                    return Ok(data);
+                    var data = accountRepository.ChangePassword(changePasswordVM.NIK, changePasswordVM.NewPassword);
+                    return Ok(new { status = "Change Password Success"});
                 }
                 else
                 {

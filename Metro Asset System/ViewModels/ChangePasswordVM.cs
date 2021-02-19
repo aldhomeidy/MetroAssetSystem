@@ -9,6 +9,8 @@ namespace Metro_Asset_System.ViewModels
     public class ChangePasswordVM
     {
         [Required]
+        public string NIK{ get; set; }
+        [Required]
         public string OldPassword { get; set; }
         [Required]
         public string NewPassword { get; set; }

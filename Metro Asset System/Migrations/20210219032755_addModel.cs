@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Metro_Asset_System.Migrations
 {
-    public partial class initial : Migration
+    public partial class addModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +40,7 @@ namespace Metro_Asset_System.Migrations
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     AssetStatus = table.Column<int>(nullable: false),
                     LoanStatus = table.Column<int>(nullable: false),
-                    InputDate = table.Column<string>(nullable: false),
+                    InputDate = table.Column<DateTime>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -60,11 +61,12 @@ namespace Metro_Asset_System.Migrations
                     NIK = table.Column<string>(maxLength: 7, nullable: false),
                     FirstName = table.Column<string>(maxLength: 20, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    Birthday = table.Column<string>(nullable: false),
+                    Birthday = table.Column<DateTime>(nullable: false),
                     Phone = table.Column<string>(maxLength: 12, nullable: false),
                     Email = table.Column<string>(maxLength: 100, nullable: false),
                     ManagerId = table.Column<string>(maxLength: 7, nullable: true),
                     DepartmentId = table.Column<string>(maxLength: 4, nullable: false),
+                    Gender = table.Column<int>(nullable: false),
                     Role = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -132,9 +134,9 @@ namespace Metro_Asset_System.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 10, nullable: false),
-                    LoanDate = table.Column<string>(nullable: false),
-                    ReturnDate = table.Column<string>(nullable: false),
-                    RequestDate = table.Column<string>(nullable: false),
+                    LoanDate = table.Column<DateTime>(nullable: false),
+                    ReturnDate = table.Column<DateTime>(nullable: false),
+                    RequestDate = table.Column<DateTime>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     RequestStatus = table.Column<int>(nullable: false),
                     RequesterId = table.Column<string>(maxLength: 7, nullable: false)
@@ -158,7 +160,7 @@ namespace Metro_Asset_System.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Status = table.Column<int>(nullable: false),
                     Note = table.Column<string>(maxLength: 20, nullable: true),
-                    Date = table.Column<string>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
                     RequestId = table.Column<string>(maxLength: 10, nullable: true),
                     EmployeeId = table.Column<string>(maxLength: 7, nullable: false)
                 },
@@ -185,7 +187,7 @@ namespace Metro_Asset_System.Migrations
                 {
                     Id = table.Column<string>(maxLength: 8, nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    InvoiceDate = table.Column<string>(nullable: false),
+                    InvoiceDate = table.Column<DateTime>(nullable: false),
                     RequestId = table.Column<string>(maxLength: 10, nullable: true),
                     ProcurementEmployeeId = table.Column<string>(maxLength: 7, nullable: false)
                 },

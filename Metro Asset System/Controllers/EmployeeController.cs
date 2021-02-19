@@ -34,5 +34,12 @@ namespace Metro_Asset_System.Controllers
                 return StatusCode(500,new { status = "Internal Server Error..." });
             }
         }
+
+        [HttpGet("Coba")]
+        public ActionResult Coba()
+        {
+            var data = requestRepository.Coba();
+            return Ok(new { data = data });
+        }
     }
 }

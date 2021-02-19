@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Metro_Asset_System.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +25,6 @@ namespace Metro_Asset_System.Handler
         {
             int next = num + 1;
             return "RQT" + DateTime.Now.ToString("yy") + next;
-        }
+        }       
     }
 }
