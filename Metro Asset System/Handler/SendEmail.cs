@@ -15,7 +15,7 @@ namespace Metro_Asset_System.Handler
             var time24 = DateTime.Now.ToString("dd/MM/yy");
 
 
-            MailMessage mm = new MailMessage("system@metroassets.com", data[0])
+            MailMessage mm = new MailMessage("1997HelloWorld1997@gmail.com", data[0])
             {
                 Subject = data[1] + " #" + time24,
                 From = new MailAddress("system@metroassets.com","MetroAssets"),                
@@ -28,6 +28,7 @@ namespace Metro_Asset_System.Handler
                 Host = "smtp.gmail.com",
                 EnableSsl = true
             };
+
             NetworkCredential NetworkCred = new NetworkCredential("aldhomeidy.bussiness@gmail.com", "ssss");
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = NetworkCred;

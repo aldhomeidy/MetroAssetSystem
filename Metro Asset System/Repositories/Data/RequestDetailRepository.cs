@@ -1,4 +1,5 @@
 ﻿using Metro_Asset_System.Context;
+using Metro_Asset_System.Handler;
 using Metro_Asset_System.Models;
 using Metro_Asset_System.ViewModels;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ namespace Metro_Asset_System.Repositories.Data
         private readonly MyContext myContext;
         private readonly RequestRepository requestRepository;
         private readonly EmployeeRepository employeeRepository;
+        private readonly SendEmail sendEmail = new SendEmail();
 
         public IConfiguration Configuration { get; }
 
@@ -28,15 +30,66 @@ namespace Metro_Asset_System.Repositories.Data
             this.Configuration = configuration;
         }
 
-        public int AcceptRequest(string requestId)
+        public int ManageRequest(bool accepted, ManageRequestVM manageRequestVM)
         {
-            RequestDetail reqDetail = myContext.RequestDetails.Where(rd => rd.RequestId == requestId).FirstOrDefault();
-            reqDetail.Status = StatusRequestDetail.Accepted;
+            var resultCreateDetail = this.CreateRequestDetail(manageRequestVM);
+            var resultUpdateStatus = requestRepository.UpdateApprovalStatus(manageRequestVM);
 
-            var result = myContext.SaveChanges();
+            Request req = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();
+            Employee emp = myContext.Employees.Where(e => e.NIK == req.RequesterId).FirstOrDefault();
+            RequestDetail reqDet = myContext.RequestDetails.OrderByDescending(rd => rd.Id).FirstOrDefault();
 
-            if (result > 0 && result > 0)
+            var subject = "";
+            var email = emp.Email;
+            var message = "";
+            var status = "";
+
+            if (manageRequestVM.RequestDetailStatus == "1")
             {
+                subject = "Request Accepted";
+                status = "Accepted";
+            }
+            else 
+            {
+                subject = "Request Accepted";
+                status = "Rejected";
+            }
+            message = "<h3>Hello " + emp.FirstName + ", </h3>";
+            message += "<br><p>There is an update with your request. Here is the detail: </p>";
+            message += "<br><table>" +
+                            "<tr>" +
+                            "<td>Request Code</td>" +
+                            "<td>: " + req.Id + "</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>Start Date</td>" +
+                            "<td>: " + req.LoanDate + "</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>End Date</td>" +
+                            "<td>: " + req.ReturnDate + "</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>Requested at</td>" +
+                            "<td>: " + req.RequestDate + "</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>Status</td>" +
+                            "<td>: " + status + "</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>Notes</td>" +
+                            "<td>: " + reqDet.Note + "</td>" +
+                            "</tr>" +
+                        "</table>";
+            message += "<br><p>Please check the details by signing in the MetroAssets System.</p>";
+            message += "<br>Best Regards, MetroAssets Staff<br>";
+
+            //set email requerement
+            var data = new[] { email, subject, message };
+            if (resultCreateDetail > 0 && resultUpdateStatus > 0) 
+            {
+                sendEmail.Send(data);
                 return 1;
             }
             else
@@ -45,49 +98,25 @@ namespace Metro_Asset_System.Repositories.Data
             }
         }
 
-        public int RejectRequest(string requestId)
-        {
-            RequestDetail reqdet = myContext.RequestDetails.Where(rd => rd.RequestId == requestId).FirstOrDefault();
-            reqdet.Status = StatusRequestDetail.Rejected;
-
-            var result = myContext.SaveChanges();
-
-            if (result > 0 && result > 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public int CreateRequestDetail(CreateRequestDetailVM createRequestDetailVM)
+        public int CreateRequestDetail(ManageRequestVM manageRequestVM)
         {
             var requestDetail = new RequestDetail()
             {
                 Note = createRequestDetailVM.Note,
                 Date =DateTime.Now.Date,
                 RequestId = createRequestDetailVM.RequestId,
-                EmployeeId = createRequestDetailVM.EmployeeId
+                EmployeeId = createRequestDetailVM.EmployeeId,
+                Status = StatusRequestDetail.NotSet
             };
-
-            if (createRequestDetailVM.Status == "1")
+            
+            if (manageRequestVM.RequestDetailStatus == "1")
             {
                 requestDetail.Status = StatusRequestDetail.Accepted;
             }
-            if (createRequestDetailVM.Status == "2")
+            else 
             {
                 requestDetail.Status = StatusRequestDetail.Rejected;
             }
-
-
-            //Send email
-            Request request = myContext.Requests.Where(r => r.Id == createRequestDetailVM.RequestId).FirstOrDefault();
-            string requesterId = request.RequesterId;
-
-            Employee employee = myContext.Employees.Where(e => e.NIK == requesterId).FirstOrDefault();
-            string email = employee.Email;
 
             myContext.Add(requestDetail);
             var result = myContext.SaveChanges();
