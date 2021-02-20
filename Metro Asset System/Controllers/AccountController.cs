@@ -18,12 +18,18 @@ namespace Metro_Asset_System.Controllers
         private readonly AccountRepository accountRepository;
         private readonly EmployeeRepository employeeRepository;
         private readonly RequestDetailRepository requestDetailRepository;
+        private readonly InvoiceRepository invoiceRepository;
+        private readonly PinaltyHistoryRepository pinaltyHistoryRepository;
 
-        public AccountController(AccountRepository accountRepository, EmployeeRepository employeeRepository, RequestDetailRepository requestDetailRepository) : base(accountRepository)
+        public AccountController(AccountRepository accountRepository, EmployeeRepository employeeRepository, 
+            RequestDetailRepository requestDetailRepository, InvoiceRepository invoiceRepository,
+            PinaltyHistoryRepository pinaltyHistoryRepository ) : base(accountRepository)
         {
             this.accountRepository = accountRepository;
             this.employeeRepository = employeeRepository;
             this.requestDetailRepository = requestDetailRepository;
+            this.invoiceRepository = invoiceRepository;
+            this.pinaltyHistoryRepository = pinaltyHistoryRepository;
         }
 
         [HttpPost("Register")]
@@ -143,7 +149,29 @@ namespace Metro_Asset_System.Controllers
         [HttpPost("CreateInvoice")]
         public ActionResult CreateInvoice(CreateInvoiceVM createInvoiceVM) 
         {
-            return Ok();
+            var data = invoiceRepository.CreateInvoice(createInvoiceVM);
+            if (data > 0)
+            {
+                return Ok(new { data = data, status = "Create Invoice Successed..." });
+            }
+            else
+            {
+                return StatusCode(500, new { data = data, status = "Internal server error..." });
+            }
+        }
+
+        [HttpPost("SetPinalty")]
+        public ActionResult SetPinalty(SetPinaltyVM setPinaltyVM)
+        {
+            var data = pinaltyHistoryRepository.SetPinalty(setPinaltyVM);
+            if (data > 0)
+            {
+                return Ok(new { data = data, status = "Set Pinalty Successed..." });
+            }
+            else
+            {
+                return StatusCode(500, new { data = data, status = "Internal server error..." });
+            }
         }
     }
 }

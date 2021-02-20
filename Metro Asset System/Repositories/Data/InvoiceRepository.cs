@@ -19,7 +19,7 @@ namespace Metro_Asset_System.Repositories.Data
             this.myContext = myContext;
         }
 
-        public int Create(CreateInvoiceVM createInvoiceVM)
+        public int CreateInvoice(CreateInvoiceVM createInvoiceVM)
         {
             int max = 0;
             var now = "INV" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy");
