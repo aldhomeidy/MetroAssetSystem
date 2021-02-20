@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections;
 using Metro_Asset_System.Content;
+using Microsoft.EntityFrameworkCore;
 
 namespace Metro_Asset_System.Repositories.Data
 {
@@ -95,6 +96,39 @@ namespace Metro_Asset_System.Repositories.Data
                 return 1;
             }
             else {
+                return 0;
+            }
+        }
+
+        public int UpdateApprovalStatus(ManageRequestVM manageRequestVM) 
+        {
+            Request req = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();
+            Employee emp = myContext.Employees.Where(e => e.NIK == manageRequestVM.EmployeeId).FirstOrDefault();
+
+            if (manageRequestVM.RequestDetailStatus == "2")
+            {
+                req.Status = Status.Inactive;
+            }
+            else 
+            {
+                if (emp.Role == EmployeeRole.Employee_Manager)
+                {
+                    req.RequestStatus = RequestStatus.Approve_Level_2;
+                }
+                else if (emp.Role == EmployeeRole.Procurement_Manager)
+                {
+                    req.RequestStatus = RequestStatus.Approved;
+                }
+            }
+            myContext.Entry(req).State = EntityState.Modified;
+
+            var resultUpdate = myContext.SaveChanges();
+            if (resultUpdate > 0)
+            {
+                return 1;
+            }
+            else 
+            {
                 return 0;
             }
         }        

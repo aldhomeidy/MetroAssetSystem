@@ -43,7 +43,7 @@ namespace Metro_Asset_System.Models
     public enum RequestStatus
     {
         [Display(Name = "Waiting for approval Level 1")]
-        Approve_Level_1 =0,
+        Approve_Level_1 = 0,
         [Display(Name = "Waiting for approval Level 2")]
         Approve_Level_2 = 1,
         [Display(Name = "Approved")]
