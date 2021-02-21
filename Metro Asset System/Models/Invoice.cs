@@ -16,7 +16,7 @@ namespace Metro_Asset_System.Models
         public StatusInvoice Status {get; set; } 
         [Required,DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-        public string InvoiceDate { get; set; }
+        public DateTime InvoiceDate { get; set; }
         //[Required]
         [MaxLength(10)]
         public string RequestId {get; set; }

@@ -102,12 +102,13 @@ namespace Metro_Asset_System.Repositories.Data
         {
             var requestDetail = new RequestDetail()
             {
-                Status = StatusRequestDetail.NotSet,
-                Note = manageRequestVM.Note,
-                Date = Convert.ToString(DateTime.Now),
-                RequestId = manageRequestVM.RequestId,
-                EmployeeId = manageRequestVM.EmployeeId
+                Note = createRequestDetailVM.Note,
+                Date =DateTime.Now.Date,
+                RequestId = createRequestDetailVM.RequestId,
+                EmployeeId = createRequestDetailVM.EmployeeId,
+                Status = StatusRequestDetail.NotSet
             };
+            
             if (manageRequestVM.RequestDetailStatus == "1")
             {
                 requestDetail.Status = StatusRequestDetail.Accepted;

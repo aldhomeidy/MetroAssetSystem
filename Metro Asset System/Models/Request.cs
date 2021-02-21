@@ -14,11 +14,11 @@ namespace Metro_Asset_System.Models
         [Key, Required(ErrorMessage = "Tidak boleh kosong"), MaxLength(10, ErrorMessage = "Maksimal 10 karakter")]
         public string Id { get; set; }
         [Required(ErrorMessage = "Tidak boleh kosong"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-        public string LoanDate { get; set; }
+        public DateTime LoanDate { get; set; }
         [Required(ErrorMessage = "Tidak boleh kosong"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-        public string ReturnDate { get; set; }
+        public DateTime ReturnDate { get; set; }
         [Required(ErrorMessage = "Tidak boleh kosong"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
-        public string RequestDate{ get; set; }
+        public DateTime RequestDate{ get; set; }
         [Required(ErrorMessage = "Tidak boleh kosong")]
         public Status Status { get; set; }
         [Required(ErrorMessage = "Tidak boleh kosong")]

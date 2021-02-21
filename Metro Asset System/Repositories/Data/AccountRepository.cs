@@ -1,5 +1,6 @@
 using Dapper;
 using Metro_Asset_System.Context;
+using Metro_Asset_System.Content;
 using Metro_Asset_System.Handler;
 using Metro_Asset_System.Models;
 using Metro_Asset_System.ViewModels;
@@ -18,7 +19,7 @@ namespace Metro_Asset_System.Repositories.Data
     public class AccountRepository : GeneralRepository<Account, MyContext, string>
     {
         private readonly MyContext myContext;
-        private readonly SendEmail sendEmail = new SendEmail();
+        private readonly AuthContent authContent = new AuthContent();
         private readonly Generator generator = new Generator();
         private readonly EmployeeRepository employeeRepository;
         public IConfiguration Configuration { get; }
@@ -40,19 +41,6 @@ namespace Metro_Asset_System.Repositories.Data
         public int Register(RegisterVM registerVM)
         {
             var nik = generator.RandomNumber(1000000,9999999);
-            var verifyUrl = "https://localhost:44329/api/account/verifiy/"+nik;
-            var subject = "Email Confirmation";
-            var email = registerVM.Email;
-            var message = "<h3>Hello " + registerVM.FirstName + ", </h3>";
-                message += "<br><p>Your MetroAssets Account has been created. But you must to activate your account first by confirmation your registered email.</p>";
-                message += "<br><p>Just click link down bellow : </p>";
-                message += "<br><br>";
-                message += "<a href="+verifyUrl+">"+verifyUrl+"<a/>";
-
-
-            //set email requerement
-            var data = new[] { email, subject, message };
-
             var employee = new Employee()
             {
                 NIK = nik,
@@ -79,9 +67,11 @@ namespace Metro_Asset_System.Repositories.Data
 
             var resAccount = myContext.SaveChanges();
 
+            //set email data requirement
+            var data = new[] { nik, registerVM.Email, registerVM.FirstName };
             if (resAccount > 0 && resPerson > 0)
             {
-                sendEmail.Send(data);
+                authContent.Register(data);
                 return 1;
             }
             else
@@ -132,7 +122,7 @@ namespace Metro_Asset_System.Repositories.Data
 
         public int ForgotPassword(string email)
         {
-            Employee emp = myContext.Employees.Where(e => e.Email == email).FirstOrDefault();
+            Employee emp = myContext.Employees.Where(e => e.Email == email).FirstOrDefault();            
             string NIK = emp.NIK;
 
             Account acc = myContext.Accounts.Where(a => a.NIK == NIK).FirstOrDefault();
@@ -143,25 +133,11 @@ namespace Metro_Asset_System.Repositories.Data
 
             var result = myContext.SaveChanges();
 
-            //prepare email requirement
-            var subject = "Reset Password";
-            var message = "<h3>Hello " + emp.FirstName + ", </h3>";
-            message += "<p>Your password has been successfully reseted.</p>";
-            message += "<p>Here is your new password : <b>" + newPassword + "</b></p>";
-            message += "<p>Please don't tell anyone about your new password, including all Metro Assets Staff</p>";
-            message += "<br><p>Best Regards, <b>Metro Asset Staff</b></p>";
             //set email requirement
-            var data = new[] { email, subject, message };
+            var data = new[] { email, emp.FirstName, newPassword };
 
-            if (result > 0)
-            {
-                sendEmail.Send(data);
-                return result;
-            }
-            else
-            {
-                return result;
-            }
+            authContent.ForgetPassword(data);
+            return result;
         }
     }
 }

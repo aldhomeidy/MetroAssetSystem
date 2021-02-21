@@ -38,11 +38,11 @@ namespace Metro_Asset_System.Controllers
             var data = accountRepository.Register(registerVM);
             if (data > 0)
             {
-                return Ok(new {data=data, status = "Registration Successed..." });
+                return Ok(new {status = "Registration Successed..." });
             }
             else
             {
-                return StatusCode(500, new { data = data, status = "Internal server error..." });
+                return StatusCode(500, new {status = "Internal server error..." });
             }
         }
 
@@ -86,6 +86,7 @@ namespace Metro_Asset_System.Controllers
                 if (BCrypt.Net.BCrypt.Verify(changePasswordVM.OldPassword, acc.Password))
                 {
                     var data = accountRepository.ChangePassword(changePasswordVM.NIK, changePasswordVM.NewPassword);
+
                     return Ok(new { status = "Change Password Successed..." });
                 }
                 else

@@ -12,8 +12,9 @@ namespace Metro_Asset_System.ViewModels
         public string FirstName { get; set; }
         //[Required(ErrorMessage = "Tidak boleh kosong"), MaxLength(50, ErrorMessage = "Maksimal 50 karakter")]
         public string LastName { get; set; }
-        //[Required, DataType(DataType.Date)]
-        public string Birthday { get; set; }
+        
+        [DataType(DataType.Date)]
+        public DateTime Birthday { get; set; }
         //[Required, RegularExpression(@"^08[0-9]{9,10}$", ErrorMessage = "Harus berupa angka diawali 08"), MaxLength(12, ErrorMessage = "Maksimal 12 karakter"), MinLength(11, ErrorMessage = "Minimal 11 karakter")]
         public string Phone { get; set; }
         //[Required, EmailAddress(ErrorMessage = "Masukan format email yang valid"), MaxLength(100, ErrorMessage = "Maksimal 100 karakter")]
