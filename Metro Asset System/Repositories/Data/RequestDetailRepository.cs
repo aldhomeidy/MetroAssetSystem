@@ -1,5 +1,5 @@
-﻿using Metro_Asset_System.Context;
-using Metro_Asset_System.Handler;
+﻿using Metro_Asset_System.Content;
+using Metro_Asset_System.Context;
 using Metro_Asset_System.Models;
 using Metro_Asset_System.ViewModels;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +14,8 @@ namespace Metro_Asset_System.Repositories.Data
     {
         private readonly MyContext myContext;
         private readonly RequestRepository requestRepository;
-        private readonly EmployeeRepository employeeRepository;
-        private readonly SendEmail sendEmail = new SendEmail();
+        private readonly EmployeeRepository employeeRepository;        
+        private readonly TransactionContent transactionContent = new TransactionContent();
 
         public IConfiguration Configuration { get; }
 
@@ -32,64 +32,18 @@ namespace Metro_Asset_System.Repositories.Data
 
         public int ManageRequest(bool accepted, ManageRequestVM manageRequestVM)
         {
-            var resultCreateDetail = this.CreateRequestDetail(manageRequestVM);
-            var resultUpdateStatus = requestRepository.UpdateApprovalStatus(manageRequestVM);
+            Request request = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();            
+            RequestDetail requestDetail = myContext.RequestDetails.Where(rd=>rd.RequestId==manageRequestVM.RequestId).OrderByDescending(rd => rd.Id).FirstOrDefault();
 
-            Request req = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();
-            Employee emp = myContext.Employees.Where(e => e.NIK == req.RequesterId).FirstOrDefault();
-            RequestDetail reqDet = myContext.RequestDetails.OrderByDescending(rd => rd.Id).FirstOrDefault();
+            var resultCreateDetail = this.CreateRequestDetail(manageRequestVM); //add request detail data
+            var resultUpdateStatus = requestRepository.UpdateApprovalStatus(manageRequestVM); //update request data
 
-            var subject = "";
-            var email = emp.Email;
-            var message = "";
-            var status = "";
+            //set email requirement
+            var identity = new[] { request.Employee.FirstName, request.Employee.Email, manageRequestVM.RequestDetailStatus, manageRequestVM.Note };
 
-            if (manageRequestVM.RequestDetailStatus == "1")
-            {
-                subject = "Request Accepted";
-                status = "Accepted";
-            }
-            else 
-            {
-                subject = "Request Accepted";
-                status = "Rejected";
-            }
-            message = "<h3>Hello " + emp.FirstName + ", </h3>";
-            message += "<br><p>There is an update with your request. Here is the detail: </p>";
-            message += "<br><table>" +
-                            "<tr>" +
-                            "<td>Request Code</td>" +
-                            "<td>: " + req.Id + "</td>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>Start Date</td>" +
-                            "<td>: " + req.LoanDate + "</td>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>End Date</td>" +
-                            "<td>: " + req.ReturnDate + "</td>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>Requested at</td>" +
-                            "<td>: " + req.RequestDate + "</td>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>Status</td>" +
-                            "<td>: " + status + "</td>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>Notes</td>" +
-                            "<td>: " + reqDet.Note + "</td>" +
-                            "</tr>" +
-                        "</table>";
-            message += "<br><p>Please check the details by signing in the MetroAssets System.</p>";
-            message += "<br>Best Regards, MetroAssets Staff<br>";
-
-            //set email requerement
-            var data = new[] { email, subject, message };
             if (resultCreateDetail > 0 && resultUpdateStatus > 0) 
             {
-                sendEmail.Send(data);
+                transactionContent.ManageRequest(identity,request);
                 return 1;
             }
             else
@@ -102,10 +56,10 @@ namespace Metro_Asset_System.Repositories.Data
         {
             var requestDetail = new RequestDetail()
             {
-                Note = createRequestDetailVM.Note,
+                Note = manageRequestVM.Note,
                 Date =DateTime.Now.Date,
-                RequestId = createRequestDetailVM.RequestId,
-                EmployeeId = createRequestDetailVM.EmployeeId,
+                RequestId = manageRequestVM.RequestId,
+                EmployeeId = manageRequestVM.EmployeeId,
                 Status = StatusRequestDetail.NotSet
             };
             

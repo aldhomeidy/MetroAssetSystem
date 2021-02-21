@@ -17,13 +17,11 @@ namespace Metro_Asset_System.Controllers
     {
         private readonly AccountRepository accountRepository;
         private readonly EmployeeRepository employeeRepository;
-        private readonly RequestDetailRepository requestDetailRepository;
 
-        public AccountController(AccountRepository accountRepository, EmployeeRepository employeeRepository, RequestDetailRepository requestDetailRepository) : base(accountRepository)
+        public AccountController(AccountRepository accountRepository, EmployeeRepository employeeRepository) : base(accountRepository)
         {
             this.accountRepository = accountRepository;
-            this.employeeRepository = employeeRepository;
-            this.requestDetailRepository = requestDetailRepository;
+            this.employeeRepository = employeeRepository;         
         }
 
         [HttpPost("Register")]
@@ -103,48 +101,6 @@ namespace Metro_Asset_System.Controllers
             {
                 return StatusCode(500, new { data = data, status = "Internal server error..." });
             }
-        }
-
-        [HttpPut("ManageRequest")]
-        public ActionResult ManageRequest(ManageRequestVM manageRequestVM)
-        {
-            bool accepted = true;
-            string notif = "Accept";
-
-            if (manageRequestVM.RequestDetailStatus == "2")
-            {
-                accepted = false;
-                notif = "Reject";
-            }
-            var data = requestDetailRepository.ManageRequest(accepted, manageRequestVM);
-            if (data > 0)
-            {
-                return Ok(new { data = data, status = notif + " Request Successed..." });
-            }
-            else
-            {
-                return StatusCode(500, new { data = data, status = "Internal server error..." });
-            }
-        }
-
-        [HttpPut("CreateRequestDetail")]
-        public ActionResult CreateRequestDetail(ManageRequestVM manageRequestVM)
-        {
-            var data = requestDetailRepository.CreateRequestDetail(manageRequestVM);
-            if (data > 0)
-            {
-                return Ok(new { data = data, status = "Create Request Detail Successed..." });
-            }
-            else
-            {
-                return StatusCode(500, new { data = data, status = "Internal server error..." });
-            }
-        }
-
-        [HttpPost("CreateInvoice")]
-        public ActionResult CreateInvoice(CreateInvoiceVM createInvoiceVM) 
-        {
-            return Ok();
         }
     }
 }

@@ -16,6 +16,9 @@ namespace Metro_Asset_System.Models
         public string InvoiceId { get; set; }
         [Required(ErrorMessage ="Tidak boleh kosong")]
         public long Pinalty { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        public DateTime PinaltyDate{ get; set; }
 
         public virtual Invoice Invoice { get; set; }
     }

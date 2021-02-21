@@ -21,21 +21,14 @@ namespace Metro_Asset_System.Repositories.Data
         private readonly MyContext myContext;
         private readonly AuthContent authContent = new AuthContent();
         private readonly Generator generator = new Generator();
-        private readonly EmployeeRepository employeeRepository;
-        public IConfiguration Configuration { get; }
+        private readonly BCryptConfigure bCryptConfigure = new BCryptConfigure();
+        private readonly EmployeeRepository employeeRepository;      
 
-        public AccountRepository(MyContext myContext, EmployeeRepository employeeRepository, IConfiguration configuration) : base(myContext)
+        public AccountRepository(MyContext myContext, EmployeeRepository employeeRepository) : base(myContext)
         {
             myContext.Set<Account>();
             this.myContext = myContext;
-            this.employeeRepository = employeeRepository;
-            this.Configuration = configuration;
-        }
-
-        public string HashPassword(string password)
-        {
-            string salt = BCrypt.Net.BCrypt.GenerateSalt(12);            
-            return BCrypt.Net.BCrypt.HashPassword(password,salt);
+            this.employeeRepository = employeeRepository;            
         }
 
         public int Register(RegisterVM registerVM)
@@ -57,7 +50,7 @@ namespace Metro_Asset_System.Repositories.Data
             {
                 NIK = employee.NIK,
                 Username =registerVM.Username,
-                Password = this.HashPassword("B0o7c@mp"),
+                Password = bCryptConfigure.HashPassword("B0o7c@mp"),
                 Status = StatusAccount.Restricted
             };
 
@@ -85,7 +78,7 @@ namespace Metro_Asset_System.Repositories.Data
             var data = myContext.Accounts.Where(a => a.Username == username).FirstOrDefault();
             if (data != null)
             {
-                if (BCrypt.Net.BCrypt.Verify(password, data.Password))
+                if (bCryptConfigure.Verify(password, data.Password))
                 {
                     if (data.Status == StatusAccount.Active)
                     {
@@ -113,28 +106,28 @@ namespace Metro_Asset_System.Repositories.Data
 
         public int ChangePassword(string NIK, string password)
         {
-            Account acc = myContext.Accounts.Where(a => a.NIK == NIK).FirstOrDefault();
-            acc.Password = this.HashPassword(password);
-            myContext.Entry(acc).State = EntityState.Modified;
+            Account acccount = myContext.Accounts.Where(a => a.NIK == NIK).FirstOrDefault();
+            acccount.Password =bCryptConfigure.HashPassword(password);
+            myContext.Entry(acccount).State = EntityState.Modified;
             var result = myContext.SaveChanges();
             return result;
         }
 
         public int ForgotPassword(string email)
         {
-            Employee emp = myContext.Employees.Where(e => e.Email == email).FirstOrDefault();            
-            string NIK = emp.NIK;
+            Employee employee = myContext.Employees.Where(e => e.Email == email).FirstOrDefault();            
+            string NIK = employee.NIK;
 
-            Account acc = myContext.Accounts.Where(a => a.NIK == NIK).FirstOrDefault();
+            Account account = myContext.Accounts.Where(a => a.NIK == NIK).FirstOrDefault();
             string newPassword = Guid.NewGuid().ToString();
 
-            acc.Password = this.HashPassword(newPassword);
-            myContext.Entry(acc).State = EntityState.Modified;
+            account.Password = bCryptConfigure.HashPassword(newPassword);
+            myContext.Entry(account).State = EntityState.Modified;
 
             var result = myContext.SaveChanges();
 
             //set email requirement
-            var data = new[] { email, emp.FirstName, newPassword };
+            var data = new[] { email, employee.FirstName, newPassword };
 
             authContent.ForgetPassword(data);
             return result;

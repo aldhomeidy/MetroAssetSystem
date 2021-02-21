@@ -80,10 +80,10 @@ namespace Metro_Asset_System.Repositories.Data
 
             string[,] listItem = new string[2, requestData.ItemRequest.Count()];
             int listItemIndex= 0;
-            foreach (var tes in requestData.ItemRequest)
+            foreach (var row in requestData.ItemRequest)
             {
-                listItem[listItemIndex, 0] = tes.Asset.Id;
-                listItem[listItemIndex, 1] = tes.Asset.Name;
+                listItem[listItemIndex, 0] = row.Asset.Id;
+                listItem[listItemIndex, 1] = row.Asset.Name;
                 listItemIndex++;
             }
             var reqData= new[] {requestId,requestVM.StartDate.ToString("dd/MM/yyyy"),requestVM.EndDate.ToString("dd/MM/yyyy") };
@@ -102,25 +102,25 @@ namespace Metro_Asset_System.Repositories.Data
 
         public int UpdateApprovalStatus(ManageRequestVM manageRequestVM) 
         {
-            Request req = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();
-            Employee emp = myContext.Employees.Where(e => e.NIK == manageRequestVM.EmployeeId).FirstOrDefault();
+            Request request = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();
+            Employee employee = myContext.Employees.Where(e => e.NIK == manageRequestVM.EmployeeId).FirstOrDefault();
 
             if (manageRequestVM.RequestDetailStatus == "2")
             {
-                req.Status = Status.Inactive;
+                request.Status = Status.Inactive;
             }
             else 
             {
-                if (emp.Role == EmployeeRole.Employee_Manager)
+                if (employee.Role == EmployeeRole.Employee_Manager)
                 {
-                    req.RequestStatus = RequestStatus.Approve_Level_2;
+                    request.RequestStatus = RequestStatus.Approve_Level_2;
                 }
-                else if (emp.Role == EmployeeRole.Procurement_Manager)
+                else if (employee.Role == EmployeeRole.Procurement_Manager)
                 {
-                    req.RequestStatus = RequestStatus.Approved;
+                    request.RequestStatus = RequestStatus.Approved;
                 }
             }
-            myContext.Entry(req).State = EntityState.Modified;
+            myContext.Entry(request).State = EntityState.Modified;
 
             var resultUpdate = myContext.SaveChanges();
             if (resultUpdate > 0)

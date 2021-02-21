@@ -28,5 +28,23 @@ namespace Metro_Asset_System.Repositories.Data
             var result = myContext.SaveChanges();
             return result;
         }
+
+        public int UpdateAssetCondition(string id, string condition) 
+        {
+            var data = myContext.Assets.FirstOrDefault(x => x.Id == id);
+            if (condition == "0")
+            {
+                data.AssetStatus = StatusAsset.Fine;
+            }
+            else if (condition == "1")
+            {
+                data.AssetStatus = StatusAsset.Problem;
+            }
+            else {
+                data.AssetStatus = StatusAsset.Lost;
+            }
+            var result = myContext.SaveChanges();
+            return result;
+        }
     }
 }
