@@ -1,4 +1,5 @@
 using Metro_Asset_System.Context;
+using Metro_Asset_System.Handler;
 using Metro_Asset_System.Repositories.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +46,8 @@ namespace Metro_Asset_System
             services.AddScoped<PinaltyHistoryRepository>();
             services.AddScoped<RequestRepository>();
             services.AddScoped<RequestDetailRepository>();
+
+            services.JwtConfigure(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

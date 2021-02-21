@@ -35,7 +35,8 @@ namespace Metro_Asset_System.Repositories.Data
             {
                 Id = invoiceId,
                 Status = StatusInvoice.On_Going,
-                InvoiceDate = DateTime.Now.ToString("dd-MM-yyyy"),
+                InvoiceDate = DateTime.Now.Date,
+                //InvoiceDate = DateTime.Now.ToString("dd-MM-yyyy"),
                 RequestId = createInvoiceVM.RequestId,
                 ProcurementEmployeeId = createInvoiceVM.ProcurementEmployeeId
             };

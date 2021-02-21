@@ -32,7 +32,6 @@ namespace Metro_Asset_System.Repositories.Data
 
         public int ManageRequest(bool accepted, ManageRequestVM manageRequestVM)
         {
-            var resultCreateDetail = this.CreateRequestDetail(manageRequestVM);
             var resultUpdateStatus = requestRepository.UpdateApprovalStatus(manageRequestVM);
 
             Request req = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();
@@ -87,41 +86,9 @@ namespace Metro_Asset_System.Repositories.Data
 
             //set email requerement
             var data = new[] { email, subject, message };
-            if (resultCreateDetail > 0 && resultUpdateStatus > 0) 
+            if (resultUpdateStatus > 0) 
             {
                 sendEmail.Send(data);
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public int CreateRequestDetail(ManageRequestVM manageRequestVM)
-        {
-            var requestDetail = new RequestDetail()
-            {
-                Note = createRequestDetailVM.Note,
-                Date =DateTime.Now.Date,
-                RequestId = createRequestDetailVM.RequestId,
-                EmployeeId = createRequestDetailVM.EmployeeId,
-                Status = StatusRequestDetail.NotSet
-            };
-            
-            if (manageRequestVM.RequestDetailStatus == "1")
-            {
-                requestDetail.Status = StatusRequestDetail.Accepted;
-            }
-            else 
-            {
-                requestDetail.Status = StatusRequestDetail.Rejected;
-            }
-
-            myContext.Add(requestDetail);
-            var result = myContext.SaveChanges();
-            if (result > 0)
-            {
                 return 1;
             }
             else
