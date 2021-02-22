@@ -2,6 +2,7 @@
 using Metro_Asset_System.Models;
 using Metro_Asset_System.Repositories.Data;
 using Metro_Asset_System.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Metro_Asset_System.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : BaseController<Account, AccountRepository, string>
@@ -126,20 +128,6 @@ namespace Metro_Asset_System.Controllers
             if (data > 0)
             {
                 return Ok(new { data = data, status = notif + " Request Successed..." });
-            }
-            else
-            {
-                return StatusCode(500, new { data = data, status = "Internal server error..." });
-            }
-        }
-
-        [HttpPut("CreateRequestDetail")]
-        public ActionResult CreateRequestDetail(ManageRequestVM manageRequestVM)
-        {
-            var data = requestDetailRepository.CreateRequestDetail(manageRequestVM);
-            if (data > 0)
-            {
-                return Ok(new { data = data, status = "Create Request Detail Successed..." });
             }
             else
             {
