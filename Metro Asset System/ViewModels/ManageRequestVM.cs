@@ -11,9 +11,7 @@ namespace Metro_Asset_System.ViewModels
         [Required]
         public string RequestId { get; set; }
         [Required]
-        public string RequestDetailStatus { get; set; }
-
-        public string Status { get; set; }
+        public string RequestDetailStatus { get; set; }     
         [Required]
         public string Note { get; set; }
         [Required]

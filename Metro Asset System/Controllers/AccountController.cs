@@ -2,7 +2,6 @@
 using Metro_Asset_System.Models;
 using Metro_Asset_System.Repositories.Data;
 using Metro_Asset_System.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,26 +11,17 @@ using System.Threading.Tasks;
 
 namespace Metro_Asset_System.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : BaseController<Account, AccountRepository, string>
     {
         private readonly AccountRepository accountRepository;
         private readonly EmployeeRepository employeeRepository;
-        private readonly RequestDetailRepository requestDetailRepository;
-        private readonly InvoiceRepository invoiceRepository;
-        private readonly PinaltyHistoryRepository pinaltyHistoryRepository;
 
-        public AccountController(AccountRepository accountRepository, EmployeeRepository employeeRepository, 
-            RequestDetailRepository requestDetailRepository, InvoiceRepository invoiceRepository,
-            PinaltyHistoryRepository pinaltyHistoryRepository ) : base(accountRepository)
+        public AccountController(AccountRepository accountRepository, EmployeeRepository employeeRepository) : base(accountRepository)
         {
             this.accountRepository = accountRepository;
-            this.employeeRepository = employeeRepository;
-            this.requestDetailRepository = requestDetailRepository;
-            this.invoiceRepository = invoiceRepository;
-            this.pinaltyHistoryRepository = pinaltyHistoryRepository;
+            this.employeeRepository = employeeRepository;         
         }
 
         [HttpPost("Register")]
@@ -106,56 +96,6 @@ namespace Metro_Asset_System.Controllers
             if (data > 0)
             {
                 return Ok(new { data = data, status = "Forgot Password Successed..." });
-            }
-            else
-            {
-                return StatusCode(500, new { data = data, status = "Internal server error..." });
-            }
-        }
-
-        [HttpPut("ManageRequest")]
-        public ActionResult ManageRequest(ManageRequestVM manageRequestVM)
-        {
-            bool accepted = true;
-            string notif = "Accept";
-
-            if (manageRequestVM.RequestDetailStatus == "2")
-            {
-                accepted = false;
-                notif = "Reject";
-            }
-            var data = requestDetailRepository.ManageRequest(accepted, manageRequestVM);
-            if (data > 0)
-            {
-                return Ok(new { data = data, status = notif + " Request Successed..." });
-            }
-            else
-            {
-                return StatusCode(500, new { data = data, status = "Internal server error..." });
-            }
-        }
-
-        [HttpPost("CreateInvoice")]
-        public ActionResult CreateInvoice(CreateInvoiceVM createInvoiceVM) 
-        {
-            var data = invoiceRepository.CreateInvoice(createInvoiceVM);
-            if (data > 0)
-            {
-                return Ok(new { data = data, status = "Create Invoice Successed..." });
-            }
-            else
-            {
-                return StatusCode(500, new { data = data, status = "Internal server error..." });
-            }
-        }
-
-        [HttpPost("SetPinalty")]
-        public ActionResult SetPinalty(SetPinaltyVM setPinaltyVM)
-        {
-            var data = pinaltyHistoryRepository.SetPinalty(setPinaltyVM);
-            if (data > 0)
-            {
-                return Ok(new { data = data, status = "Set Pinalty Successed..." });
             }
             else
             {
