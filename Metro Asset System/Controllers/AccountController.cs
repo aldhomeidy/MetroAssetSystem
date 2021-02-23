@@ -93,14 +93,32 @@ namespace Metro_Asset_System.Controllers
         public ActionResult ForgotPassword(RegisterVM registerVM)
         {
             var data = accountRepository.ForgotPassword(registerVM.Email);
-            if (data > 0)
+            if (data == 1)
             {
-                return Ok(new { data = data, status = "Forgot Password Successed..." });
+                return Ok(new {status = "Forgot Password Successed..." });
+            }
+            else if (data == 2) 
+            {
+                return NotFound(new { status = "Email not registered" });
             }
             else
             {
                 return StatusCode(500, new { data = data, status = "Internal server error..." });
             }
         }
+
+       /* [HttpPost("Check/{field}")]
+        public ActionResult FieldCheck(string field, RegisterVM registerVM) 
+        {
+            var data = accountRepository.CheckAccountUniqueField(field, registerVM.DynamicVar);
+            if (data == 1)
+            {
+                return Ok(new { status = "Available to use" });
+            }
+            else 
+            {
+                return StatusCode(403, new { status = "Already used" });
+            }
+        }*/
     }
 }

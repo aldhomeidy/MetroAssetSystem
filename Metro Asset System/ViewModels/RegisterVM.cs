@@ -24,5 +24,7 @@ namespace Metro_Asset_System.ViewModels
 
         //[Required(ErrorMessage = "Tidak boleh kosong"), MaxLength(10, ErrorMessage = "Maksimal 10 karakter")]
         public string Username { get; set; }
+
+        //public string DynamicVar { get; set; }
     }
 }
