@@ -66,7 +66,6 @@ C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\Metro Asset System\obj\D
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\Metro Asset System\bin\Debug\netcoreapp3.1\BCrypt.Net-Core.dll
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\Metro Asset System\bin\Debug\netcoreapp3.1\Castle.Core.dll
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\Metro Asset System\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Proxies.dll
-C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\Metro Asset System\obj\Debug\netcoreapp3.1\MAS.API.csprojAssemblyReference.cache
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\Metro Asset System\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\Metro Asset System\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\Metro Asset System\bin\Debug\netcoreapp3.1\MAS.API.exe
@@ -116,3 +115,4 @@ C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\Metro Asset Syste
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\Metro Asset System\obj\Debug\netcoreapp3.1\MAS.API.dll
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\Metro Asset System\obj\Debug\netcoreapp3.1\MAS.API.pdb
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\Metro Asset System\obj\Debug\netcoreapp3.1\MAS.API.genruntimeconfig.cache
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\Metro Asset System\obj\Debug\netcoreapp3.1\MAS.API.csprojAssemblyReference.cache

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Metro_Asset_System.Repositories.Data
 {
-    public class DepartmentRepository : GeneralRepository<Department, MyContext, int>
+    public class DepartmentRepository : GeneralRepository<Department, MyContext, string>
     {
         public DepartmentRepository(MyContext myContext) : base(myContext)
         {

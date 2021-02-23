@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpg" href="~/assets/images/logo.jpg" />
+    <link rel="stylesheet" href="~/vendor/bootstrap5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/vendor/datepicker/css/datepicker.css">
+    <link rel="stylesheet" href="~/vendor/datepicker/css/styling.css">
+    <script src="~/vendor/fontawesome5/js/all.js"></script>
+    <link rel="stylesheet" href="~/assets/css/index.css">
+    <title>MetroAssets</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+    <script src="~/vendor/bootstrap5/js/jquery-3.4.1.min.js"></script>
+    <script src="~/vendor/bootstrap5/js/popper.min.js"></script>
+    <script src="~/vendor/bootstrap5/js/bootstrap.min.js"></script>
+    <script src="~/vendor/datepicker/js/datepicker.js"></script>
+    <script src="~/vendor/sweetalert/sweetalert.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
