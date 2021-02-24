@@ -31,6 +31,34 @@ namespace Metro_Asset_System.Repositories.Data
             this.employeeRepository = employeeRepository;            
         }
 
+       /* public int CheckAccountUniqueField(string field, string value) 
+        {
+            if (field == "username")
+            {
+                var data = myContext.Accounts.Include(a => a.Employee).Where(a => a.Username == value).FirstOrDefault();
+                if (data != null)
+                {
+                    return 1;
+                }
+            }
+            else if (field == "phone")
+            {
+                var data = myContext.Accounts.Include(a => a.Employee).Where(a => a.Employee.Phone == value).FirstOrDefault();
+                if (data != null)
+                {
+                    return 1;
+                }
+            }
+            else 
+            {
+                var data = myContext.Accounts.Include(a => a.Employee).Where(a => a.Employee.Email == value).FirstOrDefault();
+                if (data != null)
+                {
+                    return 1;
+                }
+            }
+            return 0;
+        }*/
         public int Register(RegisterVM registerVM)
         {
             var nik = generator.RandomNumber(1000000,9999999);
@@ -115,22 +143,29 @@ namespace Metro_Asset_System.Repositories.Data
 
         public int ForgotPassword(string email)
         {
-            Employee employee = myContext.Employees.Where(e => e.Email == email).FirstOrDefault();            
-            string NIK = employee.NIK;
 
-            Account account = myContext.Accounts.Where(a => a.NIK == NIK).FirstOrDefault();
+            Account account = myContext.Accounts.Include(a=>a.Employee).Where(e => e.Employee.Email == email).FirstOrDefault();
+            if (account == null) {
+                return 2;//email tidak terdaftar
+            }
+            
             string newPassword = Guid.NewGuid().ToString();
 
             account.Password = bCryptConfigure.HashPassword(newPassword);
             myContext.Entry(account).State = EntityState.Modified;
-
             var result = myContext.SaveChanges();
 
-            //set email requirement
-            var data = new[] { email, employee.FirstName, newPassword };
-
-            authContent.ForgetPassword(data);
-            return result;
+            if (result > 0)
+            {
+                //set email requirement
+                var data = new[] { email, account.Employee.FirstName, newPassword };
+                authContent.ForgetPassword(data);
+                return 1;
+            }
+            else 
+            {
+                return 0;
+            }
         }
     }
 }

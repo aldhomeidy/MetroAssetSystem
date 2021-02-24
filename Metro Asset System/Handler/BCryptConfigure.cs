@@ -13,7 +13,7 @@ namespace Metro_Asset_System.Handler
             return BCrypt.Net.BCrypt.HashPassword(password, salt);
         }
 
-        public bool Verify(string password, string passwordInput) 
+        public bool Verify(string passwordInput, string password) 
         {
             return BCrypt.Net.BCrypt.Verify(passwordInput, password);            
         }
