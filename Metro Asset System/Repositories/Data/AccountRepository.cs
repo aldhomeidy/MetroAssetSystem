@@ -103,7 +103,7 @@ namespace Metro_Asset_System.Repositories.Data
         
         public int Login(string username, string password)
         {
-            var data = myContext.Accounts.Where(a => a.Username == username).FirstOrDefault();
+            var data = myContext.Accounts.Where(a => a.Username == username).Select(a => new { NIK = a.NIK, Password = a.Password, Status = a.Status }).FirstOrDefault();
             if (data != null)
             {
                 if (bCryptConfigure.Verify(password, data.Password))

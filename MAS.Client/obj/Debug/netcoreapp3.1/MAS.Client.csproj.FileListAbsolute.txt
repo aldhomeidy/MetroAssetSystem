@@ -81,7 +81,6 @@ C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\De
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.genruntimeconfig.cache
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.csprojAssemblyReference.cache
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Auth\Index.cshtml.g.cs
-C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Template\Main.cshtml.g.cs
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.API.exe
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\BCrypt.Net-Core.dll
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Castle.Core.dll
@@ -108,4 +107,9 @@ C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\net
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.API.dll
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.API.pdb
-C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.MvcApplicationPartsAssemblyInfo.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Template\LandingPage.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Index.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Template\DashboardBase.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Request.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\CreateRequest.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Auth\MyProfile.cshtml.g.cs

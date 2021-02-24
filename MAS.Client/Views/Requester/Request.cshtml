@@ -1,0 +1,304 @@
+﻿@{
+    Layout = "~/Views/Template/DashboardBase.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css">
+}
+@section Menu{
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Employee</div>
+        <a class="nav-link" href="/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Dashboard
+        </a>
+        <a class="nav-link" href="/request">
+            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+            Request
+        </a>
+        <a class="nav-link" href="/invoice">
+            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+            Invoice
+        </a>
+    </div>
+}
+<a href="add/request" class="btn btn-sm btn-light text-dark mb-3">
+    <i class="fas fa-plus-circle"></i> Add
+</a>
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link text-dark active" id="card-data-tab" data-toggle="tab" href="#card-data"
+           role="tab" aria-controls="card-data" aria-selected="true">Current</a>
+        <a class="nav-link text-dark" id="card-data-tab" data-toggle="tab" href="#card-data"
+           role="tab" aria-controls="card-data" aria-selected="true">On Going</a>
+        <a class="nav-link text-dark" id="card-data-tab" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">Rejected</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="card-data" role="tabpanel"
+         aria-labelledby="card-data-tab">
+        <div class="wrap-request d-flex flex-wrap justify-content-between mt-3">
+            <div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width: 18rem;">
+                <div class="card-header d-flex justify-content-between p-2">
+                    <h5 class="text-primary">#RQT211</h5>
+                    <p>01/01/2021</p>
+                </div>
+                <div class="card-body p-2">
+                    <p class="my-0">
+                        Status : <span class="badge badge-sm text-warning">
+                            <i class="far fa-clock"></i> Waiting
+                            Approval Level 1
+                        </span>
+                    </p>
+                    <p class="my-0">Total Item : 1</p>
+                    <p class="my-0">From : 01/01/2021</p>
+                    <p class="my-0">Until : 01/01/2021</p>
+                    <a href="javascript:void(0)" class="badge badge-sm badge-primary float-right"
+                       data-toggle="modal" data-target="#detailsModal">Detail</a>
+                </div>
+            </div>
+            <div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width: 18rem;">
+                <div class="card-header d-flex justify-content-between p-2">
+                    <h5 class="text-primary">#RQT211</h5>
+                    <p>01/01/2021</p>
+                </div>
+                <div class="card-body p-2">
+                    <p class="my-0">
+                        Status : <span class="badge badge-sm text-success">
+                            <i class="far fa-check-circle"></i>
+                            Approved
+                        </span>
+                    </p>
+                    <p class="my-0">Total Item : 1</p>
+                    <p class="my-0">From : 01/01/2021</p>
+                    <p class="my-0">Until : 01/01/2021</p>
+                    <a href="javascript:void(0)" class="badge badge-sm badge-primary float-right"
+                       data-toggle="modal" data-target="#detailsModal">Detail</a>
+                </div>
+            </div>
+            <div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width: 18rem;">
+                <div class="card-header d-flex justify-content-between p-2">
+                    <h5 class="text-primary">#RQT211</h5>
+                    <p>01/01/2021</p>
+                </div>
+                <div class="card-body p-2">
+                    <p class="my-0">
+                        Status : <span class="badge badge-sm text-primary">
+                            <i class="fas fa-location-arrow"></i> Processed
+                        </span>
+                    </p>
+                    <p class="my-0">Total Item : 1</p>
+                    <p class="my-0">From : 01/01/2021</p>
+                    <p class="my-0">Until : 01/01/2021</p>
+                    <a href="javascript:void(0)" class="badge badge-sm badge-primary float-right"
+                       data-toggle="modal" data-target="#detailsModal">Detail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="data-tables" role="tabpanel" aria-labelledby="data-tables-tab">
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Requested On</th>
+                        <th>From</th>
+                        <th>Until</th>
+                        <th>Total Items</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Requested On</th>
+                        <th>From</th>
+                        <th>Until</th>
+                        <th>Total Items</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr>
+                        <td>RQT211</td>
+                        <td>01/01/2021</td>
+                        <td>01/01/2021</td>
+                        <td>01/01/2021</td>
+                        <td>1</td>
+                        <td>
+                            <span class="badge badge-sm text-danger">
+                                <i class="far fa-times-circle"></i>
+                                Rejected By Manager Level 1
+                            </span>
+                        </td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>RQT212</td>
+                        <td>01/01/2021</td>
+                        <td>01/01/2021</td>
+                        <td>01/01/2021</td>
+                        <td>1</td>
+                        <td>
+                            <span class="badge badge-sm text-danger">
+                                <i class="far fa-times-circle"></i>
+                                Rejected By Manager Level 2
+                            </span>
+                        </td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>RQT213</td>
+                        <td>01/01/2021</td>
+                        <td>01/01/2021</td>
+                        <td>01/01/2021</td>
+                        <td>1</td>
+                        <td>
+                            <span class="badge badge-sm text-danger">
+                                <i class="far fa-times-circle"></i>
+                                Rejected By Manager Level 1
+                            </span>
+                        </td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Start Modal -->
+<div class="modal fade" id="detailsModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Request Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="5">
+                    <tr>
+                        <td>Request Id</td>
+                        <td>: #RQT211</td>
+                    </tr>
+                    <tr>
+                        <td>Requested On</td>
+                        <td>: 01/01/2021</td>
+                    </tr>
+                    <tr>
+                        <td>From</td>
+                        <td>: 01/01/2021</td>
+                    </tr>
+                    <tr>
+                        <td>Until</td>
+                        <td>: 01/01/2021</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            : <span class="badge badge-sm text-primary">
+                                <i class="fas fa-location-arrow"></i> Processed
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Note</td>
+                        <td>: -</td>
+                    </tr>
+                </table>
+                <hr>
+                <h5>Items List</h5>
+                <ol>
+                    <li>#213 - Laptop Asus A456UR Navy</li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary"
+                        data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-sm btn-danger">Abort</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
+
+@section ScriptsLink{
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+}
+
+@section ScriptsDocReady{
+    $('#myTable').DataTable();
+    let table = null;
+    table =  $('#mytabless').DataTable({
+                "ajax": {
+                    "url": "https://localhost:44329/api/Assets/available",
+                    "datatype": "json",
+                    "dataSrc": "data"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0,1,4],
+                        "searchable": true,
+                        "orderable" : true,
+                    },
+                    {
+                        "targets": [2,3,5,6],
+                        "searchable": false,
+                        "orderable": false
+                    }
+                ],
+                "columns": [
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return row['Id'];
+                        },
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return row['Name'];
+                        },
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return row['Pinalty']['Low'];
+                        },
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                             return row['Pinalty']['Middle'];
+                        },
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                           return row['Pinalty']['High'];
+                        },
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return row['Pinalty']['Lost'];
+                        },
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<a href="javascript:void(0)" class="far fa-edit table-action text-dark" data-toggle="tooltip" data-placement="top" title="Edit" onclick="Get(\'' + row['id'] + '\')"></a> ' +
+                                '<a href="javascript:void(0)" class="fa fa-trash table-action text-danger" data-toggle="tooltip" data-placement="top" title="Delete" onclick="Delete(\'' + row['id'] + '\')"></a>'
+                        }
+                    }
+                ]
+           });
+}
