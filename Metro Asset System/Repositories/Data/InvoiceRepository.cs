@@ -165,7 +165,7 @@ namespace Metro_Asset_System.Repositories.Data
             {
                 InvoiceId = returnAssetsVM.InvoiceId,
                 Pinalty = sumPinalty,
-                PinaltyDate = DateTime.Now.Date
+                //PinaltyDate = DateTime.Now.Date
             };
             var createPinalty = pinaltyHistoryRepository.Create(pinaltyData);
             //end create pinalty data

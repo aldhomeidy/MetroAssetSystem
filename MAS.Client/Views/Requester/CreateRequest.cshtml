@@ -1,0 +1,197 @@
+﻿@{
+    Layout = "~/Views/Template/DashboardBase.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css">
+}
+@section Menu{
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Employee</div>
+        <a class="nav-link" href="/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Dashboard
+        </a>
+        <a class="nav-link" href="/request">
+            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+            Request
+        </a>
+        <a class="nav-link" href="/invoice">
+            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+            Invoice
+        </a>
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-7 overflow-auto">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-link text-dark" id="card-data-tab" data-toggle="tab"
+                   href="#data-tables" role="tab" aria-controls="card-data"
+                   aria-selected="true">Available</a>
+                <a class="nav-link text-dark" id="card-data-tab" data-toggle="tab"
+                   href="#data-tables" role="tab" aria-controls="card-data"
+                   aria-selected="true">Unavailable</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade" id="data-tables" role="tabpanel"
+                 aria-labelledby="data-tables-tab">
+                <div class="table-responsive mt-4">
+                    <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Id Asset</th>
+                                <th>Name</th>
+                                <th>Low Pinalty</th>
+                                <th>Middle Pinalty</th>
+                                <th>High Pinalty</th>
+                                <th>Lost Pinalty</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Id Asset</th>
+                                <th>Name</th>
+                                <th>Low Pinalty</th>
+                                <th>Middle Pinalty</th>
+                                <th>High Pinalty</th>
+                                <th>Lost Pinalty</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                           @* <tr>
+                                <td>213</td>
+                                <td>Spidol Snowman 1 Pack</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-light">
+                                        <i class="fas fa-plus-circle"></i> Add
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>213</td>
+                                <td>Spidol Snowman 1 Pack</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-light">
+                                        <i class="fas fa-plus-circle"></i> Add
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>213</td>
+                                <td>Spidol Snowman 1 Pack</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>Rp 30000,-</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-light">
+                                        <i class="fas fa-plus-circle"></i> Add
+                                    </a>
+                                </td>
+                            </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-5">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
+                <i class="far fa-list-alt"></i> Request Detail
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="start">From</label>
+                        <input type="email" class="form-control" id="start" name="start">
+                    </div>
+                    <div class="form-group">
+                        <label for="end">Until</label>
+                        <input type="email" class="form-control" id="end" name="end">
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">
+                            I agree with alls terms
+                            and conditions
+                        </label>
+                    </div>
+                    <hr>
+                    <h5 class="text-center mb-3"><b>Items List</b></h5>
+                    <ol class="px-3">
+                        <li>#213 - Laptop Asus A456UR</li>
+                        <li>#215 - Proyektor EPSON</li>
+                    </ol>
+                    <button type="submit" class="btn btn-dark btn-sm w-100" id="submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section ScriptsLink{
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+}
+
+@section ScriptsDocReady{   
+    let table = null;
+    table =  $('#myTable').DataTable({
+                "ajax": {
+                    "url": "https://localhost:44329/api/Asset/GetAsset/available",
+                    "datatype": "json",
+                    "dataSrc": "data"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0,1,4],
+                        "searchable": true,
+                        "orderable" : true,
+                    },
+                    {
+                        "targets": [2,3,5,6],
+                        "searchable": false,
+                        "orderable": false
+                    }
+                ],
+                "columns": [
+                    {
+                        "data": 'id'                       
+                    },
+                    {
+                        "data": 'name'
+                    },
+                    {
+                         "data": 'pinalty.lowPinalty'
+                    },
+                    {
+                         "data": 'pinalty.middlePinalty'
+                    },
+                    {
+                        "data": 'pinalty.highPinalty'
+                    },
+                    {
+                        "data": 'pinalty.lostPinalty'
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<a href="javascript:void(0)" class="btn btn-sm btn-light"><i class="far fa-plus-square"></i></a>'
+                        }
+                    }
+                ]
+           });
+}

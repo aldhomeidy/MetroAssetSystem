@@ -1,5 +1,6 @@
 ﻿using Metro_Asset_System.Models;
 using Metro_Asset_System.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -27,8 +28,7 @@ namespace MAS.Client.Controllers
             {
                 Id = "212",
                 Name = "ADD 1"
-            };
-
+            };          
             ViewData["Department"] = department;
             return View();
         }
@@ -40,7 +40,21 @@ namespace MAS.Client.Controllers
             StringContent content = new StringContent(JsonConvert.SerializeObject(loginVM), Encoding.UTF8, "application/json");
 
             var result = httpClient.PostAsync("https://localhost:44329/api/Account/Login", content).Result;
+           /* if (result.StatusCode == HttpStatusCode.OK)
+            {
+                HttpContext.Session.SetString("Id", "The Doctor");
+            }*/
             return result.StatusCode;
+
+
+            /* var httpClient = new HttpClient();
+             StringContent content = new StringContent(JsonConvert.SerializeObject(loginVM), Encoding.UTF8, "application/json");
+
+             var result = httpClient.PostAsync("https://localhost:44329/api/Account/Login", content).Result;
+             var data = result.Content.ReadAsStringAsync().Result;
+             var dataa = JsonConvert.DeserializeObject(data);
+             return dataa;*/
+
         }
 
         [HttpPost]
