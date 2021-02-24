@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Metro_Asset_System.Repositories.Data
 {
-    public class InvoiceRepository : GeneralRepository<Invoice, MyContext, int>
+    public class InvoiceRepository : GeneralRepository<Invoice, MyContext, string>
     {
         private readonly MyContext myContext;
         private readonly Generator generator = new Generator();

@@ -32,8 +32,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj": {
-                "projectPath": "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj"
+              "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj": {
+                "projectPath": "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj"
               }
             }
           }
@@ -51,6 +51,10 @@
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
             }
           },
           "imports": [
@@ -75,20 +79,20 @@
         }
       }
     },
-    "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj": {
+    "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj",
+        "projectUniqueName": "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj",
         "projectName": "MAS.API",
-        "projectPath": "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj",
-        "packagesPath": "C:\\Users\\Aldho Meidy\\.nuget\\packages\\",
-        "outputPath": "C:\\RepoGithub\\MCC\\FINALPROJECT\\PROJECT\\MetroAssetSystem\\Metro Asset System\\obj\\",
+        "projectPath": "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\MAS.API.csproj",
+        "packagesPath": "C:\\Users\\Edward\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Edward\\source\\05.Git\\Final Project 2\\MetroAssetSystem\\Metro Asset System\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Aldho Meidy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Edward\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -123,6 +127,10 @@
               "target": "Package",
               "version": "[2.0.78, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
               "version": "[3.1.0, )"
@@ -144,6 +152,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[3.1.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.8.0, )"
             }
           },
           "imports": [

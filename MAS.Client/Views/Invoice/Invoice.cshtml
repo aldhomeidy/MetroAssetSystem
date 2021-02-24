@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Template/DashboardBase.cshtml";
+ }
+@section styles{
+    <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css"> 
+}
+@section Menu{ 
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Employee</div>
+        <a class="nav-link" href="/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Dashboard
+        </a>
+        <a class="nav-link" href="/request">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Request
+        </a>
+        <a class="nav-link" href="/invoice">
+            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+            Invoice
+        </a>
+    </div>
+}
