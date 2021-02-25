@@ -26,6 +26,20 @@ namespace Metro_Asset_System.Repositories.Data
             this.assetRepository = assetRepository;
         }
 
+        public IEnumerable<Invoice> GetByStatus(string onGoing) 
+        {
+            if (onGoing == "true")
+            {
+                var data = myContext.Invoices.Where(i => i.Status == StatusInvoice.On_Going);
+                return data;
+            }
+            else
+            {
+                var data = myContext.Invoices.Where(i => i.Status != StatusInvoice.On_Going);
+                return data;
+            }
+        }
+
         public int CreateInvoice(CreateInvoiceVM createInvoiceVM)
         {
             int max = 0;
