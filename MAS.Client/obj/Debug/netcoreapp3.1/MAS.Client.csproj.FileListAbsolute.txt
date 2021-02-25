@@ -142,11 +142,9 @@ C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\De
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\MAS.API.pdb
-C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Auth\Index.cshtml.g.cs
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Invoice\Invoice.cshtml.g.cs
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Template\DashboardBase.cshtml.g.cs
-C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Template\Main.cshtml.g.cs
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
@@ -220,3 +218,9 @@ C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\De
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Invoice\Index.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Auth\MyProfile.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\CreateRequest.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Index.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Request.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Template\LandingPage.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Invoice.cshtml.g.cs

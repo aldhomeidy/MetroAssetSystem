@@ -32,5 +32,11 @@ namespace MAS.Client.Controllers
         {
             return View("~/Views/Auth/MyProfile.cshtml");
         }
+
+        [Route("employee/invoice")]
+        public ActionResult Invoice()
+        {
+            return View("~/Views/Requester/Invoice.cshtml");
+        }
     }
 }
