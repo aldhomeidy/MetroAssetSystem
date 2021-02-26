@@ -21,7 +21,7 @@ namespace Metro_Asset_System.Controllers
         }
 
         [HttpGet("GetInvoice/{status}")]
-        public ActionResult GetAsset(string onGoing)
+        public ActionResult GetInvoice(string onGoing)
         {
             var data = invoiceRepository.GetByStatus(onGoing);
             if (data != null)

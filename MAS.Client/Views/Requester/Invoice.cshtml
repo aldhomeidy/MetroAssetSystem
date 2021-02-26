@@ -30,65 +30,65 @@
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="card-data" role="tabpanel"
          aria-labelledby="card-data-tab">
-        <div class="wrap-invoice d-flex flex-wrap justify-content-between mt-3">
+        <div class="wrap-invoice d-flex flex-wrap justify-content-between mt-3" id="invoice">
 
-            <div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width:18rem;">
+            <!--<div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width:18rem;">
                 <div class="card-header d-flex justify-content-between p-2">
-                    <h5 class="text-primary">#RQT211</h5>
-                    <p>01/01/2021</p>
-                </div>
+                    <h5 class="text-primary">INV02211</h5>-->
+            <!---Invoice ID-->
+            <!--<p>01/01/2021</p>--> <!-- Invoice Date -->
+            <!--</div>
                 <div class="card-body p-2">
                     <p class="my-0">
                         Status : <span class="badge badge-sm text-warning">
-                            <i class="far fa-clock"></i>Waiting Aprroval Level 1
+                            <i class="far fa-clock">
+                            </i>Waiting Aprroval Level 1>
                         </span>
                     </p>
-                    <p class="my-0">Total Item : 1</p>
-                    <p class="my-0">From : 01/01/2021</p>
-                    <p class="my-0">Until : 01/01/2021</p>
                     <a href="javascript:void(0)" class="badge badge-sm badge-primary float-right"
                        data-toggle="modal" data-target="#detailsModal">Detail</a>
                 </div>
-            </div>
+            </div>-->
 
-            <div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width:18rem;">
-                <div class="card-header d-flex justify-content-between p-2">
-                    <h5 class="text-primary">#RQT211</h5>
-                    <p>01/01/2021</p>
-                </div>
-                <div class="card-body p-2">
-                    <p class="my-0">
-                        Status : <span class="badge badge-sm text-warning">
-                            <i class="far fa-clock"></i>Waiting Aprroval Level 1
-                        </span>
-                    </p>
-                    <p class="my-0">Total Item : 1</p>
-                    <p class="my-0">From : 01/01/2021</p>
-                    <p class="my-0">Until : 01/01/2021</p>
-                    <a href="javascript:void(0)" class="badge badge-sm badge-primary float-right"
-                       data-toggle="modal" data-target="#detailsModal">Detail</a>
-                </div>
-            </div>
-
-
-            <div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width:18rem;">
-                <div class="card-header d-flex justify-content-between p-2">
-                    <h5 class="text-primary">#RQT211</h5>
-                    <p>01/01/2021</p>
-                </div>
-                <div class="card-body p-2">
-                    <p class="my-0">
-                        Status : <span class="badge badge-sm text-warning">
-                            <i class="far fa-clock"></i>Waiting Aprroval Level 1
-                        </span>
-                    </p>
-                    <p class="my-0">Total Item : 1</p>
-                    <p class="my-0">From : 01/01/2021</p>
-                    <p class="my-0">Until : 01/01/2021</p>
-                    <a href="javascript:void(0)" class="badge badge-sm badge-primary float-right"
-                       data-toggle="modal" data-target="#detailsModal">Detail</a>
-                </div>
-            </div>
         </div>
     </div>
 </div>
+
+@section scripts{
+
+        $(document).ready(function () {
+            $.getJSON("https://localhost:44329/api/Invoice/GetInvoice/Finished", function (result) {
+                $.each(result.data, function (i, field) {
+                    const date = field.invoiceDate;   
+                    var status = "";  
+                    if (field.status == "0"){
+                         status = "On Going";
+                    } else if (field.status == 1){
+                         status = "Finished Fine";
+                    } else {
+                         status = "Finished With Problem";
+                    }
+                    $("#invoice").append('<div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width:18rem;">'
+                        + '<div class= "card-header d-flex justify-content-between p-2">'
+                        + '<h5 class="text-primary">' + field.id + '</h5>'
+                        + '</div>'
+
+                        + '<div class="card-body p-2">'
+                        + '<p class="my-0">Date   :' + field.invoiceDate + '</p>'
+                        + '<p class="my-0">Status :' + status + '</p>'
+                        + '</div>'
+                      
+                        + '</div>');
+                });
+            });
+        });
+
+}
+
+@section ScriptsLink{
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+}
+
+
+
