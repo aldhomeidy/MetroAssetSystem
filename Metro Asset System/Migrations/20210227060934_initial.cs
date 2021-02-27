@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Metro_Asset_System.Migrations
 {
-    public partial class addModelInitial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -241,8 +241,7 @@ namespace Metro_Asset_System.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InvoiceId = table.Column<string>(maxLength: 8, nullable: false),
-                    Pinalty = table.Column<long>(nullable: false),
-                    PinaltyDate = table.Column<DateTime>(nullable: false)
+                    Pinalty = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {

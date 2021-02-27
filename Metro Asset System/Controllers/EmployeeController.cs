@@ -90,5 +90,19 @@ namespace Metro_Asset_System.Controllers
                 return StatusCode(500, new { status = "Internal server error..." });
             }
         }
+
+        [HttpGet("CurrentRequest")]
+        public ActionResult GetCurrentRequest(string employeeId) 
+        {
+            var data = requestRepository.GetCurrentRequest(employeeId);
+            if (data > 0)
+            {
+                return Ok(new { data = data, status = "Ok" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal server error..." });
+            }
+        }
     }
 }

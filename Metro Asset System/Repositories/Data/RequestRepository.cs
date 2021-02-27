@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 using System.Collections;
 using Metro_Asset_System.Content;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using Dapper;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace Metro_Asset_System.Repositories.Data
 {
@@ -19,11 +24,14 @@ namespace Metro_Asset_System.Repositories.Data
         private readonly Generator generator = new Generator();
         private readonly ItemRequestRepository itemRequestRepository;
         private readonly AssetRepository assetRepository;
-        public RequestRepository(MyContext myContext, ItemRequestRepository itemRequestRepository, AssetRepository assetRepository) : base(myContext)
+        public IConfiguration Configuration { get; }
+
+        public RequestRepository(MyContext myContext, ItemRequestRepository itemRequestRepository, AssetRepository assetRepository, IConfiguration configuration) : base(myContext)
         {
             this.myContext = myContext;
             this.itemRequestRepository = itemRequestRepository;
             this.assetRepository = assetRepository;
+            this.Configuration = configuration;
         }
         public int Create(RequestVM requestVM) {
 
@@ -132,5 +140,20 @@ namespace Metro_Asset_System.Repositories.Data
                 return 0;
             }
         }        
+
+        public int GetCurrentRequest(string employeeId)
+        {
+            int result = 0;
+
+            string connectStr = Configuration.GetConnectionString("MyConnection");
+
+            using (IDbConnection db = new SqlConnection(connectStr)) 
+            {
+                string readSp = "SP_GetCurrentRequest";
+                var parameter = new { EmployeeId = employeeId};
+                result = (int)db.Query(readSp, parameter, commandType: CommandType.StoredProcedure).Count();
+            }
+            return result;
+        }
     }
 }

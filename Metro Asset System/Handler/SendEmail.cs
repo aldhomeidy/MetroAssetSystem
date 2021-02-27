@@ -29,7 +29,7 @@ namespace Metro_Asset_System.Handler
                 EnableSsl = true
             };
 
-            NetworkCredential NetworkCred = new NetworkCredential("aldhomeidy.bussiness@gmail.com", "sss");
+            NetworkCredential NetworkCred = new NetworkCredential("1997HelloWorld1997@gmail.com", "wwwsawwwsdwwwszwwwsx");
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = NetworkCred;
             smtp.Port = 587;

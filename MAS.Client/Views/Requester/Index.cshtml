@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Metro_Asset_System.Models.Request>
+
+@{
     Layout = "~/Views/Template/DashboardBase.cshtml";
 }
 @section Menu{
@@ -29,7 +31,9 @@
                     </div>
                     <div class="col mr-5">
                         <div class="text-xs font-weight-bold text-primary">Current Requests</div>
-                        <div class="h1 mb-0 font-weight-bold text-gray-800">3</div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-800" id="current-request">
+                           
+                        </div>
                     </div>
                 </div>
             </div>
@@ -90,12 +94,30 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
+                <h6>Rules</h6>
                 <ol>
-                    <li>First, the requester need to create request by filling the create request form and submit the form.</li>
-                    <li>The requester need to wait as the request need to be approved by the manager and procurement manager.</li>
-                    <li>After accecpted by the managers, the requester can meet the procurement employee to create an invoice.</li>
+                    <li>Create your request.</li>
+                    <li>Waiting until your manager and procurement manager approve your request.</li>
+                    <li>Go to procurement employee and gives your request ID.</li>
+                    <li>Please return the asset according to the return date based from your request.</li>
+                </ol>
+                <h6>Terms and Condition</h6>
+                <ol>
+                    <li>If there are some damages with the asset, you must to pay the pinalty.</li>
+                    <li>You cannot lend the asset to another.</li>
+                    <li>You must return the asset according to the return date based from your request.</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
+
+@section scripts{
+
+    $(document).ready(function () {
+        $.getJSON("https://localhost:44329/api/Employee/CurrentRequest", function (result) {
+            debugger;
+            $("#current-request").append(result.data);
+        });
+    });
+}
