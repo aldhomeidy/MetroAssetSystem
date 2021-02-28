@@ -32,5 +32,16 @@ namespace Metro_Asset_System.Handler
             int next = num + 1;
             return "INV" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("yy") + next;
         }
+        public string GenerateAssetId(int num)
+        {
+            int next = num + 1;
+            return DateTime.Now.ToString("yy") + next;
+        }
+
+        public string GenerateDepartmentId(int num)
+        {
+            int next = num + 1;
+            return DateTime.Now.ToString("yy") + next;
+        }
     }
 }

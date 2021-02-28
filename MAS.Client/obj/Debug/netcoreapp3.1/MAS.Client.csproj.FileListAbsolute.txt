@@ -224,3 +224,10 @@ C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\De
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Request.cshtml.g.cs
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Template\LandingPage.cshtml.g.cs
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Invoice.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Index.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Assets.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Request.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Invoice.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Category.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Department.cshtml.g.cs

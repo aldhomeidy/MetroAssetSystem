@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="/vendor/bootstrap4.6/css/bootstrap.min.css">
     <link href="/vendor/sb-admin/css/styles.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+
     @RenderSection("Styles", required: false)
 
 </head>
@@ -70,9 +73,15 @@
     <script src="/vendor/bootstrap4.6/js/bootstrap.min.js"></script>
     <script src="/vendor/sb-admin/js/scripts.js"></script>
     <script src="/vendor/fontawesome5/js/all.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
     @RenderSection("ScriptsLink", required: false)
 
-<script>
+    <script>
         $(document).ready(function () {
             var interval = setInterval(function () {
                 var momentNow = moment();
@@ -83,7 +92,7 @@
             @RenderSection("ScriptsDocReady", required: false)
         });
     @RenderSection("Scripts", required: false)
-</script>
+    </script>
 </body>
 
 </html>

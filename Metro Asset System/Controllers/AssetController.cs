@@ -1,6 +1,7 @@
 ﻿using Metro_Asset_System.Base.Controller;
 using Metro_Asset_System.Models;
 using Metro_Asset_System.Repositories.Data;
+using Metro_Asset_System.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,34 @@ namespace Metro_Asset_System.Controllers
             else
             {
                 return StatusCode(500, new {data=data, status = "Internal server error" });
+            }
+        }
+
+        [HttpPost("SubmitAsset")]
+        public ActionResult SubmitAsset(AssetVM assetVM) 
+        {
+            var data = assetRepository.Create(assetVM);
+            if (data == 1) 
+            {
+                return Ok(new { status = "Submit Success" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal Server Error" });
+            }
+        }
+
+        [HttpPut("UpdateAsset")]
+        public ActionResult UpdateAsset(AssetVM assetVM)
+        {
+            var data = assetRepository.Update(assetVM);
+            if (data == 1)
+            {
+                return Ok(new { status = "Update Success" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal Server Error" });
             }
         }
     }

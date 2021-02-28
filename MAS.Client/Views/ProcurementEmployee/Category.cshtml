@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Metro_Asset_System.Models.Request>
+
+@{
+    Layout = "~/Views/Template/DashboardBase.cshtml";
+}
+@section Menu{
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Procurement Employee</div>
+        <a class="nav-link" href="/procurementemployee">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Dashboard
+        </a>
+        <a class="nav-link" href="/procurementemployee/assets">
+            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+            Assets
+        </a>
+        <a class="nav-link" href="/procurementemployee/department">
+            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+            Department
+        </a>
+        <a class="nav-link" href="/procurementemployee/request">
+            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+            Request
+        </a>
+        <a class="nav-link" href="/procurementemployee/invoice">
+            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+            Invoice
+        </a>
+    </div>
+}
+
+<div class="row">
+    @*<div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-1">
+                        <i class="fas fa-tasks fa-3x text-primary"></i>
+                    </div>
+                    <div class="col mr-5">
+                        <div class="text-xs font-weight-bold text-primary">Current Requests</div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-800" id="current-request">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-1">
+                        <i class="fas fa-spinner fa-3x text-warning"></i>
+                    </div>
+                    <div class="col mr-5">
+                        <div class="text-xs font-weight-bold text-warning">On Going Requests</div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-800">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-1">
+                        <i class="fas fa-times fa-3x text-danger"></i>
+                    </div>
+                    <div class="col mr-5">
+                        <div class="text-xs font-weight-bold text-danger">Rejected Requests</div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-800">1</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-1">
+                        <i class="fas fa-check fa-3x text-success"></i>
+                    </div>
+                    <div class="col mr-1">
+                        <div class="text-xs font-weight-bold text-success">Finished Requests</div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-800">16</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+<div class="row">
+    <div class="col-xl-9 col-lg-7">
+        <div class="card shadow mb-4">
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    
+    
+}
