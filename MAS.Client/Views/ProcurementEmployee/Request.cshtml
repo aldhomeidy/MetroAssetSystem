@@ -1,0 +1,275 @@
+﻿@{
+    Layout = "~/Views/Template/DashboardBase.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css">
+}
+
+@section Menu{
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Manager</div>
+        <a class="nav-link" href="https://localhost:44342/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Dashboard
+        </a>
+        <a class="nav-link" href="https://localhost:44342/master/asset">
+            <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
+            Asset
+        </a>
+        <a class="nav-link" href="https://localhost:44342/master/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-users-cog"></i></div>
+            Requester
+        </a>
+        <a class="nav-link" href="https://localhost:44342/master/request">
+            <div class="sb-nav-link-icon"><i class="far fa-newspaper"></i></div>
+            Request
+        </a>
+        <a class="nav-link" href="https://localhost:44342/master/invoice">
+            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+            Invoice
+        </a>
+    </div>
+}
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link text-dark active" id="incoming-btn" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">Incoming</a>
+        <a class="nav-link text-dark" id="processed-btn" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">Processed</a>        
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">    
+    <div class="tab-pane fade show active" id="data-tables" role="tabpanel" aria-labelledby="data-tables-tab">
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Request Id</th>
+                        <th>Full Name</th>
+                        <th>Total Items</th>                       
+                        <th>Request Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>Request Id</th>
+                        <th>Full Name</th>
+                        <th>Total Items</th>
+                        <th>Request Date</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Start Modal -->
+<div class="modal fade" id="detailsModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Request Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="5">
+                    <tr>
+                        <td>Request Id</td>
+                        <td>:</td>
+                        <td id="setId"></td>
+                    </tr>
+                    <tr>
+                        <td>Requested On</td>
+                        <td>:</td>
+                        <td id="setRequestDate"></td>
+                    </tr>
+                    <tr>
+                        <td>From</td>
+                        <td>:</td>
+                        <td id="setFromDate"></td>
+                    </tr>
+                    <tr>
+                        <td>Until</td>
+                        <td>:</td>
+                        <td id="setUntilDate"></td>
+                    </tr>                                     
+                </table>
+                <hr>
+                <h5>Items List</h5>
+                <ol id="itemList">                    
+                </ol>
+                <form id="invoiceForm">                    
+                    <input hidden id="requestId" name="requestId" />                   
+                </form>
+            </div>
+            <div class="modal-footer">                
+                <button type="button" class="btn btn-sm btn-dark" id="submit-btn">Processed</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
+
+@section ScriptsLink{
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+}
+
+@section ScriptsDocReady{     
+    table = $('#myTable').DataTable({
+            "ajax": {
+                "url": "https://localhost:44342/Request/data/incoming",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columnDefs": [
+                {
+                    "targets": [0, 1,2,4],
+                    "searchable": true,
+                    "orderable": true,
+                },
+                {
+                    "targets": [3,5],
+                    "searchable": false,
+                    "orderable": false
+                }
+            ],
+            "columns": [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    "data": 'id'
+                },
+                {             
+                    "data":'null',
+                    "render": function (data, type, row, meta) {                        
+                       return row.employee.firstName+" "+row.employee.lastName;
+                    }
+                },
+                {
+                    "data": 'itemRequest.length'                    
+                },
+                {
+                    "data": 'requestDate',
+                    "render": function (data, type, row, meta) {                        
+                       return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }
+                },                                         
+                {
+                    "data": 'id',
+                    "render": function (data, type, row, meta) {
+                        if(row.requestStatus==2 && row.status==1){
+                            return '<a href="javascript:void(0)" class="btn btn-sm btn-light" onclick="Details(\'' + data + '\')"><i class="far fa-check-square"></i></a>';              
+                        }else{
+                            return '-';
+                        }
+                    }
+                }
+            ]
+        });    
+
+    $("#incoming-btn").click(function(){
+        table.ajax.url( 'https://localhost:44342/Request/data/incoming').load();
+    }); 
+    $("#processed-btn").click(function(){
+        table.ajax.url( 'https://localhost:44342/Request/data/processed').load();
+    });
+    
+    $("#closeModal").click(function(){
+      ClearForm();
+    }); 
+
+    $("#submit-btn").click(function(e){
+        e.preventDefault();
+        Submit();
+    });
+} 
+
+@section Scripts{
+    function Details(id){
+        $.ajax({
+                type:'GET',
+                url: 'https://localhost:44329/api/Request/'+id,
+                data: 'data'
+            }).done((result) => {                
+                if (result.status == "Ok") {
+                    let hasil="";
+                    $('#detailsModal').modal('show');
+                    $('#setId').html('#'+result.data.id);
+                    $('#setRequestDate').html(moment(result.data.requestDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $('#setFromDate').html(moment(result.data.loanDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $('#setUntilDate').html(moment(result.data.returnDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $.each( result.data.itemRequest, function( key, field ) {
+                        hasil+='<li>#'+field.asset.id+' - '+field.asset.name+'</li>';                                        
+                    });
+                    $('#itemList').html(hasil);
+                    $('#requestId').val(result.data.id);                    
+                } 
+                else {
+                      swal("Failed to get data", {
+                        icon: "warning",
+                    });               
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+    }
+
+    function ClearForm(){
+         $('#setId').html('');
+         $('#setRequestDate').html('');
+         $('#setFromDate').html('');
+         $('#setUntilDate').html('');
+         $('#itemList').html('');        
+         $('#requestId').val('');        
+    }
+
+    function Submit(){
+        swal({
+            title: "Processing...",
+            text: "Please wait",
+            button: false,
+            closeOnClickOutside: false,
+        });        
+        var Invoice = new Object();        
+        Invoice.RequestId = $('#requestId').val();
+            $.ajax({
+                type:'POST',
+                url: 'https://localhost:44342/employee/create/invoice',
+                data: Invoice
+            }).done((result) => {
+                console.log(result);
+                if (result == 200) {
+                    swal({
+                        title: "Success!",
+                        text: "Success creating invoice for this request",
+                        icon: "success"                        
+                    });
+                    ClearForm();
+                    $('#detailsModal').modal('hide');
+                    table.ajax.url( 'https://localhost:44342/Request/data/incoming').load();                    
+                } 
+                else {
+                      swal("Failed to create request", {
+                        icon: "warning",
+                    });               
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+    }    
+} 

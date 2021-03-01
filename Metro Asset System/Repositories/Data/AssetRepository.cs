@@ -15,9 +15,9 @@ namespace Metro_Asset_System.Repositories.Data
             this.myContext = myContext;
         }
 
-        public IEnumerable<Asset> GetByConditon(string available) 
+        public IEnumerable<Asset> GetByConditon(bool available) 
         {           
-            if (available=="true") 
+            if (available) 
             { 
                 var data = myContext.Assets.Where(a => a.LoanStatus == StatusLoan.Available);
                 return data;

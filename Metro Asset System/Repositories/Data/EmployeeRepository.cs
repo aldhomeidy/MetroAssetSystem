@@ -20,5 +20,10 @@ namespace Metro_Asset_System.Repositories.Data
             myContext.Set<Employee>();
             employees = myContext.Set<Employee>();
         }
+
+        public Employee GetByUsername(string username) {
+            var data = myContext.Employees.Include(e => e.Account).Where(a => a.Account.Username == username).FirstOrDefault();
+            return data;
+        }
     }
 }

@@ -61,6 +61,7 @@ namespace Metro_Asset_System.Repositories.Data
         }*/
         public int Register(RegisterVM registerVM)
         {
+            var department = myContext.Departments.FirstOrDefault();
             var nik = generator.RandomNumber(1000000,9999999);
             var employee = new Employee()
             {
@@ -70,7 +71,7 @@ namespace Metro_Asset_System.Repositories.Data
                 Email = registerVM.Email,
                 Phone = registerVM.Phone,
                 Birthday = registerVM.Birthday,
-                DepartmentId = registerVM.DepartmentId,
+                DepartmentId = department.Id,
                 Role = EmployeeRole.Employee
             };
 

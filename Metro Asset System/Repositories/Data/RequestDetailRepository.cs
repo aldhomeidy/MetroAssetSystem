@@ -34,12 +34,22 @@ namespace Metro_Asset_System.Repositories.Data
         {
             Request request = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();            
             RequestDetail requestDetail = myContext.RequestDetails.Where(rd=>rd.RequestId==manageRequestVM.RequestId).OrderByDescending(rd => rd.Id).FirstOrDefault();
+            Employee employee = myContext.Employees.Where(e => e.NIK == manageRequestVM.EmployeeId).FirstOrDefault();
+
+            var role = "";
+            if (employee.Role == EmployeeRole.Employee_Manager)
+            {
+                role = "1";
+            }
+            else {
+                role = "2";
+            }
 
             var resultCreateDetail = this.CreateRequestDetail(manageRequestVM); //add request detail data
             var resultUpdateStatus = requestRepository.UpdateApprovalStatus(manageRequestVM); //update request data
 
             //set email requirement
-            var identity = new[] { request.Employee.FirstName, request.Employee.Email, manageRequestVM.RequestDetailStatus, manageRequestVM.Note };
+            var identity = new[] { request.Employee.FirstName, request.Employee.Email, manageRequestVM.RequestDetailStatus, manageRequestVM.Note, role};
 
             if (resultCreateDetail > 0 && resultUpdateStatus > 0) 
             {

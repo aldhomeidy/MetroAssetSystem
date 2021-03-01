@@ -113,3 +113,13 @@ C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\net
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Request.cshtml.g.cs
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\CreateRequest.cshtml.g.cs
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Auth\MyProfile.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Auth\EmailConfirmed.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\MAS.Client.MvcApplicationPartsAssemblyInfo.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\RequesterManager\Approval.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementManager\Approval.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Invoice.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Request.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\MyProfile.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementManager\MyProfile.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\RequesterManager\MyProfile.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\MyProfile.cshtml.g.cs

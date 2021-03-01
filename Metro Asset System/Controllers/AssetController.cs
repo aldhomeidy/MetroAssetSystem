@@ -17,9 +17,14 @@ namespace Metro_Asset_System.Controllers
             this.assetRepository = assetRepository;
         }
 
-        [HttpGet("GetAsset/{status}")]
-        public ActionResult GetAsset(string available)
+        [HttpGet("GetAsset/{condition}")]
+        public ActionResult GetAsset(string condition)
         {
+            var available=false;
+            if (condition == "available") {
+                available = true;
+            }
+                
             var data = assetRepository.GetByConditon(available);
             if (data!=null)
             {

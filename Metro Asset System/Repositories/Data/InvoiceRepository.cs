@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Metro_Asset_System.Repositories.Data
 {
-    public class InvoiceRepository : GeneralRepository<Invoice, MyContext, int>
+    public class InvoiceRepository : GeneralRepository<Invoice, MyContext, string>
     {
         private readonly MyContext myContext;
         private readonly Generator generator = new Generator();
@@ -33,7 +33,7 @@ namespace Metro_Asset_System.Repositories.Data
             var data = myContext.Invoices.OrderByDescending(i => i.Id).Where(i => i.Id.Contains(now)).Select(i => new { Id = i.Id }).FirstOrDefault();
             if (data != null)
             {
-                max = Convert.ToInt32(data.Id.Substring(7), data.Id.Length - 7);
+                max = Convert.ToInt32(data.Id.Substring(7));
             }
 
             string invoiceId = generator.GenerateInvoiceId(max);
@@ -165,7 +165,7 @@ namespace Metro_Asset_System.Repositories.Data
             {
                 InvoiceId = returnAssetsVM.InvoiceId,
                 Pinalty = sumPinalty,
-                //PinaltyDate = DateTime.Now.Date
+                PinaltyDate = DateTime.Now.Date
             };
             var createPinalty = pinaltyHistoryRepository.Create(pinaltyData);
             //end create pinalty data
@@ -178,6 +178,20 @@ namespace Metro_Asset_System.Repositories.Data
             }
             else { 
                 return 0;
+            }
+        }
+
+
+        public IEnumerable<Invoice> GetByCondition(string condition) {
+
+            if (condition == "ongoing") { 
+                var data = myContext.Invoices.Where(i => i.Status == StatusInvoice.On_Going);
+                return data;
+            }
+            else 
+            {   
+                var data = myContext.Invoices.Where(i => i.Status != StatusInvoice.On_Going);
+                return data;
             }
         }
     }

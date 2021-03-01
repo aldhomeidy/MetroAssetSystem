@@ -1,4 +1,5 @@
-﻿using Metro_Asset_System.Models;
+﻿using MAS.Client.ViewModels;
+using Metro_Asset_System.Models;
 using Metro_Asset_System.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,43 +18,30 @@ namespace MAS.Client.Controllers
     {
         public IActionResult Index()
         {
-            //var httpClient = new HttpClient();
-            //var response = httpClient.GetAsync("https://localhost:44329/api/Department").Result;            
-            //var apiResponse = response.Content.ReadAsStringAsync();
-            //string json = @"[ { 'Id': 1, 'Name': 'Customer'}, { 'Id': 2, 'Name':'Admin'} ]";
-            //roleList = JsonConvert.DeserializeObject<List<RoleVM>>(apiResponse);
-            //apiResponse.Result;
-            //var departmentList = JsonConvert.DeserializeObject<List<Department>>(apiResponse.Result);
-            Department department = new Department
+            if (HttpContext.Session.GetString("Id")!=null)
             {
-                Id = "212",
-                Name = "ADD 1"
-            };          
-            ViewData["Department"] = department;
+                return RedirectToAction("Index", "Employee");
+            }
             return View();
-        }
+        }        
 
         [HttpPost]
         public HttpStatusCode Login(LoginVM loginVM) 
-        {
+        {                  
             var httpClient = new HttpClient();
             StringContent content = new StringContent(JsonConvert.SerializeObject(loginVM), Encoding.UTF8, "application/json");
 
             var result = httpClient.PostAsync("https://localhost:44329/api/Account/Login", content).Result;
-           /* if (result.StatusCode == HttpStatusCode.OK)
+            var data = result.Content.ReadAsStringAsync().Result;
+            var dataJson = JsonConvert.DeserializeObject<LoginResult>(data);
+            if (result.StatusCode == HttpStatusCode.OK)
             {
-                HttpContext.Session.SetString("Id", "The Doctor");
-            }*/
+                HttpContext.Session.SetString("Id", dataJson.NIk);
+                HttpContext.Session.SetString("Name", dataJson.FirstName);
+                HttpContext.Session.SetInt32("Role", dataJson.Role);
+            }
+
             return result.StatusCode;
-
-
-            /* var httpClient = new HttpClient();
-             StringContent content = new StringContent(JsonConvert.SerializeObject(loginVM), Encoding.UTF8, "application/json");
-
-             var result = httpClient.PostAsync("https://localhost:44329/api/Account/Login", content).Result;
-             var data = result.Content.ReadAsStringAsync().Result;
-             var dataa = JsonConvert.DeserializeObject(data);
-             return dataa;*/
 
         }
 
@@ -77,6 +65,21 @@ namespace MAS.Client.Controllers
             return result.StatusCode;
         }
 
+       
+        public ActionResult Verify(string id) {
+            var httpClient = new HttpClient();
+            var result = httpClient.GetAsync("https://localhost:44329/api/account/verify/"+id).Result;
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.Result = 200;
+            }
+            else {
+                ViewBag.Result = 404;
+            }            
+            return View("~/Views/Auth/EmailConfirmed.cshtml");           
+        }
+
        /* [HttpPost("/{field}")]
         public HttpStatusCode Check(string field,RegisterVM registerVM)
         {
@@ -86,10 +89,42 @@ namespace MAS.Client.Controllers
             var result = httpClient.PostAsync("https://localhost:44329/api/Account/Check/"+ field, content).Result;
             return result.StatusCode;
         }*/
+        
+        public ActionResult Logout() {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
 
-        public string Dashboard() 
+        public ActionResult Profile()
         {
-            return "ok";
+            if (HttpContext.Session.GetInt32("Role") == 0)
+            {
+                return View("~/Views/Requester/MyProfile.cshtml");
+            }
+            else if(HttpContext.Session.GetInt32("Role") == 1)
+            {
+                return View("~/Views/RequesterManager/MyProfile.cshtml");
+            }
+            else if (HttpContext.Session.GetInt32("Role") == 2)
+            {
+                return View("~/Views/ProcurementManager/MyProfile.cshtml");
+            }
+            else if (HttpContext.Session.GetInt32("Role") == 3)
+            {
+                return View("~/Views/ProcurementEmployee/MyProfile.cshtml");
+            }
+            else
+            {
+                /*var httpClient = new HttpClient();
+                StringContent content = new StringContent(JsonConvert.SerializeObject(loginVM), Encoding.UTF8, "application/json");
+
+                var result = httpClient.PostAsync("https://localhost:44329/api/Account/Login", content).Result;
+                var data = result.Content.ReadAsStringAsync().Result;
+                var dataJson = JsonConvert.DeserializeObject<LoginResult>(data);*/
+
+                return View("~/Views/ProcurementManager/MyProfile.cshtml");
+                //return RedirectToAction("Index", "Employee");
+            }
         }
     }    
 }

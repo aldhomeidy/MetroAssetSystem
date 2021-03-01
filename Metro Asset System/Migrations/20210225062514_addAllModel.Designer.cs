@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metro_Asset_System.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20210219032755_addModel")]
-    partial class addModel
+    [Migration("20210225062514_addAllModel")]
+    partial class addAllModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -264,6 +264,9 @@ namespace Metro_Asset_System.Migrations
 
                     b.Property<long>("Pinalty")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime>("PinaltyDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

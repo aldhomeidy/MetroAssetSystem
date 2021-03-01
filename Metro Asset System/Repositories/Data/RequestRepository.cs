@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Metro_Asset_System.Repositories.Data
 {
-    public class RequestRepository : GeneralRepository<Request, MyContext, int>
+    public class RequestRepository : GeneralRepository<Request, MyContext, string>
     {
         private readonly MyContext myContext;       
         private readonly TransactionContent transactionContent = new TransactionContent();
@@ -33,7 +33,7 @@ namespace Metro_Asset_System.Repositories.Data
             var data = myContext.Requests.OrderByDescending(r => r.Id).Where(r => r.Id.Contains(now)).Select(s => new { Id = s.Id }).FirstOrDefault();
             if (data != null)
             {
-                max = Convert.ToInt32(data.Id.Substring(5, data.Id.Length - 5));//get max increment id in database          
+                max = Convert.ToInt32(data.Id.Substring(5));//get max increment id in database          
             }
             string requestId = generator.GenerateRequestId(max);//generate
             //end generate request id
@@ -78,7 +78,7 @@ namespace Metro_Asset_System.Repositories.Data
             var requestData = myContext.Requests.Where(r => r.Id == requestId).FirstOrDefault();//get request data   
             var employeeData = myContext.Employees.Where(r => r.NIK == requestData.RequesterId).FirstOrDefault();//get employee data   
 
-            string[,] listItem = new string[2, requestData.ItemRequest.Count()];
+            string[,] listItem = new string[requestData.ItemRequest.Count(),2];
             int listItemIndex= 0;
             foreach (var row in requestData.ItemRequest)
             {
@@ -131,6 +131,80 @@ namespace Metro_Asset_System.Repositories.Data
             {
                 return 0;
             }
-        }        
+        }
+
+        public IEnumerable<Request> GetByConditon(string condition, string requesterid)//for employee and procurement employee
+        {
+            if (requesterid == null)// untuk procurement employee, get tanpa requester 
+            {
+                if (condition == "incoming")
+                {
+                    var data = myContext.Requests.Where(r => r.Status == Status.Active && r.RequestStatus == RequestStatus.Approved);
+                    return data;
+                }
+                else //processed
+                {
+                    var data = myContext.Requests.Where(r => r.Status == Status.Active && r.RequestStatus == RequestStatus.Processed);
+                    return data;
+                }
+
+            }
+            else {
+                if (condition == "current") //current
+                {
+                    var data = myContext.Requests.Where(r => r.Employee.NIK == requesterid && r.Status == Status.Active && r.RequestStatus != RequestStatus.Processed);
+                    return data;
+                }
+                else if (condition == "ongoing") //ongoing
+                {
+                    var data = myContext.Requests.Where(r => r.Employee.NIK == requesterid && r.Status == Status.Active && r.RequestStatus == RequestStatus.Processed);
+                    return data;
+                }
+                else //rejected
+                {
+                    var data = myContext.Requests.Where(r => r.Employee.NIK == requesterid && r.Status == Status.Inactive);
+                    return data;
+                }
+            }           
+        }
+
+        public IEnumerable<Request> GetByConditionManager(string level,string condition, string managerid)//for manager
+        {
+            if (level == "1" && condition=="incoming")
+            {
+                var data = myContext.Requests.Where(r => r.Employee.ManagerId == managerid && r.Status == Status.Active && r.RequestStatus == RequestStatus.Approve_Level_1);
+                return data;
+            }
+            else if (level=="1" && condition == "approved")
+            {
+                var data = myContext.Requests.Where(r => r.Employee.ManagerId == managerid && r.Status == Status.Active && r.RequestStatus == RequestStatus.Approve_Level_2);
+                return data;
+            }
+            else if (level == "1" && condition == "rejected")
+            {
+                var data = myContext.Requests.Where(r => r.Employee.ManagerId == managerid && r.Status == Status.Inactive && r.RequestStatus == RequestStatus.Approve_Level_1);
+                return data;
+            }
+            else if (level == "2" && condition == "incoming")
+            {
+                var data = myContext.Requests.Where(r =>  r.Status == Status.Active && r.RequestStatus == RequestStatus.Approve_Level_2);
+                return data;
+            }
+            else if (level == "2" && condition == "approved")
+            {
+                var data = myContext.Requests.Where(r =>  r.Status == Status.Active && r.RequestStatus == RequestStatus.Approved);
+                return data;
+            }
+            else if (level == "2" && condition == "rejected")
+            {
+                var data = myContext.Requests.Where(r =>  r.Status == Status.Inactive && r.RequestStatus == RequestStatus.Approve_Level_2);
+                return data;
+            }
+            else
+            {
+                var data = myContext.Requests.Where(r => r.Employee.NIK == managerid && r.Status == Status.Inactive);
+                return data;
+            }
+        }
     }
 }

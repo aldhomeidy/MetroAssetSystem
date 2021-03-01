@@ -1,5 +1,4 @@
-﻿@using Metro_Asset_System.Models;
-@{
+﻿@{
     Layout = "~/Views/Template/LandingPage.cshtml";
 }
 <div class="d-flex content">
@@ -46,7 +45,7 @@
                             Forget
                             Password
                         </a>
-                        <button type="submit" class="btn btn-primary w-100 mt-3" id="loginBtn">Login</button>
+                        <button type="submit" class="btn btn-primary w-100 mt-3" id="loginBtn">Login <img id="loaderLogin" src="~/assets/images/loader.gif" width="4%" /></button>
                     </form>
                 </div>
                 <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
@@ -55,24 +54,24 @@
                             <div class="form-group col">
                                 <label for="firstName">First Name</label>
                                 <input type="text" class="form-control" placeholder="First name" id="firstName"
-                                       name="firstName">
+                                       name="firstName" autocomplete="off">
                             </div>
                             <div class="form-group col">
                                 <label for="lastName">Last Name</label>
                                 <input type="text" class="form-control" placeholder="Last name" id="lastName"
-                                       name="lastName">
+                                       name="lastName" autocomplete="off">
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="form-group col">
                                 <label for="username">Username</label>
                                 <input type="text" class="form-control" placeholder="Username" id="username_"
-                                       name="username">
+                                       name="username" autocomplete="off">
                             </div>
                             <div class="form-group col">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" placeholder="Email" id="email"
-                                       name="email">
+                                       name="email" autocomplete="off">
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -83,55 +82,35 @@
                             </div>
                             <div class="form-group col">
                                 <label for="phone">Phone Number</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">08</span>
-                                    <input type="text" class="form-control" placeholder="Phone Number"
-                                           id="phone" name="phone">
-                                </div>
+                                <input type="text" class="form-control" placeholder="Phone Number"
+                                       id="phone" name="phone" autocomplete="off">                            
                             </div>
-                        </div>
-                        <fieldset class="form-group row err-custom">
-                            <legend class="col-form-label col-sm-2 float-sm-left pt-0">Gender</legend>
-                            <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gender" id="gender"
-                                           value="0">
-                                    <label class="form-check-label" for="gender">
-                                        Male
-                                    </label>
+                        </div>                     
+                        <div class="form-row err-custom">
+                                <label class="col-form-label col-sm-2 float-sm-left pt-0">Gender</label>                           
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="0" checked>
+                                    <label class="form-check-label" for="male">Male</label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gender" id="gender"
-                                           value="1">
-                                    <label class="form-check-label" for="gender">
-                                        Female
-                                    </label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="1">
+                                    <label class="form-check-label" for="female">Female</label>
                                 </div>
-                            </div>
-                        </fieldset>
-                        @{
-                            var department = (Department)ViewData["Department"];
-                        }
-                        <div class="form-group">
-                            <label for="department">Department</label>
-                            <select class="form-select form-control" id="department" name="department">
-                                <option value="">Choose...</option>
-                                <option value="@department.Id">@department.Name</option>
-                                <option value="213">ADD 2</option>
-                                <option value="214">Payment</option>
-                                <option value="215">SDM</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-3" id="registBtn">Register</button>
+                        </div>                      
+                        <button type="submit" class="btn btn-primary w-100 mt-3" id="registBtn">Register <img id="loaderRegist" src="~/assets/images/loader.gif" width="4%" /></button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 @section scripts{
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function () {           
+            $('#loaderRegister').hide();
+            $('#loaderLogin').hide();
             $(function () {
                 $("#birthday").datepicker({
                     format: 'dd/mm/yyyy',
@@ -173,10 +152,7 @@
                     email: {
                         required: true,
                         email: true,
-                    },
-                    gender: "required",
-                    department: "required",
-                    department: "required"
+                    }                                                         
                 },
                 highlight: function (element) {
                     $(element).closest('.form-control').addClass('is-invalid');
@@ -261,7 +237,6 @@
                 });
             });
 
-
             $("#loginBtn").on("click", function (e) {
                 e.preventDefault();
                 if (loginForm.valid()) {
@@ -278,14 +253,8 @@
 
         });//end document ready
 
-        function Login() {
-            swal({
-                title: "Checking...",
-                text: "Please wait",               
-                showConfirmButton: false,
-                closeOnClickOutside: false,
-                
-            });
+        function Login() {            
+            $('#loaderLogin').show();
             var Login = new Object();           
             Login.Username = $('#username').val();
             Login.Password = $('#password').val();
@@ -295,17 +264,12 @@
                 data: Login
             }).done((result) => {
                 if (result == 200) {
-                    swal({
-                        title: "Success!",
-                        text: "Login success",
-                        icon: "success"                        
-                    }).then((clickOk) => {
-                        window.location.replace("/Auth/Dashboard");
-                    });
+                    $('#loaderLogin').hide();
+                    window.location.replace("/");                    
                 } else if (result == 403) {
                    swal({
                         title: "Login Failed!",
-                        text: "Username/password was incorected or maybe you didn't verificate the email yet",
+                        text: "Please recheck your username/password and make sure that your email was verificated",
                         icon: "warning"                        
                     });
                 }
@@ -326,13 +290,12 @@
             $('#email').val("");
             $('#birthday').val("");
             $('#phone').val("");
-            $('#gender').val(0);
-            $('#department').val("");
+            $('#gender').val(0);           
             $('input').removeClass('is-valid');
         }
 
         function Register() {
-            console.log("Login function");
+            $('#loaderRegister').show();
             var Register = new Object();           
             Register.FirstName = $('#firstName').val();
             Register.LastName = $('#lastName').val();
@@ -340,14 +303,14 @@
             Register.Email = $('#email').val();
             Register.Birthday = $('#birthday').val();
             Register.Phone = $('#phone').val();
-            Register.Gender = $('#gender').val();
-            Register.DepartmentId = $('#department').val();
+            Register.Gender = $('#gender').val();            
             $.ajax({
                 type:'POST',
                 url: '/Auth/Register',
                 data: Register
             }).done((result) => {
                 if (result == 200) {
+                    $('#loaderRegister').hide();
                     swal({
                         title: "Success!",
                         text: "Register Account success. Please check your email to verificate",

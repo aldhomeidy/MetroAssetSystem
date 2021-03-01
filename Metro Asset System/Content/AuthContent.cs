@@ -13,11 +13,11 @@ namespace Metro_Asset_System.Content
         public void Register(string[] data)
         {
 
-            var verifyUrl = "https://localhost:44329/api/account/verify/" + data[0];
-            var subject = "Email Confirmation";
+            var verifyUrl = "https://localhost:44342/Auth/Verify/" + data[0];
+            var subject = "[Verification]";
             var email = data[1];
             var message = "<h3>Hello " + data[2] + ", </h3>";
-            message += "<br><p>Your MetroAssets Account has been created. But you must to activate your account first by confirmation your registered email.</p>";
+            message += "<br><p>Your MetroAssets Account has been created. Please verificate your email first before using the system.</p>";
             message += "<br><p>Just click link down bellow : </p>";
             message += "<br><a href=" + verifyUrl + ">" + verifyUrl + "<a/>";
             message += "<br><br>";
@@ -29,7 +29,7 @@ namespace Metro_Asset_System.Content
 
         public void ForgetPassword(string[] data)
         {
-            var subject = "Reset Password";
+            var subject = "[Reset Password]";
             var email = data[0];
             var message = "<h3>Hello " + data[1] + ", </h3>";
             message += "<p>Your password has been successfully reseted.</p>";
