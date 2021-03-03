@@ -107,19 +107,5 @@ namespace Metro_Asset_System.Controllers
                 return StatusCode(500, new { data = data, status = "Internal server error..." });
             }
         }
-
-       /* [HttpPost("Check/{field}")]
-        public ActionResult FieldCheck(string field, RegisterVM registerVM) 
-        {
-            var data = accountRepository.CheckAccountUniqueField(field, registerVM.DynamicVar);
-            if (data == 1)
-            {
-                return Ok(new { status = "Available to use" });
-            }
-            else 
-            {
-                return StatusCode(403, new { status = "Already used" });
-            }
-        }*/
     }
 }

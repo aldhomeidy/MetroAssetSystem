@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metro_Asset_System.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20210227060934_initial")]
+    [Migration("20210301152826_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

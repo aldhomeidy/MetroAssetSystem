@@ -1,7 +1,7 @@
-﻿using MAS.Client.ViewModels;
-using Metro_Asset_System.Base.Controller;
+﻿using Metro_Asset_System.Base.Controller;
 using Metro_Asset_System.Models;
 using Metro_Asset_System.Repositories.Data;
+using Metro_Asset_System.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

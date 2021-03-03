@@ -43,5 +43,10 @@ namespace Metro_Asset_System.Handler
             int next = num + 1;
             return DateTime.Now.ToString("yy") + next;
         }
+
+        public int GenerateId(int num) 
+        {
+            return num + 1;
+        }
     }
 }

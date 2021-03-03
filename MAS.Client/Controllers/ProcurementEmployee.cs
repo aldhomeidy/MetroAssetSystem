@@ -1,5 +1,6 @@
 ﻿using MAS.Client.ViewModels;
 using Metro_Asset_System.Models;
+using Metro_Asset_System.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -42,10 +43,10 @@ namespace MAS.Client.Controllers
             return View("~/Views/ProcurementEmployee/Invoice.cshtml");
         }
 
-        [Route("procurementemployee/requester")]
-        public ActionResult Requester() 
+        [Route("procurementemployee/category")]
+        public ActionResult Category() 
         {
-            return View("~/Views/ProcurementEmployee/Requester.cshtml");
+            return View("~/Views/ProcurementEmployee/Category.cshtml");
         }
 
         [Route("procurementemployee/department")]
@@ -122,6 +123,42 @@ namespace MAS.Client.Controllers
             var httpClient = new HttpClient();
             StringContent content = new StringContent(JsonConvert.SerializeObject(departmentVM), Encoding.UTF8, "application/json");
             var result = httpClient.PutAsync("https://localhost:44329/api/Department/UpdateDepartment", content).Result;
+            return result.StatusCode;
+        }
+
+
+        [HttpGet]
+        public String GetCategory(int Id)
+        {
+            var httpClient = new HttpClient();
+            var response = httpClient.GetAsync("https://localhost:44329/api/Category/" + Id).Result;
+            var apiResponse = response.Content.ReadAsStringAsync();
+            return apiResponse.Result;
+        }
+
+        [HttpDelete]
+        public HttpStatusCode DeleteCategory(int Id)
+        {
+            var httpClient = new HttpClient();
+            var result = httpClient.DeleteAsync("https://localhost:44329/api/Category/" + Id).Result;
+            return result.StatusCode;
+        }
+
+        [HttpPost]
+        public HttpStatusCode CreateCategory(CategoryVM categoryVM)
+        {
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(categoryVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync("https://localhost:44329/api/Category/", content).Result;
+            return result.StatusCode;
+        }
+
+        [HttpPut]
+        public HttpStatusCode UpdateCategory(CategoryVM categoryVM)
+        {
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(categoryVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync("https://localhost:44329/api/Category/", content).Result;
             return result.StatusCode;
         }
     }

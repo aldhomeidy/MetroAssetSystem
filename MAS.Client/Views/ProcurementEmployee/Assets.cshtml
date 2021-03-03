@@ -18,9 +18,9 @@
             <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
             Department
         </a>
-        <a class="nav-link" href="/procurementemployee/request">
+        <a class="nav-link" href="/procurementemployee/category">
             <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Request
+            Category
         </a>
         <a class="nav-link" href="/procurementemployee/invoice">
             <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
@@ -42,17 +42,35 @@
             </div>
             <div class="modal-body">
                 <form id="commentForm">
-                    <div class="form-group" hidden>
-                        <label for="id" class="col-form-label">Id</label>
-                        <input type="text" class="form-control" id="id" name="id">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Category</label>
-                        <input type="text" class="form-control" id="categoryId" name="categoryId" required>
+                    <div class="row">
+                        <div class="form-group" hidden>
+                            <label for="id" class="col-form-label">Id</label>
+                            <input type="text" class="form-control" id="id" name="id">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="message-text" class="col-form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="message-text" class="col-form-label">Category</label>
+                            <input type="text" class="form-control" id="categoryId" name="categoryId" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">Low Pinalty</label>
+                            <input type="text" class="form-control" id="lowPinalty" name="lowPinalty" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">High Pinalty</label>
+                            <input type="text" class="form-control" id="highPinalty" name="highPinalty" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">Middle Pinalty</label>
+                            <input type="text" class="form-control" id="middlePinalty" name="middlePinalty" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">Lost Pinalty</label>
+                            <input type="text" class="form-control" id="lostPinalty" name="lostPinalty" required>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -74,28 +92,47 @@
             </div>
             <div class="modal-body">
                 <form id="commentForm">
-                    <div class="form-group" hidden>
-                        <label for="id" class="col-form-label">Id</label>
-                        <input type="text" class="form-control" id="idUpdate" name="idUpdate">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Name</label>
-                        <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">LoanStatus</label>
-                        <select id="loanStatus" name="loanStatus" class="form-control">
-                            <option value="0">Available</option>
-                            <option value="1">Unavailable</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">AssetStatus</label>
-                        <select id="assetStatus" name="assetStatus" class="form-control">
-                            <option value="0">Fine</option>
-                            <option value="1">Problem</option>
-                            <option value="2">Lost</option>
-                        </select>
+                    <div class="row">
+                        <div class="form-group" hidden>
+                            <label for="id" class="col-form-label">Id</label>
+                            <input type="text" class="form-control" id="idUpdate" name="idUpdate">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="message-text" class="col-form-label">Name</label>
+                            <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">Loan Status</label>
+                            <select id="loanStatus" name="loanStatus" class="form-control">
+                                <option value="0">Available</option>
+                                <option value="1">Unavailable</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">Asset Status</label>
+                            <select id="assetStatus" name="assetStatus" class="form-control">
+                                <option value="0">Fine</option>
+                                <option value="1">Problem</option>
+                                <option value="2">Lost</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">Low Pinalty</label>
+                            <input type="text" class="form-control" id="lowPinaltyUpdate" name="lowPinaltyUpdate" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">High Pinalty</label>
+                            <input type="text" class="form-control" id="highPinaltyUpdate" name="highPinaltyUpdate" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">Middle Pinalty</label>
+                            <input type="text" class="form-control" id="middlePinaltyUpdate" name="middlePinaltyUpdate" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="message-text" class="col-form-label">Lost Pinalty</label>
+                            <input type="text" class="form-control" id="lostPinaltyUpdate" name="lostPinaltyUpdate" required>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -117,6 +154,10 @@
                 <th>Asset Status</th>
                 <th>Loan Status</th>
                 <th>Input Date</th>
+                <th>Low Pinalty</th>
+                <th>Medium Pinalty</th>
+                <th>High Pinalty</th>
+                <th>Lost Pinalty</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -129,6 +170,10 @@
                 <th>Asset Status</th>
                 <th>Loan Status</th>
                 <th>Input Date</th>
+                <th>Low Pinalty</th>
+                <th>Medium Pinalty</th>
+                <th>High Pinalty</th>
+                <th>Lost Pinalty</th>
                 <th>Action</th>
             </tr>
         </tfoot>
@@ -163,7 +208,7 @@
                         "searchable": true
                     },
                     {
-                        "targets": [6],
+                        "targets": [10],
                         "searchable": false,
                         "orderable": false
                     }
@@ -207,6 +252,18 @@
                         "data": "inputDate"
                     },
                     {
+                        "data": "pinalty.lowPinalty"
+                    },
+                    {
+                        "data": "pinalty.middlePinalty"
+                    },
+                    {
+                        "data": "pinalty.highPinalty"
+                    },
+                    {
+                        "data": "pinalty.lostPinalty"
+                    },
+                    {
                         "render": function (data, type, row, meta) {
                             return '<a href="javascript:void(0)" class="far fa-edit table-action text-dark" data-toggle="tooltip" data-placement="top" title="Edit" onclick="return GetAsset(' + row['id'] + ')"></a>' +
                                 '<a href="javascript:void(0)" class="fa fa-trash table-action text-danger" data-toggle="tooltip" data-placement="top" title="Delete" onclick="return Delete(' + row['id'] + ')"></a>'
@@ -223,6 +280,10 @@
             var Asset = new Object();
             Asset.name = $('#name').val();
             Asset.categoryId = $('#categoryId').val();
+            Asset.lowPinalty = $('#lowPinalty').val();
+            Asset.middlePinalty = $('#middlePinalty').val();
+            Asset.highPinalty = $('#highPinalty').val();
+            Asset.lostPinalty = $('#lostPinalty').val();
                 $.ajax({
                     url: '/ProcurementEmployee/SubmitAsset',
                     type: "POST",
@@ -233,6 +294,10 @@
                         $('#addModal').modal('hide');
                         $("#name").val(null);
                         $("#categoryId").val(null);
+                        $("#lowPinalty").val(null);
+                        $("#middlePinalty").val(null);
+                        $("#highPinalty").val(null);
+                        $("#lostPinalty").val(null);
                         table.ajax.reload();
                     }
                     else {
@@ -257,6 +322,10 @@
                 $("#nameUpdate").val(obj.data.name);
                 $("#assetStatus").val(obj.data.assetStatus);
                 $("#loanStatus").val(obj.data.loanStatus);
+                $("#lowPinaltyUpdate").val(obj.data.pinalty.lowPinalty);
+                $("#middlePinaltyUpdate").val(obj.data.pinalty.middlePinalty);
+                $("#highPinaltyUpdate").val(obj.data.pinalty.highPinalty);
+                $("#lostPinaltyUpdate").val(obj.data.pinalty.lostPinalty);
             }).fail((error) => {
                 console.log(error);
             });
@@ -269,6 +338,12 @@
             Asset.name = $("#nameUpdate").val();
             Asset.assetStatus = $("#assetStatus").val();
             Asset.loanStatus = $("#loanStatus").val();
+
+            Asset.lowPinalty = $("#lowPinaltyUpdate").val();
+            Asset.middlePinalty = $("#middlePinaltyUpdate").val();
+            Asset.highPinalty = $("#highPinaltyUpdate").val();
+            Asset.lostPinalty = $("#lostPinaltyUpdate").val();
+                
             $('#updateModal').hide();
             $.ajax({
                 url: "/ProcurementEmployee/Update",

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Metro_Asset_System.ViewModels
 {
-    public class DepartmentVM
+    public class CategoryVM
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

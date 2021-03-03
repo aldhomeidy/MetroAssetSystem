@@ -13,9 +13,12 @@ namespace Metro_Asset_System.Controllers
     public class AssetController : BaseController<Asset, AssetRepository, string>
     {
         private readonly AssetRepository assetRepository;
-        public AssetController(AssetRepository assetRepository):base(assetRepository)
+        private readonly PinaltyRepository pinaltyRepository;
+
+        public AssetController(AssetRepository assetRepository, PinaltyRepository pinaltyRepository):base(assetRepository)
         {
             this.assetRepository = assetRepository;
+            this.pinaltyRepository = pinaltyRepository;
         }
 
         [HttpGet("GetAsset/{status}")]
@@ -32,20 +35,6 @@ namespace Metro_Asset_System.Controllers
             }
         }
 
-        [HttpPost("SubmitAsset")]
-        public ActionResult SubmitAsset(AssetVM assetVM) 
-        {
-            var data = assetRepository.Create(assetVM);
-            if (data == 1) 
-            {
-                return Ok(new { status = "Submit Success" });
-            }
-            else
-            {
-                return StatusCode(500, new { status = "Internal Server Error" });
-            }
-        }
-
         [HttpPut("UpdateAsset")]
         public ActionResult UpdateAsset(AssetVM assetVM)
         {
@@ -59,5 +48,22 @@ namespace Metro_Asset_System.Controllers
                 return StatusCode(500, new { status = "Internal Server Error" });
             }
         }
+
+        [HttpPost("SubmitAsset")]
+        public ActionResult SubmitAsset(AssetVM assetVM)
+        {
+            var data = assetRepository.Create(assetVM);
+            if (data == 1)
+            {
+                return Ok(new { status = "Submit Success" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal Server Error" });
+            }
+        }
+
+        //[HttpGet("GetAllAsset")]
+        //public ActionResult
     }
 }

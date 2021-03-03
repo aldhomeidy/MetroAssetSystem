@@ -12,5 +12,10 @@ namespace Metro_Asset_System.ViewModels
         public int CategoryId { get; set; }
         public string AssetStatus { get; set; }
         public string LoanStatus { get; set; }
+
+        public long HighPinalty { get; set; }
+        public long MiddlePinalty { get; set; }
+        public long LowPinalty { get; set; }
+        public long LostPinalty { get; set; }
     }
 }
