@@ -37,10 +37,10 @@ namespace MAS.Client.Controllers
             return View("~/Views/ProcurementEmployee/Request.cshtml");
         }
 
-        [Route("procurementemployee/invoice")]
-        public ActionResult Invoice()
+        [Route("procurementemployee/employee")]
+        public ActionResult Employee()
         {
-            return View("~/Views/ProcurementEmployee/Invoice.cshtml");
+            return View("~/Views/ProcurementEmployee/Employee.cshtml");
         }
 
         [Route("procurementemployee/category")]
@@ -161,5 +161,24 @@ namespace MAS.Client.Controllers
             var result = httpClient.PutAsync("https://localhost:44329/api/Category/", content).Result;
             return result.StatusCode;
         }
+
+        [HttpGet]
+        public String GetEmployee(int Id)
+        {
+            var httpClient = new HttpClient();
+            var response = httpClient.GetAsync("https://localhost:44329/api/Employee/" + Id).Result;
+            var apiResponse = response.Content.ReadAsStringAsync();
+            return apiResponse.Result;
+        }
+
+        [HttpPut]
+        public HttpStatusCode UpdateEmployeeRole(UpdateEmployeeRoleVM updateEmployeeRoleVM)
+        {
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(updateEmployeeRoleVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync("https://localhost:44329/api/Employee/UpdateEmployeeRole", content).Result;
+            return result.StatusCode;
+        }
+
     }
 }

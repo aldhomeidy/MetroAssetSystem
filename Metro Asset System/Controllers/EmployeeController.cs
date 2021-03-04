@@ -104,5 +104,19 @@ namespace Metro_Asset_System.Controllers
                 return StatusCode(500, new { status = "Internal server error..." });
             }
         }
+
+        [HttpPut("UpdateEmployeeRole")]
+        public ActionResult UpdateEmployeeRole(UpdateEmployeeRoleVM updateEmployeeRoleVM)
+        {
+            var data = employeeRepository.UpdateEmployeeRole(updateEmployeeRoleVM);
+            if (data > 0)
+            {
+                return Ok(new { data = data, status = "Ok" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal server error..." });
+            }
+        }
     }
 }

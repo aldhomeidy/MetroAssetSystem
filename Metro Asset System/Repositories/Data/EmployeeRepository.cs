@@ -20,5 +20,38 @@ namespace Metro_Asset_System.Repositories.Data
             myContext.Set<Employee>();
             employees = myContext.Set<Employee>();
         }
+
+        public int UpdateEmployeeRole(UpdateEmployeeRoleVM updateEmployeeRoleVM) 
+        {
+            var employee = myContext.Employees.Where(e => e.NIK == updateEmployeeRoleVM.NIK).FirstOrDefault();
+            if (updateEmployeeRoleVM.Role == "0") 
+            {
+                employee.Role = EmployeeRole.Employee;
+            }
+            else if (updateEmployeeRoleVM.Role == "1")
+            {
+                employee.Role = EmployeeRole.Employee_Manager;
+            }
+            else if (updateEmployeeRoleVM.Role == "2")
+            {
+                employee.Role = EmployeeRole.Procurement_Manager;
+            }
+            else if (updateEmployeeRoleVM.Role == "3")
+            {
+                employee.Role = EmployeeRole.Procurement_Employee;
+            }
+
+            myContext.Entry(employee).State = EntityState.Modified;
+            var result = myContext.SaveChanges();
+
+            if (result > 0)
+            {
+                return 1;
+            }
+            else 
+            {
+                return 0;
+            }
+        }
     }
 }

@@ -62,8 +62,5 @@ namespace Metro_Asset_System.Controllers
                 return StatusCode(500, new { status = "Internal Server Error" });
             }
         }
-
-        //[HttpGet("GetAllAsset")]
-        //public ActionResult
     }
 }
