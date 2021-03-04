@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MAS.Client.ViewModels
+namespace Metro_Asset_System.ViewModels
 {
-    public class RequestHistory
+    public class HistoryRequest
     {
         public string Condition { get; set; }
         public string RequesterId { get; set; }
-        public string Level { get;set; }
+        public string Level { get; set; }
     }
 }

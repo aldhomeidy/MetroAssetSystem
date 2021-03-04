@@ -1,41 +1,48 @@
 ﻿@{
     Layout = "~/Views/Template/DashboardBase.cshtml";
 }
+
 @section Styles{
+    <link rel="stylesheet" href="~/vendor/datepicker/css/datepicker.css">
     <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css">
+    <style>
+        .error {
+            color: rgb(221, 0, 0);
+        }
+    </style>
 }
 @section Menu{
     <div class="nav">
         <div class="sb-sidenav-menu-heading">Employee</div>
-        <a class="nav-link" href="/employee">
+        <a class="nav-link" href="https://localhost:44342/employee">
             <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
             Dashboard
         </a>
-        <a class="nav-link" href="/request">
+        <a class="nav-link" href="https://localhost:44342/employee/request">
             <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
             Request
         </a>
-        <a class="nav-link" href="/invoice">
+        <a class="nav-link disabled" href="https://localhost:44342/employee/invoice">
             <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
             Invoice
         </a>
     </div>
 }
 
-<div class="row">
+<div class="row mb-3">
     <div class="col-lg-8 col-md-7 overflow-auto">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link text-dark" id="card-data-tab" data-toggle="tab"
-                   href="#data-tables" role="tab" aria-controls="card-data"
+                <a class="nav-link active text-dark" data-toggle="tab"
+                   href="#data-tables" id="available-btn" role="tab" aria-controls="card-data"
                    aria-selected="true">Available</a>
-                <a class="nav-link text-dark" id="card-data-tab" data-toggle="tab"
-                   href="#data-tables" role="tab" aria-controls="card-data"
+                <a class="nav-link text-dark" data-toggle="tab"
+                   href="#data-tables" id="unavailable-btn" role="tab" aria-controls="card-data"
                    aria-selected="true">Unavailable</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade" id="data-tables" role="tabpanel"
+            <div class="tab-pane fade show active" id="data-tables" role="tabpanel"
                  aria-labelledby="data-tables-tab">
                 <div class="table-responsive mt-4">
                     <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
@@ -62,45 +69,6 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                           @* <tr>
-                                <td>213</td>
-                                <td>Spidol Snowman 1 Pack</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-light">
-                                        <i class="fas fa-plus-circle"></i> Add
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>213</td>
-                                <td>Spidol Snowman 1 Pack</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-light">
-                                        <i class="fas fa-plus-circle"></i> Add
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>213</td>
-                                <td>Spidol Snowman 1 Pack</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>Rp 30000,-</td>
-                                <td>
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-light">
-                                        <i class="fas fa-plus-circle"></i> Add
-                                    </a>
-                                </td>
-                            </tr>*@
                         </tbody>
                     </table>
                 </div>
@@ -113,29 +81,31 @@
                 <i class="far fa-list-alt"></i> Request Detail
             </div>
             <div class="card-body">
-                <form>
+                <form id="requestForm">
                     <div class="form-group">
                         <label for="start">From</label>
-                        <input type="email" class="form-control" id="start" name="start">
+                        <input type="text" class="form-control date-input" id="start" name="start">
                     </div>
                     <div class="form-group">
                         <label for="end">Until</label>
-                        <input type="email" class="form-control" id="end" name="end">
+                        <input type="text" class="form-control date-input" id="end" name="end">
                     </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">
-                            I agree with alls terms
+                    <div class="form-group form-check agree">
+                        <input type="checkbox" class="form-check-input" id="agreement" name="agreement">
+                        <label class="form-check-label" for="agreement">
+                            I agree with all terms
                             and conditions
                         </label>
                     </div>
                     <hr>
                     <h5 class="text-center mb-3"><b>Items List</b></h5>
-                    <ol class="px-3">
-                        <li>#213 - Laptop Asus A456UR</li>
-                        <li>#215 - Proyektor EPSON</li>
+                    <input type="text" id="listCheck" name="listCheck" hidden>
+                    <ol class="px-3" id="itemsList">
                     </ol>
-                    <button type="submit" class="btn btn-dark btn-sm w-100" id="submit-btn">Submit</button>
+                    <div class="w-100">
+                        <button type="reset" class="btn btn-secondary btn-sm w-25 d-inline" id="reset-btn"><i class="fas fa-undo-alt"></i></button>
+                        <button type="submit" class="btn btn-dark btn-sm w-auto d-inline" id="submit-btn">Submit</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -146,52 +116,214 @@
 @section ScriptsLink{
     <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/vendor/datepicker/js/datepicker.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 }
 
-@section ScriptsDocReady{   
-    let table = null;
-    table =  $('#myTable').DataTable({
-                "ajax": {
-                    "url": "https://localhost:44329/api/Asset/GetAsset/available",
-                    "datatype": "json",
-                    "dataSrc": "data"
-                },
-                "columnDefs": [
-                    {
-                        "targets": [0,1,4],
-                        "searchable": true,
-                        "orderable" : true,
-                    },
-                    {
-                        "targets": [2,3,5,6],
-                        "searchable": false,
-                        "orderable": false
-                    }
-                ],
-                "columns": [
-                    {
-                        "data": 'id'                       
-                    },
-                    {
-                        "data": 'name'
-                    },
-                    {
-                         "data": 'pinalty.lowPinalty'
-                    },
-                    {
-                         "data": 'pinalty.middlePinalty'
-                    },
-                    {
-                        "data": 'pinalty.highPinalty'
-                    },
-                    {
-                        "data": 'pinalty.lostPinalty'
-                    },
-                    {
-                        "render": function (data, type, row, meta) {
-                            return '<a href="javascript:void(0)" class="btn btn-sm btn-light"><i class="far fa-plus-square"></i></a>'
-                        }
-                    }
-                ]
-           });
+@section ScriptsDocReady{
+    table = $('#myTable').DataTable({
+    "ajax": {
+    "url": "https://localhost:44329/api/Asset/GetAsset/available",
+    "datatype": "json",
+    "dataSrc": "data"
+    },
+    "columnDefs": [
+    {
+    "targets": [0, 1],
+    "searchable": true,
+    "orderable": true,
+    },
+    {
+    "targets": [2, 3, 4, 5, 6],
+    "searchable": false,
+    "orderable": false
+    }
+    ],
+    "columns": [
+    {
+    "data": 'id'
+    },
+    {
+    "data": 'name'
+    },
+    {
+    "data": 'pinalty.lowPinalty'
+    },
+    {
+    "data": 'pinalty.middlePinalty'
+    },
+    {
+    "data": 'pinalty.highPinalty'
+    },
+    {
+    "data": 'pinalty.lostPinalty'
+    },
+    {
+    "render": function (data, type, row, meta) {
+    if(row.loanStatus==0){
+    return '<a href="javascript:void(0)" class="btn btn-sm btn-light"><i class="far fa-plus-square" onclick="Add(\'' + row.id + '\')"></i></a>'
+    }else{
+    return 'Not Available'
+    }
+    }
+    }
+    ]
+    });
+
+    $("#available-btn").click(function(){
+    table.ajax.url( 'https://localhost:44329/api/Asset/GetAsset/available').load();
+    });
+    $("#unavailable-btn").click(function(){
+    table.ajax.url( 'https://localhost:44329/api/Asset/GetAsset/unavailable').load();
+    });
+
+    $(function () {
+    $(".date-input").datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose: true,
+    todayHighlight: true,
+    leftArrow: '<i class="far fa-arrow-alt-circle-left"></i>',
+    rightArrow: '<i class="far fa-arrow-alt-circle-right"></i>'
+    });
+    });
+
+    $("#submit-btn").click(function (e) {
+    e.preventDefault();
+    let listCheck = $('#listCheck').val();
+    if (listCheck=='') {
+    swal("Warning!", "Please choose at least 1 items!", "warning");
+    }else if(requestForm.valid()){
+    Request();
+    }
+    });
+
+    $("#reset-btn").click(function (e) {
+    ClearForm();
+    });
+
+    let requestForm = $("#requestForm");
+
+    requestForm.validate({
+    rules: {
+    start: {
+    required: true,
+    maxLoan: true
+    },
+    end: {
+    required: true
+    },
+    agreement: "required"
+    },
+    highlight: function (element) {
+    $(element).closest('.form-control').addClass('is-invalid');
+    $(element).closest('.form-control').removeClass('is-valid');
+    },
+    unhighlight: function (element) {
+    $(element).closest('.form-control').removeClass('is-invalid');
+    $(element).closest('.form-control').addClass('is-valid');
+    }, errorPlacement: function (error, element) {
+    if (element.is(":checkbox")) {
+    error.appendTo(element.parents(".agree"));
+    } else {
+    error.insertAfter(element)
+    }
+    }
+    })
+
+    $.validator.addMethod("maxLoan", function (value, element) {
+    let start = new Date(value);
+    let now = new Date();
+    let maxDate = new Date(now);
+    maxDate.setDate(maxDate.getDate() + 5);
+
+    if (start > maxDate) {
+    return false;
+    } else {
+    return true;
+    }
+    }, "You only can loan for 5 days forward from now!");
+
+}
+@section Scripts{
+    let countItems = 0;
+    let itemList = [];
+    var output = "";
+    function Add(id) {
+    if (itemList.includes(id)){
+    swal({
+    title: "Abort",
+    text: "You have add this item",
+    icon: "warning",
+    button: "I got it",
+    });
+    }else if(countItems>=3){
+    swal({
+    title: "Abort",
+    text: "You cann't add more than 3 items",
+    icon: "warning",
+    button: "I got it",
+    });
+    }
+    else{
+    CountItems(id);
+    DisplayItems(id);
+    $('#listCheck').val("true");
+    }
+    }
+
+    function CountItems(id){
+    itemList.push(id);
+    countItems+=1;
+    }
+
+    function DisplayItems(id){
+    output+='<li>#'+id+'</li>';
+    $("#itemsList").html(output);
+    }
+
+    function ClearForm(){
+    $('#start').val('').removeClass("is-valid");
+    $('#end').val('').removeClass("is-valid");
+    $('#agreement').prop('checked', false);
+    $("#itemsList").empty();
+    $('#listCheck').val('');
+    countItems = 0;
+    itemList=[];
+    }
+
+    function Request(){
+    swal({
+    title: "Requesting...",
+    text: "Please wait",
+    button: false,
+    closeOnClickOutside: false,
+    });
+    var Request = new Object();
+    Request.StartDate = $('#start').val();
+    Request.EndDate = $('#end').val();
+    Request.Assets = itemList;
+    $.ajax({
+    type:'POST',
+    url: 'https://localhost:44342/employee/create',
+    data: Request
+    }).done((result) => {
+    if (result == 200) {
+    swal({
+    title: "Success!",
+    text: "Your request has been created",
+    icon: "success"
+    });
+    ClearForm();
+    $('#myTable').ajax.url( 'https://localhost:44329/api/Asset/GetAsset/available').load();
+    }
+    else {
+    swal("Failed to create request", {
+    icon: "warning",
+    });
+    }
+    }).fail((error) => {
+    console.log(error);
+    });
+    }
+
 }

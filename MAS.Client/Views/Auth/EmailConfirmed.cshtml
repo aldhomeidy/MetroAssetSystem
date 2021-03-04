@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Template/LandingPage.cshtml";
+}
+<section class="header bg-dark" style="height: 100px;">
+    <h1 class="text-light text-center pt-4">MetroAssets</h1>
+</section>
+<section class="content">
+
+    @{
+        var result = ViewBag.Result;
+        @if (result == 200)
+        {
+            <h3 class="text-center p-5">
+                Your email has been confirmed. Now you can login with your account. Thankyou...
+            </h3>
+        }
+        else
+        {
+            <h3 class="text-center p-5">
+                Account not identified...
+            </h3>
+        }
+    }
+
+
+</section>
+@section Scripts{
+    <script>
+        if (@result== 200) {
+            swal({
+                title: "Success!",
+                text: "Email confirmed",
+                icon: "success"
+            }).then((clickOk) => {
+                window.location.replace("/");
+            });
+        } else {
+            swal({
+                title: "Warning!",
+                text: "Account not identified",
+                icon: "warning"
+            }).then((clickOk) => {                
+            });
+        }
+   
+            
+    </script>
+}

@@ -53,5 +53,10 @@ namespace Metro_Asset_System.Repositories.Data
                 return 0;
             }
         }
+
+        public Employee GetByUsername(string username) {
+            var data = myContext.Employees.Include(e => e.Account).Where(a => a.Account.Username == username).FirstOrDefault();
+            return data;
+        }
     }
 }

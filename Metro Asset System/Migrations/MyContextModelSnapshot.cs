@@ -263,6 +263,9 @@ namespace Metro_Asset_System.Migrations
                     b.Property<long>("Pinalty")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("PinaltyDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId")

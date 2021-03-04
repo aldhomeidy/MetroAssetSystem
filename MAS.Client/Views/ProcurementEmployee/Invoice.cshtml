@@ -1,37 +1,7 @@
-@* ﻿@model IEnumerable<Metro_Asset_System.Models.Request>
-
-@{
-    Layout = "~/Views/Template/DashboardBase.cshtml";
-}
-@section Menu{
-    <div class="nav">
-        <div class="sb-sidenav-menu-heading">Procurement Employee</div>
-        <a class="nav-link" href="/procurementemployee">
-            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
-            Dashboard
-        </a>
-        <a class="nav-link" href="/procurementemployee/assets">
-            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Assets
-        </a>
-        <a class="nav-link" href="/procurementemployee/department">
-            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Department
-        </a>
-        <a class="nav-link" href="/procurementemployee/category">
-            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Category
-        </a>
-        <a class="nav-link" href="/procurementemployee/employee">
-            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Employee
-        </a>
-    </div>
-} *@
-
 ﻿@{
     Layout = "~/Views/Template/DashboardBase.cshtml";
 }
+
 @section Styles{
     <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css">
 }
@@ -58,17 +28,16 @@
         <a class="nav-link" href="https://localhost:44342/master/invoice">
             <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
             Invoice
-
         </a>
     </div>
 }
 
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-link text-dark active" id="incoming-btn" data-toggle="tab" href="#data-tables"
-           role="tab" aria-controls="card-data" aria-selected="true">Incoming</a>
-        <a class="nav-link text-dark" id="processed-btn" data-toggle="tab" href="#data-tables"
-           role="tab" aria-controls="card-data" aria-selected="true">Processed</a>        
+        <a class="nav-link text-dark active" id="ongoing-btn" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">On Going</a>
+        <a class="nav-link text-dark" id="finished-btn" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">Finished</a>        
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">    
@@ -78,20 +47,20 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Invoice Id</th>
                         <th>Request Id</th>
-                        <th>Full Name</th>
-                        <th>Total Items</th>                       
-                        <th>Request Date</th>
+                        <th>Requester</th>
+                        <th>Total Items</th>                                              
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Invoice Id</th>
                         <th>Request Id</th>
-                        <th>Full Name</th>
+                        <th>Requester</th>
                         <th>Total Items</th>
-                        <th>Request Date</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -105,7 +74,7 @@
 <!-- Start Modal -->
 <div class="modal fade" id="detailsModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
      aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detailsModalLabel">Request Details</h5>
@@ -116,32 +85,22 @@
             <div class="modal-body">
                 <table cellpadding="5">
                     <tr>
-                        <td>Request Id</td>
+                        <td>Invoice Id</td>
                         <td>:</td>
                         <td id="setId"></td>
                     </tr>
-                    <tr>
-                        <td>Requested On</td>
-                        <td>:</td>
-                        <td id="setRequestDate"></td>
-                    </tr>
-                    <tr>
-                        <td>From</td>
-                        <td>:</td>
-                        <td id="setFromDate"></td>
-                    </tr>
-                    <tr>
-                        <td>Until</td>
-                        <td>:</td>
-                        <td id="setUntilDate"></td>
-                    </tr>                                     
                 </table>
                 <hr>
                 <h5>Items List</h5>
-                <ol id="itemList">                    
+                <ol id="itemList">
                 </ol>
-                <form id="invoiceForm">                    
-                    <input hidden id="requestId" name="requestId" />                   
+                <hr>
+                <h5>Items Condition</h5>
+                <form id="invoiceForm">
+                    <input hidden id="invoiceId" name="invoiceId" />
+                   <div id="assetPinalty">
+
+                   </div>
                 </form>
             </div>
             <div class="modal-footer">                
@@ -150,7 +109,6 @@
         </div>
     </div>
 </div>
-
 <!-- End Modal -->
 
 @section ScriptsLink{
@@ -161,7 +119,7 @@
 @section ScriptsDocReady{     
     table = $('#myTable').DataTable({
             "ajax": {
-                "url": "https://localhost:44342/Request/data/incoming",
+                "url": "https://localhost:44329/api/Invoice/data/ongoing",
                 "datatype": "json",
                 "dataSrc": ""
             },
@@ -188,24 +146,21 @@
                     "data": 'id'
                 },
                 {             
-                    "data":'null',
-                    "render": function (data, type, row, meta) {                        
-                       return row.employee.firstName+" "+row.employee.lastName;
-                    }
+                    "data":'requestId'                   
                 },
                 {
-                    "data": 'itemRequest.length'                    
+                    "data": 'null',
+                    "render": function (data, type, row, meta) {                        
+                       return row.request.employee.firstName+" "+row.request.employee.lastName ;
+                    }                    
                 },
                 {
-                    "data": 'requestDate',
-                    "render": function (data, type, row, meta) {                        
-                       return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
-                    }
+                    "data": 'request.itemRequest.length'                    
                 },                                         
                 {
                     "data": 'id',
                     "render": function (data, type, row, meta) {
-                        if(row.requestStatus==2 && row.status==1){
+                        if(row.status==0){
                             return '<a href="javascript:void(0)" class="btn btn-sm btn-light" onclick="Details(\'' + data + '\')"><i class="far fa-check-square"></i></a>';              
                         }else{
                             return '-';
@@ -215,11 +170,11 @@
             ]
         });    
 
-    $("#incoming-btn").click(function(){
-        table.ajax.url( 'https://localhost:44342/Request/data/incoming').load();
+    $("#ongoing-btn").click(function(){
+        table.ajax.url( 'https://localhost:44329/api/Invoice/data/ongoing').load();
     }); 
-    $("#processed-btn").click(function(){
-        table.ajax.url( 'https://localhost:44342/Request/data/processed').load();
+    $("#finished-btn").click(function(){
+        table.ajax.url( 'https://localhost:44329/api/Invoice/data/finished').load();
     });
     
     $("#closeModal").click(function(){
@@ -233,24 +188,41 @@
 } 
 
 @section Scripts{
+    let listAssetId = [];
+
     function Details(id){
+        let pinaltyList = "";
         $.ajax({
                 type:'GET',
-                url: 'https://localhost:44329/api/Request/'+id,
+                url: 'https://localhost:44329/api/Invoice/'+id,
                 data: 'data'
             }).done((result) => {                
                 if (result.status == "Ok") {
                     let hasil="";
-                    $('#detailsModal').modal('show');
-                    $('#setId').html('#'+result.data.id);
-                    $('#setRequestDate').html(moment(result.data.requestDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
-                    $('#setFromDate').html(moment(result.data.loanDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
-                    $('#setUntilDate').html(moment(result.data.returnDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
-                    $.each( result.data.itemRequest, function( key, field ) {
-                        hasil+='<li>#'+field.asset.id+' - '+field.asset.name+'</li>';                                        
+                    $('#setId').html('#'+result.data.id);                  
+                    $.each( result.data.request.itemRequest, function( i, field ) {
+                        listAssetId.push(field.asset.id.toString());                        
+                        pinaltyList+='<div class="form-row">'+
+                                        '<div class="form-group col-md-5">'+
+                                            '<input type="text" class="form-control-plaintext" id="asset'+field.asset.id +'" value="#'+field.asset.id+' ">'+
+                                        '</div>'+
+                                        '<div class="form-group col-md-7">'+
+                                            '<select id="pinalty'+field.asset.id +'" class="form-control">'+
+                                                '<option value="" selected>Choose...</option>'+
+                                                '<option value="0">Fine</option>'+
+                                                '<option value="1">Low Damaged</option>'+
+                                                '<option value="2">Middle Damaged</option>'+
+                                                '<option value="3">High Damaged</option>'+
+                                                '<option value="4">Asset Lost</option>'+
+                                            '</select>'+
+                                        '</div>'+
+                                      '</div>';                        
+                        hasil+='<li>#'+field.asset.id+' - '+field.asset.name+'</li>';                                      
                     });
                     $('#itemList').html(hasil);
-                    $('#requestId').val(result.data.id);                    
+                    $('#assetPinalty').html(pinaltyList);
+                    $('#invoiceId').val(result.data.id);                    
+                    $('#detailsModal').modal('show');                    
                 } 
                 else {
                       swal("Failed to get data", {
@@ -261,43 +233,81 @@
                 console.log(error);
             });
     }
+   
 
     function ClearForm(){
          $('#setId').html('');
-         $('#setRequestDate').html('');
-         $('#setFromDate').html('');
-         $('#setUntilDate').html('');
+         $('#assetPinalty').html('');
          $('#itemList').html('');        
-         $('#requestId').val('');        
+         $('#invoiceId').val('');
+         listAssetId = [];        
+    }
+
+    function Coba(){
+        let assetData =[];
+        let problemCount =0;
+        $.each(listAssetId, function( index, value ) {
+    	    let res = $('#pinalty'+value).val();
+  		    assetData.push([value,res]);
+            if(value!=0){
+                problemCount+=1;
+            }
+	    });
+        var Invoice = new Object();        
+        Invoice.InvoiceId = $('#invoiceId').val();
+        Invoice.Assets = assetData;
+        if(problemCount>0){
+            Invoice.StatusInvoice = "2";
+        }else{
+            Invoice.StatusInvoice = "1";
+        }
+        console.log(Invoice);
     }
 
     function Submit(){
-            swal({
+        swal({
             title: "Processing...",
             text: "Please wait",
             button: false,
             closeOnClickOutside: false,
         });        
+        let assetData =[];
+        let problemCount =0;
+        $.each(listAssetId, function( index, value ) {
+    	    let res = $('#pinalty'+value).val().toString();
+  		    assetData.push([value,res]);
+            if(value!=0){
+                problemCount+=1;
+            }
+	    });
         var Invoice = new Object();        
-        Invoice.RequestId = $('#requestId').val();
+        Invoice.InvoiceId = $('#invoiceId').val();
+        Invoice.Assets = assetData;
+        if(problemCount>0){
+            Invoice.StatusInvoice = "2";
+        }else{
+            Invoice.StatusInvoice = "1";
+        }
+        console.log(Invoice.Assets);
+        console.log(assetData);
             $.ajax({
                 type:'POST',
-                url: 'https://localhost:44342/employee/create/invoice',
+                url: 'https://localhost:44342/employee/return',                
                 data: Invoice
             }).done((result) => {
                 console.log(result);
                 if (result == 200) {
                     swal({
                         title: "Success!",
-                        text: "Success creating invoice for this request",
+                        text: "Success returning the assets",
                         icon: "success"                        
                     });
                     ClearForm();
                     $('#detailsModal').modal('hide');
-                    table.ajax.url( 'https://localhost:44342/Request/data/incoming').load();                    
+                    table.ajax.url( 'https://localhost:44329/api/Invoice/data/ongoing').load();                    
                 } 
                 else {
-                      swal("Failed to create request", {
+                      swal("Failed to returning asset", {
                         icon: "warning",
                     });               
                 }
@@ -305,11 +315,4 @@
                 console.log(error);
             });
     }    
-
-    $(document).ready(function () {
-        $.getJSON("https://localhost:44329/api/Employee/CurrentRequest", function (result) {
-            debugger;
-            $("#current-request").append(result.data);
-        });
-    });
 } 

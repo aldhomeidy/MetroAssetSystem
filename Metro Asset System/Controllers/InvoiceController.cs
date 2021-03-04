@@ -10,27 +10,45 @@ using System.Threading.Tasks;
 
 namespace Metro_Asset_System.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    // Edward
+    // [Route("api/[controller]")]
+    // [ApiController]
     public class InvoiceController : BaseController<Invoice, InvoiceRepository, string>
     {
         private readonly InvoiceRepository invoiceRepository;
-        public InvoiceController(InvoiceRepository invoiceRepository) : base(invoiceRepository)
+
+        public InvoiceController(InvoiceRepository invoiceRepository): base(invoiceRepository)
         {
             this.invoiceRepository = invoiceRepository;
         }
 
-        [HttpGet("GetInvoice/{status}")]
-        public ActionResult GetInvoice(string onGoing)
+        // Edward
+        // [HttpGet("GetInvoice/{status}")]
+        // public ActionResult GetInvoice(string onGoing)
+        // {
+        //     var data = invoiceRepository.GetByStatus(onGoing);
+        //     if (data != null)
+        //     {
+        //         return Ok(new { data = data, status = "Ok" });
+        //     }
+        //     else
+        //     {
+        //         return StatusCode(500, new { data = data, status = "Internal server error" });
+        //     }
+        // }
+
+        [HttpGet("data/{condition}")]
+        public ActionResult GetInvoice(string condition)
         {
-            var data = invoiceRepository.GetByStatus(onGoing);
+
+            var data = invoiceRepository.GetByCondition(condition);
             if (data != null)
             {
-                return Ok(new { data = data, status = "Ok" });
+                return Ok(data);
             }
             else
             {
-                return StatusCode(500, new { data = data, status = "Internal server error" });
+                return StatusCode(500, data);
             }
         }
     }

@@ -13,11 +13,11 @@ namespace Metro_Asset_System.Content
 
         public void Request(string[] identity, string[] requestData, string[,] listData)
         {
-            var subject = "Request Notification";
+            var subject = "[Request Notification]";
             var email = identity[0];
             var message = "<h3>Hello " + identity[1] + ", </h3>";
             message += "<br><p>You have successed creating for loan request. Here is your details request:</p>";
-            message += "<br><table>" +
+            message += "<br><table style='text-align:left;'>" +
                             "<tr>" +
                             "<th>Request Code</th>" +
                             "<td>#" + requestData[0] + "</td>" +
@@ -69,20 +69,39 @@ namespace Metro_Asset_System.Content
             var email = identity[1];
             var message = "";
             var status = "";
+            var role = "";
+
+            if (identity[4] == "1") //jika manager level 1
+            { 
+                role = "Manager Level 1 (Your Manager)";
+            }
+            else {//manager level 2
+                role = "Manager Level 2 (Procurement Manager)";
+            }
+
 
             if (identity[2] == "1")
             {
-                subject = "Request Accepted #"+ DateTime.Now.ToString("dd/MM/yyyy");
-                status = "Accepted";
+                subject = "[Request Accepted]";
+                status = "Accepted by "+role;
             }
             else
             {
-                subject = "Request Rejected #"+ DateTime.Now.ToString("dd/MM/yyyy");
-                status = "Rejected";
+                subject = "[Request Rejected]";
+                status = "Rejected by " +role;
             }
             message = "<h3>Hello " + identity[0] + ", </h3>";
-            message += "<br><p>There is an update with your request. Here is the detail: </p>";
-            message += "<br><table>" +
+
+            if (identity[4] == "2" && identity[2]=="1")//manager level 2
+            {
+                message += "<br><p>Congratulations your request Has been approved by Procurement Manager. Now you can pick the assets in Procurement Office.</p>";
+                message += "Tell your Request Code to the Procurement Staff while you picking up the asset. Here is your request detail : ";               
+            }
+            else //manager level 1
+            {
+                message += "<br><p>There is an update with your request. Here is the detail: </p>";
+            }
+            message += "<br><table style='text-align:left;'>" +
                             "<tr>" +
                             "<th>Request Code</th>" +
                             "<td>: #" + request.Id + "</td>" +
@@ -119,13 +138,13 @@ namespace Metro_Asset_System.Content
         public void Invoice(string[] identity, Invoice invoice)
         {
             //firstname, email, procurement staff name           
-            var subject = "Invoice";
+            var subject = "[Invoice]";
             var email = identity[1];
             var message = "";
 
             message = "<h3>Hello " + identity[0] + ", </h3>";
             message += "<br><p>Congratulations, your request has been processed and here is your invoice detail: </p>";
-            message += "<br><table>" +
+            message += "<br><table style='text-align:left;'>" +
                             "<tr>" +
                             "<th>Invoice Number</th>" +
                             "<td>: #" + invoice.Id + "</td>" +
@@ -162,12 +181,12 @@ namespace Metro_Asset_System.Content
         public void Return(Invoice invoice, string[,] pinalty, string totalPinalty)
         {            
             //list pinalty(Id asset, name, return conditions, pinalty)
-            var subject = "Finished Invoice";
+            var subject = "[Invoice]";
             var email = invoice.Request.Employee.Email;
             var message = "";
 
             message = "<h3>Hello " + invoice.Request.Employee.FirstName + ", </h3>";
-            message += "<p>You are success returning the assets to us. Here is your finished invoice detail : </p>";
+            message += "<p>You are success returning the assets. Here is your finished invoice detail : </p>";
             message += "<table style='text-align:left;'>" +
                             "<tr>" +
                             "<th>Invoice Number</th>" +

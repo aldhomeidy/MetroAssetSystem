@@ -1,34 +1,3 @@
-@* ﻿@model IEnumerable<Metro_Asset_System.Models.Request>
-
-@{
-    Layout = "~/Views/Template/DashboardBase.cshtml";
-}
-@section Menu{
-    <div class="nav">
-        <div class="sb-sidenav-menu-heading">Procurement Employee</div>
-        <a class="nav-link" href="/procurementemployee">
-            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
-            Dashboard
-        </a>
-        <a class="nav-link" href="/procurementemployee/assets">
-            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Assets
-        </a>
-        <a class="nav-link" href="/procurementemployee/department">
-            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Department
-        </a>
-        <a class="nav-link" href="/procurementemployee/category">
-            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Category
-        </a>
-        <a class="nav-link" href="/procurementemployee/employee">
-            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
-            Employee
-        </a>
-    </div>
-} *@
-
 ﻿@{
     Layout = "~/Views/Template/DashboardBase.cshtml";
 }
@@ -43,22 +12,13 @@
             <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
             Dashboard
         </a>
-        <a class="nav-link" href="https://localhost:44342/master/asset">
-            <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
-            Asset
+        <a class="nav-link disabled" href="/manager/subordinates">
+            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+            My Subordinate
         </a>
-        <a class="nav-link" href="https://localhost:44342/master/employee">
-            <div class="sb-nav-link-icon"><i class="fas fa-users-cog"></i></div>
-            Requester
-        </a>
-        <a class="nav-link" href="https://localhost:44342/master/request">
-            <div class="sb-nav-link-icon"><i class="far fa-newspaper"></i></div>
-            Request
-        </a>
-        <a class="nav-link" href="https://localhost:44342/master/invoice">
-            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
-            Invoice
-
+        <a class="nav-link" href="https://localhost:44342/manager/approval">
+            <div class="sb-nav-link-icon"><i class="far fa-edit"></i></div>
+            Manage Request
         </a>
     </div>
 }
@@ -67,8 +27,10 @@
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <a class="nav-link text-dark active" id="incoming-btn" data-toggle="tab" href="#data-tables"
            role="tab" aria-controls="card-data" aria-selected="true">Incoming</a>
-        <a class="nav-link text-dark" id="processed-btn" data-toggle="tab" href="#data-tables"
-           role="tab" aria-controls="card-data" aria-selected="true">Processed</a>        
+        <a class="nav-link text-dark" id="approved-btn" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">Approved</a>
+        <a class="nav-link text-dark" id="rejected-btn" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">Rejected</a>
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">    
@@ -77,21 +39,21 @@
             <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Request Id</th>
-                        <th>Full Name</th>
+                        <th>Id</th>
+                        <th>Requested On</th>
+                        <th>From</th>
+                        <th>Until</th>
                         <th>Total Items</th>                       
-                        <th>Request Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>No</th>
-                        <th>Request Id</th>
-                        <th>Full Name</th>
-                        <th>Total Items</th>
-                        <th>Request Date</th>
+                        <th>Id</th>
+                        <th>Requested On</th>
+                        <th>From</th>
+                        <th>Until</th>
+                        <th>Total Items</th>                       
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -140,17 +102,28 @@
                 <h5>Items List</h5>
                 <ol id="itemList">                    
                 </ol>
-                <form id="invoiceForm">                    
-                    <input hidden id="requestId" name="requestId" />                   
+                <form id="approvalForm">
+                    <div class="form-group mb-3">
+                        <label for="notes">Notes</label>
+                        <textarea class="form-control" id="notes" placeholder="Say something about this request..." maxlength="20"></textarea>
+                    </div>
+                    <input hidden id="requestId" name="requestId" />
+                    <div class="form-group">
+                        <label for="approval">Approval</label>
+                        <select class="form-control" id="approval" name="approval">
+                            <option value="" selected>Choose...</option>
+                            <option value="1">Approve</option>
+                            <option value="2">Reject</option>
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">                
-                <button type="button" class="btn btn-sm btn-dark" id="submit-btn">Processed</button>
+                <button type="button" class="btn btn-sm btn-dark" id="submit-btn">Submit</button>
             </div>
         </div>
     </div>
 </div>
-
 <!-- End Modal -->
 
 @section ScriptsLink{
@@ -161,51 +134,51 @@
 @section ScriptsDocReady{     
     table = $('#myTable').DataTable({
             "ajax": {
-                "url": "https://localhost:44342/Request/data/incoming",
+                "url": "https://localhost:44342/Request/manager/1/incoming",
                 "datatype": "json",
                 "dataSrc": ""
             },
             "columnDefs": [
                 {
-                    "targets": [0, 1,2,4],
+                    "targets": [0, 1],
                     "searchable": true,
                     "orderable": true,
                 },
                 {
-                    "targets": [3,5],
+                    "targets": [2, 3, 4, 5],
                     "searchable": false,
                     "orderable": false
                 }
             ],
             "columns": [
                 {
-                    "data": null,
-                    "render": function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
-                {
                     "data": 'id'
                 },
                 {             
-                    "data":'null',
-                    "render": function (data, type, row, meta) {                        
-                       return row.employee.firstName+" "+row.employee.lastName;
-                    }
-                },
-                {
-                    "data": 'itemRequest.length'                    
-                },
-                {
-                    "data": 'requestDate',
+                    "data":'requestDate',
                     "render": function (data, type, row, meta) {                        
                        return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
                     }
-                },                                         
+                },
+                {
+                    "data": 'loanDate',
+                    "render": function (data, type, row, meta) {                        
+                       return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }
+                },
+                {
+                    "data": 'returnDate',
+                    "render": function (data, type, row, meta) {                        
+                       return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }
+                },
+                {
+                    "data": 'itemRequest.length',
+                },                             
                 {
                     "data": 'id',
                     "render": function (data, type, row, meta) {
-                        if(row.requestStatus==2 && row.status==1){
+                        if(row.requestStatus==0 && row.status==1){
                             return '<a href="javascript:void(0)" class="btn btn-sm btn-light" onclick="Details(\'' + data + '\')"><i class="far fa-check-square"></i></a>';              
                         }else{
                             return '-';
@@ -216,11 +189,14 @@
         });    
 
     $("#incoming-btn").click(function(){
-        table.ajax.url( 'https://localhost:44342/Request/data/incoming').load();
+        table.ajax.url( 'https://localhost:44342/Request/manager/1/incoming').load();
     }); 
-    $("#processed-btn").click(function(){
-        table.ajax.url( 'https://localhost:44342/Request/data/processed').load();
+    $("#approved-btn").click(function(){
+        table.ajax.url( 'https://localhost:44342/Request/manager/1/approved').load();
     });
+    $("#rejected-btn").click(function(){
+        table.ajax.url( 'https://localhost:44342/Request/manager/1/rejected').load();
+    }); 
     
     $("#closeModal").click(function(){
       ClearForm();
@@ -228,7 +204,13 @@
 
     $("#submit-btn").click(function(e){
         e.preventDefault();
-        Submit();
+        if($('#approval').val()==''){
+            swal("Please select approval first", {
+                 icon: "warning",
+            });
+        }else{
+            Submit();
+        }
     });
 } 
 
@@ -267,34 +249,38 @@
          $('#setRequestDate').html('');
          $('#setFromDate').html('');
          $('#setUntilDate').html('');
-         $('#itemList').html('');        
-         $('#requestId').val('');        
+         $('#itemList').html('');
+         $('#notes').val('');
+         $('#requestId').val('');
+         $('#approval').val('');
     }
 
     function Submit(){
-            swal({
+        swal({
             title: "Processing...",
             text: "Please wait",
             button: false,
             closeOnClickOutside: false,
         });        
-        var Invoice = new Object();        
-        Invoice.RequestId = $('#requestId').val();
+        var Approve = new Object();
+        Approve.RequestDetailStatus = $('#approval').val();
+        Approve.Note = $('#notes').val();
+        Approve.RequestId = $('#requestId').val();
             $.ajax({
                 type:'POST',
-                url: 'https://localhost:44342/employee/create/invoice',
-                data: Invoice
+                url: 'https://localhost:44342/manager/approving',
+                data: Approve
             }).done((result) => {
                 console.log(result);
                 if (result == 200) {
                     swal({
                         title: "Success!",
-                        text: "Success creating invoice for this request",
+                        text: "Success managing this request",
                         icon: "success"                        
                     });
                     ClearForm();
                     $('#detailsModal').modal('hide');
-                    table.ajax.url( 'https://localhost:44342/Request/data/incoming').load();                    
+                    table.ajax.url( 'https://localhost:44342/Request/manager/1/incoming').load();                    
                 } 
                 else {
                       swal("Failed to create request", {
@@ -305,11 +291,4 @@
                 console.log(error);
             });
     }    
-
-    $(document).ready(function () {
-        $.getJSON("https://localhost:44329/api/Employee/CurrentRequest", function (result) {
-            debugger;
-            $("#current-request").append(result.data);
-        });
-    });
 } 

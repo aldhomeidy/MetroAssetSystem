@@ -8,8 +8,7 @@ namespace Metro_Asset_System.ViewModels
 {
     public class ReturnAssetsVM
     {
-        public string InvoiceId { get; set; }
-        //public long Pinalty { get; set; }
+        public string InvoiceId { get; set; }        
         public string StatusInvoice { get; set; }
         public string[,] Assets { get; set; }
         //index 0 berisi id asset, 1 berisi kondisi aset

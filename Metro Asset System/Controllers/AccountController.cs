@@ -42,18 +42,21 @@ namespace Metro_Asset_System.Controllers
         public ActionResult Login(LoginVM loginVM) {
 
             var data = accountRepository.Login(loginVM.Username,loginVM.Password);
+            var employeeData = employeeRepository.GetByUsername(loginVM.Username);
+
+            var sendData = new { NIK = employeeData.NIK, FirstName= employeeData.FirstName, Role = employeeData.Role};
             switch (data)
-            {
+            {               
                 case 1:
-                    return Ok(new { status = "Login Successed..." });
+                    return Ok(sendData);
                 case 2:
-                    return StatusCode(403,new { status = "Your email was not verificated..." });
+                    return StatusCode(403, sendData);
                 case 3:
-                    return StatusCode(403, new { status = "Incorrect password..." });
+                    return StatusCode(403, sendData);
                 case 4:
-                    return StatusCode(403, new { status = "Username was not registered..." });
+                    return StatusCode(403, sendData);
                 default:
-                    return NotFound(new { status = "Account is not identified..." });
+                    return NotFound(sendData);
             }
         }
 

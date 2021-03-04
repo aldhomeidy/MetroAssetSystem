@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -29,7 +31,7 @@
         <p id="time-part" class="d-none d-md-inline form-inline ml-0 mr-auto mt-3 text-light"></p>
 
         <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mt-3">
-            <p class="text-light">Welcome, Aldho</p>
+            <p class="text-light">Welcome, @HttpContextAccessor.HttpContext.Session.GetString("Name")</p>
         </div>
         <!-- Navbar-->
         <ul class="navbar-nav ml-auto ml-md-0">
@@ -37,9 +39,9 @@
                 <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="https://localhost:44342/employee/profile">Profile</a>
+                    <a class="dropdown-item" href="https://localhost:44342/auth/profile">Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="https://localhost:44342/employee/logout">Logout</a>
+                    <a class="dropdown-item" href="https://localhost:44342/auth/logout">Logout</a>
                 </div>
             </li>
         </ul>
@@ -74,11 +76,13 @@
     <script src="/vendor/sb-admin/js/scripts.js"></script>
     <script src="/vendor/fontawesome5/js/all.min.js"></script>
 
+    @* Edward *@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @*  *@
 
-
+    <script src="~/vendor/sweetalert/sweetalert.min.js"></script>
     @RenderSection("ScriptsLink", required: false)
 
     <script>
@@ -89,6 +93,7 @@
                     .substring(0, 3) + ', '
                     + momentNow.format('DD MMMM YYYY'));
             }, 100);
+            let table = null;
             @RenderSection("ScriptsDocReady", required: false)
         });
     @RenderSection("Scripts", required: false)
