@@ -156,6 +156,51 @@ namespace Metro_Asset_System.Repositories.Data
             return result;
         }
 
+        public int GetOnGoingRequest(string employeeId)
+        {
+            int result = 0;
+
+            string connectStr = Configuration.GetConnectionString("MyConnection");
+
+            using (IDbConnection db = new SqlConnection(connectStr))
+            {
+                string readSp = "SP_GetOnGoinRequest";
+                var parameter = new { EmployeeId = employeeId };
+                result = (int)db.Query(readSp, parameter, commandType: CommandType.StoredProcedure).Count();
+            }
+            return result;
+        }
+
+        public int GetAcceptedRequest(string employeeId)
+        {
+            int result = 0;
+
+            string connectStr = Configuration.GetConnectionString("MyConnection");
+
+            using (IDbConnection db = new SqlConnection(connectStr))
+            {
+                string readSp = "SP_GetAcceptedRequest";
+                var parameter = new { EmployeeId = employeeId };
+                result = (int)db.Query(readSp, parameter, commandType: CommandType.StoredProcedure).Count();
+            }
+            return result;
+        }
+
+        public int GetRejectedRequest(string employeeId)
+        {
+            int result = 0;
+
+            string connectStr = Configuration.GetConnectionString("MyConnection");
+
+            using (IDbConnection db = new SqlConnection(connectStr))
+            {
+                string readSp = "SP_GetRejectedRequest";
+                var parameter = new { EmployeeId = employeeId };
+                result = (int)db.Query(readSp, parameter, commandType: CommandType.StoredProcedure).Count();
+            }
+            return result;
+        }
+
         public IEnumerable<Request> GetByConditon(string condition, string requesterid)//for employee and procurement employee
         {
             if (requesterid == null)// untuk procurement employee, get tanpa requester 

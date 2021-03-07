@@ -80,7 +80,7 @@ namespace MAS.Client.Controllers
             return View("~/Views/Auth/EmailConfirmed.cshtml");           
         }
 
-       /* [HttpPost("/{field}")]
+        /* [HttpPost("/{field}")]
         public HttpStatusCode Check(string field,RegisterVM registerVM)
         {
             var httpClient = new HttpClient();
@@ -125,6 +125,18 @@ namespace MAS.Client.Controllers
                 return View("~/Views/ProcurementManager/MyProfile.cshtml");
                 //return RedirectToAction("Index", "Employee");
             }
+        }
+
+        [HttpPost]
+        public HttpStatusCode ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            var httpClient = new HttpClient();
+            changePasswordVM.NIK = HttpContext.Session.GetString("Id");
+
+            StringContent content = new StringContent(JsonConvert.SerializeObject(changePasswordVM), Encoding.UTF8, "application/json");
+
+            var result = httpClient.PutAsync("https://localhost:44329/api/Account/ChangePassword", content).Result;
+            return result.StatusCode;
         }
     }    
 }

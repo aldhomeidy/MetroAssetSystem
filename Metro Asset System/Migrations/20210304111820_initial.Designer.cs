@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metro_Asset_System.Migrations
 {
     [DbContext(typeof(MyContext))]
-<<<<<<< HEAD:Metro Asset System/Migrations/20210301152826_initial.Designer.cs
-    [Migration("20210301152826_initial")]
+    [Migration("20210304111820_initial")]
     partial class initial
-=======
-    [Migration("20210225062514_addAllModel")]
-    partial class addAllModel
->>>>>>> origin/aldho:Metro Asset System/Migrations/20210225062514_addAllModel.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

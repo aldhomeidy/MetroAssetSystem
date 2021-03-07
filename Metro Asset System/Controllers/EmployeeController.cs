@@ -105,6 +105,52 @@ namespace Metro_Asset_System.Controllers
             }
         }
 
+
+        [HttpGet("OnGoingRequest")]
+        public ActionResult GetCurrentRequest(string employeeId)
+        {
+            var data = requestRepository.GetCurrentRequest(employeeId);
+            if (data > 0)
+            {
+                return Ok(new { data = data, status = "Ok" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal server error..." });
+            }
+        }
+
+
+        [HttpGet("CurrentRequest")]
+        public ActionResult GetCurrentRequest(string employeeId)
+        {
+            var data = requestRepository.GetCurrentRequest(employeeId);
+            if (data > 0)
+            {
+                return Ok(new { data = data, status = "Ok" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal server error..." });
+            }
+        }
+
+
+        [HttpGet("CurrentRequest")]
+        public ActionResult GetCurrentRequest(string employeeId)
+        {
+            var data = requestRepository.GetCurrentRequest(employeeId);
+            if (data > 0)
+            {
+                return Ok(new { data = data, status = "Ok" });
+            }
+            else
+            {
+                return StatusCode(500, new { status = "Internal server error..." });
+            }
+        }
+
+
         [HttpPut("UpdateEmployeeRole")]
         public ActionResult UpdateEmployeeRole(UpdateEmployeeRoleVM updateEmployeeRoleVM)
         {
@@ -116,6 +162,21 @@ namespace Metro_Asset_System.Controllers
             else
             {
                 return StatusCode(500, new { status = "Internal server error..." });
+            }
+        }
+
+        [HttpPost("GetEmployeeData")]
+        public ActionResult GetEmployeeData(EmployeeVM employeeVM) 
+        {
+            var NIK = employeeVM.NIK;
+            var data = employeeRepository.GetByNIK(NIK);
+            if (data != null) 
+            { 
+                return Ok(data);
+            }
+            else 
+            {
+                return StatusCode(500, data);
             }
         }
     }

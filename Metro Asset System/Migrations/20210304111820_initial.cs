@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Metro_Asset_System.Migrations
 {
-<<<<<<< HEAD:Metro Asset System/Migrations/20210301152826_initial.cs
     public partial class initial : Migration
-=======
-    public partial class addAllModel : Migration
->>>>>>> origin/aldho:Metro Asset System/Migrations/20210225062514_addAllModel.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

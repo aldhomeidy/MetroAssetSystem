@@ -231,3 +231,11 @@ C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\De
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Category.cshtml.g.cs
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Department.cshtml.g.cs
 C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Employee.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Auth\EmailConfirmed.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Invoice.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\MyProfile.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementManager\Approval.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementManager\MyProfile.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\RequesterManager\Approval.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\RequesterManager\MyProfile.cshtml.g.cs
+C:\Users\Edward\source\05.Git\Final Project 2\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\MyProfile.cshtml.g.cs

@@ -83,20 +83,20 @@
                             <div class="form-group col">
                                 <label for="phone">Phone Number</label>
                                 <input type="text" class="form-control" placeholder="Phone Number"
-                                       id="phone" name="phone" autocomplete="off">                            
+                                       id="phone" name="phone" autocomplete="off">
                             </div>
-                        </div>                     
+                        </div>
                         <div class="form-row err-custom">
-                                <label class="col-form-label col-sm-2 float-sm-left pt-0">Gender</label>                           
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="male" value="0" checked>
-                                    <label class="form-check-label" for="male">Male</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="female" value="1">
-                                    <label class="form-check-label" for="female">Female</label>
-                                </div>
-                        </div>                      
+                            <label class="col-form-label col-sm-2 float-sm-left pt-0">Gender</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="0" checked>
+                                <label class="form-check-label" for="male">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="1">
+                                <label class="form-check-label" for="female">Female</label>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary w-100 mt-3" id="registBtn">Register <img id="loaderRegist" src="~/assets/images/loader.gif" width="4%" /></button>
                     </form>
                 </div>
@@ -296,18 +296,17 @@
 
         function Register() {
             debugger;
-            console.log("Login function");
             $('#loaderRegister').show();
-            var Register = new Object();           
+            var Register = new Object();
             Register.FirstName = $('#firstName').val();
             Register.LastName = $('#lastName').val();
             Register.Username = $('#username_').val();
             Register.Email = $('#email').val();
             Register.Birthday = $('#birthday').val();
             Register.Phone = $('#phone').val();
-            Register.Gender = $('#gender').val();            
+            Register.Gender = $('#gender').val();
             $.ajax({
-                type:'POST',
+                type: 'POST',
                 url: '/Auth/Register',
                 data: Register
             }).done((result) => {
@@ -316,14 +315,14 @@
                     swal({
                         title: "Success!",
                         text: "Register Account success. Please check your email to verificate",
-                        icon: "success"                        
+                        icon: "success"
                     });
-                     ClearRegistForm();
-                } 
+                    ClearRegistForm();
+                }
                 else {
-                      swal("Register failed. Please recheck all your input field", {
+                    swal("Register failed. Please recheck all your input field", {
                         icon: "warning",
-                    });               
+                    });
                 }
             }).fail((error) => {
                 console.log(error);

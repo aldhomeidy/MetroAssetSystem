@@ -58,5 +58,11 @@ namespace Metro_Asset_System.Repositories.Data
             var data = myContext.Employees.Include(e => e.Account).Where(a => a.Account.Username == username).FirstOrDefault();
             return data;
         }
+
+        public Employee GetByNIK(string NIK) 
+        {
+            var data = myContext.Employees.Where(e => e.NIK == NIK).FirstOrDefault();
+            return data;
+        }
     }
 }

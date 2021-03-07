@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Metro_Asset_System.Models.Employee>
+
+@{
     Layout = "~/Views/Template/DashboardBase.cshtml";
 }
 @section Menu{
@@ -131,9 +133,67 @@
                         <input type="password" class="form-control" id="confirmPassword"
                                placeholder="Retype your new password">
                     </div>
-                    <button type="submit" class="btn btn-dark w-100">Save</button>
+                    <button type="submit" class="btn btn-dark w-100" id="buttonsubmit" onclick="ChangePassword();">Save</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section scripts{
+
+        function ChangePassword() {
+            debugger;
+            var ChangePassword = new Object();
+            ChangePassword.oldPassword = $("#currentPassword").val();
+            ChangePassword.newPassword = $("#newPassword").val();
+            ChangePassword.confirmPassword = $("#confirmPassword").val();
+            $.ajax({
+                type: 'POST',
+                url: '/Auth/ChangePassword',
+                data: ChangePassword
+            }).done((result) => {
+                if (result == 200) {
+                    swal({
+                        title: "Success!",
+                        text: "Change Password Success",
+                        icon: "success"
+                    });
+                }
+                else {
+                    swal("Register failed. Please recheck all your input field", {
+                        icon: "warning",
+                    });
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+        }
+
+}
+
+
+
+        @*$.(document).ready(function () {
+            debugger;
+            let pinaltyList = "";
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:44329/api/Employee/' + id,
+                data: 'data'
+            }).done((result) => {
+                if (result.status == "Ok") {
+                    let hasil = "";
+                    $('#firstName').html(result.data.firstName);
+                    $('#lastName').html(result.data.lastName);
+                }
+                else {
+                    swal("Failed to get data", {
+                        icon: "warning",
+                    });
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+
+        });*@

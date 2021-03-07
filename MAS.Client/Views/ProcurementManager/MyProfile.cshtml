@@ -131,9 +131,42 @@
                         <input type="password" class="form-control" id="confirmPassword"
                                placeholder="Retype your new password">
                     </div>
-                    <button type="submit" class="btn btn-dark w-100">Save</button>
+                    <button type="submit" class="btn btn-dark w-100" id="buttonsubmit" onclick="ChangePassword();">Save</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
+@section scripts{
+
+        function ChangePassword() {
+            debugger;
+            var ChangePassword = new Object();
+            ChangePassword.oldPassword = $("#currentPassword").val();
+            ChangePassword.newPassword = $("#newPassword").val();
+            ChangePassword.confirmPassword = $("#confirmPassword").val();
+            $.ajax({
+                type: 'POST',
+                url: '/Auth/ChangePassword',
+                data: ChangePassword
+            }).done((result) => {
+                if (result == 200) {
+                    swal({
+                        title: "Success!",
+                        text: "Change Password Success",
+                        icon: "success"
+                    });
+                }
+                else {
+                    swal("Register failed. Please recheck all your input field", {
+                        icon: "warning",
+                    });
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+        }
+
+}

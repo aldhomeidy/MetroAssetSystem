@@ -68,10 +68,6 @@ namespace MAS.Client.Controllers
             return dataJson;
         }
 
-        // Edward
-        // public IActionResult Index()
-        // {
-        //     return View();
-        // }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Metro_Asset_System.ViewModels;
+﻿using Metro_Asset_System.Models;
+using Metro_Asset_System.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -18,7 +19,7 @@ namespace MAS.Client.Controllers
         {
             //condition check, will return different view with different roles
             if (HttpContext.Session.GetInt32("Role") == 0) //employee
-            {                
+            {
                 return View("~/Views/Requester/Index.cshtml");
             }
             else if (HttpContext.Session.GetInt32("Role") == 1)//emp manager
@@ -35,14 +36,14 @@ namespace MAS.Client.Controllers
             }
             else //belum login
             {
-                return RedirectToAction("Index","Auth");
+                return RedirectToAction("Index", "Auth");
             }
-            
+
         }
 
         public new ActionResult Request()
         {
-            if(HttpContext.Session.GetInt32("Role") != 0 ) //belum login dan tidak ada hak akses
+            if (HttpContext.Session.GetInt32("Role") != 0) //belum login dan tidak ada hak akses
             {
                 return RedirectToAction("Index", "Auth");
             }
@@ -58,31 +59,35 @@ namespace MAS.Client.Controllers
             StringContent content = new StringContent(JsonConvert.SerializeObject(requestVM), Encoding.UTF8, "application/json");
 
             var result = httpClient.PostAsync("https://localhost:44329/api/Employee/Request", content).Result;
-            return result.StatusCode;            
+            return result.StatusCode;
         }
 
         //Aldho
         [Route("employee/add/request")]
-        public ActionResult AddRequest() 
+        public ActionResult AddRequest()
         {
             if (HttpContext.Session.GetInt32("Role") != 0) //belum login dan tidak ada hak akses
             {
                 return RedirectToAction("Index", "Auth");
             }
             return View("~/Views/Requester/CreateRequest.cshtml");
-        }        
+        }
 
-        // Edward
-        // [Route("employee/invoice")]
-        // public ActionResult Invoice()
-        // {
-        //     return View("~/Views/Requester/Invoice.cshtml");
-        // }
+        //[HttpGet("Auth/Profile")]
+        public Employee GetEmployeeData()
+        {
+            var employee = new Employee()
+            {
+                NIK = HttpContext.Session.GetString("Id")
+            };
+            var httpClient = new HttpClient();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
 
-        // [Route("employee/add/request")]
-        // public ActionResult AddRequest() 
-        // {
-        //     return View("~/Views/Auth/MyProfile.cshtml");
-        // }
+            var result = httpClient.PostAsync("https://localhost:44329/api/Employee/GetEmployeeData", content).Result;
+            var data = result.Content.ReadAsStringAsync().Result;
+            var dataJson = JsonConvert.DeserializeObject<Employee>(data);
+
+            return dataJson;
+        }
     }
 }
