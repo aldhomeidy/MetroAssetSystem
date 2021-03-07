@@ -76,14 +76,14 @@
     @RenderSection("ScriptsLink", required: false)
 
     <script>
+        window.table = null;
         $(document).ready(function () {
             var interval = setInterval(function () {
                 var momentNow = moment();
                 $('#time-part').html('<i class="far fa-clock"></i> ' + momentNow.format('A hh:mm:ss') + ' <i class="far fa-calendar-alt"></i> ' + momentNow.format('dddd')
                     .substring(0, 3) + ', '
                     + momentNow.format('DD MMMM YYYY'));
-            }, 100);
-            let table = null;
+            }, 100);            
             @RenderSection("ScriptsDocReady", required: false)
         });
     @RenderSection("Scripts", required: false)

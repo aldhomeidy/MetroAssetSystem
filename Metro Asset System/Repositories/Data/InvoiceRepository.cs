@@ -26,6 +26,7 @@ namespace Metro_Asset_System.Repositories.Data
             this.assetRepository = assetRepository;
         }
 
+        #region Transaction
         public int CreateInvoice(CreateInvoiceVM createInvoiceVM)
         {
             int max = 0;
@@ -181,7 +182,10 @@ namespace Metro_Asset_System.Repositories.Data
             }
         }
 
-
+        #endregion
+        
+        
+        #region GetData
         public IEnumerable<Invoice> GetByCondition(string condition) {
 
             if (condition == "ongoing") { 
@@ -194,5 +198,20 @@ namespace Metro_Asset_System.Repositories.Data
                 return data;
             }
         }
+
+        public IEnumerable<Invoice> GetByRequester(string requesterId, string condition) {
+
+            if (condition == "ongoing") { 
+                var data = myContext.Invoices.Where(i =>i.Request.RequesterId==requesterId && i.Status == StatusInvoice.On_Going);
+                return data;
+            }
+            else 
+            {   
+                var data = myContext.Invoices.Where(i => i.Request.RequesterId == requesterId && i.Status != StatusInvoice.On_Going);
+                return data;
+            }
+        }
+
+        #endregion
     }
 }

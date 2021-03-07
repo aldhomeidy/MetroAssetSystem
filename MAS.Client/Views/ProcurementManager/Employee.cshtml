@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "~/Views/Template/DashboardBase.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css">
+}
+@section Menu{
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Manager</div>
+        <a class="nav-link" href="https://localhost:44342/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Dashboard
+        </a>
+        <a class="nav-link" href="https://localhost:44342/manager/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+            Employee
+        </a>
+        <a class="nav-link" href="https://localhost:44342/manager/approval">
+            <div class="sb-nav-link-icon"><i class="far fa-edit"></i></div>
+            Manage Request
+        </a>
+    </div>
+}
+
+<div class="table-responsive mt-4">
+    <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Total Requests</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Total Requests</th>
+            </tr>
+        </tfoot>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+@section ScriptsLink{
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+}
+
+@section ScriptsDocReady{    
+   table = $('#myTable').DataTable({
+            "ajax": {
+                "url": "https://localhost:44329/api/employee/data/requester",
+                "datatype": "json",
+                "dataSrc": "data"
+            },
+            "columnDefs": [
+                {
+                    "targets": [1,4],
+                    "searchable": true,
+                    "orderable": true,
+                },
+                {
+                    "targets": [0,2,3],
+                    "searchable": false,
+                    "orderable": false
+                }
+            ],
+            "columns": [
+                {
+                    "data": 'nik',
+                    "render": function (data, type, row, meta) {
+                        return '<a href="https://localhost:44342/manager/details/'+data+'">'+data+'</a>';
+                    }
+                },
+                {                  
+                    "render": function (data, type, row, meta) {
+                       return row.firstName + " " + row.lastName;
+                    }
+                },
+                {
+                    "data": 'email'                   
+                },               
+                {
+                    "data": 'phone',
+                },
+                {
+                    "data": 'request.length'         
+                }
+            ]
+        });    
+}

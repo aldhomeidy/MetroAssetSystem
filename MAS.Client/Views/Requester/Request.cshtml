@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "~/Views/Template/DashboardBase.cshtml";
 }
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 @section Styles{
     <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css">
 }
@@ -15,7 +17,7 @@
             <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
             Request
         </a>
-        <a class="nav-link disabled" href="https://localhost:44342/employee/invoice">
+        <a class="nav-link" href="https://localhost:44342/employee/invoice">
             <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
             Invoice
         </a>
@@ -47,8 +49,7 @@
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Requested On</th>
-                        <th>Status</th>
+                        <th>Requested On</th>                       
                         <th>Notes</th>
                         <th>Action</th>
                     </tr>
@@ -56,8 +57,7 @@
                 <tfoot>
                     <tr>
                         <th>Id</th>
-                        <th>Requested On</th>
-                        <th>Status</th>
+                        <th>Requested On</th>                       
                         <th>Notes</th>
                         <th>Action</th>
                     </tr>
@@ -76,7 +76,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detailsModalLabel">Request Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -84,46 +84,30 @@
                 <table cellpadding="5">
                     <tr>
                         <td>Request Id</td>
-                        <td>: #RQT211</td>
+                        <td>:</td>
+                        <td id="setId"></td>
                     </tr>
                     <tr>
                         <td>Requested On</td>
-                        <td>: 01/01/2021</td>
+                        <td>:</td>
+                        <td id="setRequestDate"></td>
                     </tr>
                     <tr>
                         <td>From</td>
-                        <td>: 01/01/2021</td>
+                        <td>:</td>
+                        <td id="setFromDate"></td>
                     </tr>
                     <tr>
                         <td>Until</td>
-                        <td>: 01/01/2021</td>
-                    </tr>
-                    <tr>
-                        <td>Status</td>
-                        <td>
-                            : <span class="badge badge-sm text-primary">
-                                <i class="fas fa-location-arrow"></i> Processed
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Note</td>
-                        <td>: -</td>
+                        <td>:</td>
+                        <td id="setUntilDate"></td>
                     </tr>
                 </table>
                 <hr>
                 <h5>Items List</h5>
-                <ol>
-                    <li>#213 - Laptop Asus A456UR Navy</li>
-                </ol>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary"
-                        data-dismiss="modal">
-                    Close
-                </button>
-                <button type="button" class="btn btn-sm btn-danger">Abort</button>
-            </div>
+                <ol id="itemList">
+                </ol>              
+            </div>            
         </div>
     </div>
 </div>
@@ -134,127 +118,136 @@
     <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
 }
 
-@section ScriptsDocReady{
-    table =  $('#myTable').DataTable({
-    "ajax": {
-    "url": "https://localhost:44342/Request/else",
-    "datatype": "json",
-    "dataSrc": "requestDetails"
-    },
-    "columnDefs": [
-    {
-    "targets": [0,1],
-    "searchable": true,
-    "orderable" : true,
-    },
-    {
-    "targets": [2,3,4],
-    "searchable": false,
-    "orderable": false
-    }
-    ],
-    "columns": [
-    {
-    "render": function (data, type, row) {
-    return row.date;
-    }
-    },
-    {
-    "render": function (data, type, row) {
-    return row.date;
-    }
-    },
-    {
-    "render": function (data, type, row) {
-    return row.date;
-    }
-    },
-    {
-    "render": function (data, type, row) {
-    return row.date;
-    }
-    },
-    {
-    "render": function (data, type, row) {
-    return row.date;
-    }
-    }
-    ]
-    });
+@section ScriptsDocReady{        
+        table = $('#myTable').DataTable({                   
+            "ajax": {
+                "type":"GET",
+                "url": 'https://localhost:44329/api/Request/History/'+'rejected'+'/'+@HttpContextAccessor.HttpContext.Session.GetString("Id"),
+                "datatype": "json",                
+                "dataSrc" : ""
+            },
+            "columnDefs": [
+                {
+                    "targets": [0, 1],
+                    "searchable": true,
+                    "orderable": true,
+                },
+                {
+                    "targets": [2, 3],
+                    "searchable": false,
+                    "orderable": false
+                }
+            ],
+            "columns": [
+                {
+                    "data": 'requestId'
+                },
+                {
+                    "data": 'date',
+                    "render": function (data, type, row, meta) {
+                        return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }                       
+                },               
+                {
+                    "data": 'note'
+                },
+                {
+                    "data": 'requestId',
+                    "render": function (data, type, row, meta) {                      
+                        return '<a href="javascript:void(0)" class="btn btn-sm btn-light" onclick="Details(\'' + data + '\')"><i class="far fa-check-square"></i></a>';        
+                    }                                        
+                }
+            ]
+        });
 
-    $("#current-data").click(function(){
-    LoadData("current");
-    });
-    $("#ongoing-data").click(function(){
-    LoadData("ongoing");
-    });
+        $("#current-data").click(function () {
+            LoadData("current");
+        });
+        $("#ongoing-data").click(function () {
+            LoadData("ongoing");
+        });   
 }
 
 @section Scripts{
+
     function LoadData(condition){
-    var card = "";
-    var status="";
-    $.get("https://localhost:44342/Request/"+condition, function(result, status){
-    }).fail(function() {
-    alert( "error" );
-    }).done(function(result) {
-    if(result.length==0){
-    card+="<p>No Data Available</p>";
-    }
-    else
-    {
-    console.log(result);
-    $.each(result, function (i, field) {
-    var loanDate = moment(field.loanDate, 'YYYY-MM-DD').format('DD MMMM YYYY');
-    var returnDate = moment(field.returnDate, 'YYYY-MM-DD').format('DD MMMM YYYY');
-    if(field.requestStatus==0){
-    status+='<span class="badge badge-sm text-warning">
-        '+
-        '<i class="far fa-clock"></i> Waiting Approval Level 1'+
-        '
-    </span>';
-    }else if(field.requestStatus==1){
-    status+='<span class="badge badge-sm text-warning">
-        '+
-        '<i class="far fa-clock"></i> Waiting Approval Level 2'+
-        '
-    </span>';
-    }else if(field.requestStatus==2){
-    status+='<span class="badge badge-sm text-success">
-        '+
-        '<i class="far fa-check-circle"></i> Approved'+
-        '
-    </span>';
-    }else{
-    status+='<span class="badge badge-sm text-primary">
-        '+
-        '<i class="fas fa-location-arrow"></i> Processed'+
-        '
-    </span>';
-    }
-    card+='<div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width: 18rem;">
-        '+
-        '<div class="card-header d-flex justify-content-between p-2">
-            '+
-            '<h5 class="text-primary">#'+field.id+'</h5>'+
-            '<p>01/01/2021</p>'+
-            '
-        </div>'+
-        '<div class="card-body p-2">
-            '+
-            '<p class="my-0">Status: '+status+'</p>'+
-            '<p class="my-0">Total Item : 1</p>'+
-            '<p class="my-0">From : '+loanDate+'</p>'+
-            '<p class="my-0">Until : '+returnDate+'</p>'+
-            '<a href="javascript:void(0)" class="badge badge-sm badge-primary float-right" data-toggle="modal" data-target="#detailsModal">Detail</a>'+
-            '
-        </div>'+
-        '
-    </div>';
-    });
-    }
-    $('#listCardData').html(card);
-    });
+        var card = "";
+        var status="";
+        $.get("https://localhost:44342/Request/"+condition, function(result, status){
+        }).fail(function() {
+            alert( "error" );
+        }).done(function(result) {
+                if(result.length==0){
+                    card+="<p>No Data Available</p>";
+                }
+                else
+                {                    
+                    $.each(result, function (i, field) {
+                        var loanDate = moment(field.loanDate, 'YYYY-MM-DD').format('DD MMMM YYYY');
+                        var returnDate = moment(field.returnDate, 'YYYY-MM-DD').format('DD MMMM YYYY');
+                        if(field.requestStatus==0){
+                        status+='<span class="badge badge-sm text-warning">'+
+                            '<i class="far fa-clock"></i> Waiting Approval Level 1'+
+                            '</span>';
+                        }else if(field.requestStatus==1){
+                        status+='<span class="badge badge-sm text-warning">'+
+                            '<i class="far fa-clock"></i> Waiting Approval Level 2'+
+                            '</span>';
+                        }else if(field.requestStatus==2){
+                        status+='<span class="badge badge-sm text-success">'+
+                            '<i class="far fa-check-circle"></i> Approved'+
+                            '</span>';
+                        }else{
+                        status+='<span class="badge badge-sm text-primary">'+
+                            '<i class="fas fa-location-arrow"></i> Processed'+
+                            '</span>';
+                        }
+                        card+='<div class="card text-white bg-dark mb-3 w-100 h-50" style="max-width: 18rem;">'+
+                            '<div class="card-header d-flex justify-content-between p-2">'+
+                                '<h5 class="text-primary">#'+field.id+'</h5>'+
+                                '<p>01/01/2021</p>'+
+                                '</div>'+
+                            '<div class="card-body p-2">'+
+                                '<p class="my-0">Status: '+status+'</p>'+
+                                '<p class="my-0">Total Item : 1</p>'+
+                                '<p class="my-0">From : '+loanDate+'</p>'+
+                                '<p class="my-0">Until : '+returnDate+'</p>'+
+                                '<a href="javascript:void(0)" class="badge badge-sm badge-primary float-right" data-toggle="modal" data-target="#detailsModal"  onclick="Details(\'' + field.id + '\')">Detail</a>'+
+                                '</div>'+
+                            '</div>';
+                        status="";
+                });
+            }
+            $('#listCardData').html(card);
+        });       
     }
 
+    function Details(id) {
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:44329/api/Request/' + id,
+                data: 'data'
+            }).done((result) => {
+                if (result.status == "Ok") {
+                    let hasil = "";
+                    $('#detailsModal').modal('show');
+                    $('#setId').html('#' + result.data.id);
+                    $('#setRequestDate').html(moment(result.data.requestDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $('#setFromDate').html(moment(result.data.loanDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $('#setUntilDate').html(moment(result.data.returnDate, "YYYY-MM-DD").format("DD MMMM YYYY"));      
+                    $.each(result.data.itemRequest, function (key, field) {
+                        hasil += '<li>#' + field.asset.id + ' - ' + field.asset.name + '</li>';
+                    });             
+                    $('#itemList').html(hasil);                 
+                }
+                else {
+                    swal("Failed to get data", {
+                        icon: "warning",
+                    });
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+    }
+    
 }

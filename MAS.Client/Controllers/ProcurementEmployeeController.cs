@@ -56,6 +56,7 @@ namespace MAS.Client.Controllers
 
             var result = httpClient.PostAsync("https://localhost:44329/api/Employee/Return", content).Result;
             return result.StatusCode;
-        }
+        }       
+
     }
 }

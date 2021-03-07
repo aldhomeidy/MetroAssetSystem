@@ -1,0 +1,210 @@
+﻿@{
+    Layout = "~/Views/Template/DashboardBase.cshtml";
+}
+@section Menu{
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Manager</div>
+        <a class="nav-link" href="https://localhost:44342/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Dashboard
+        </a>
+        <a class="nav-link" href="https://localhost:44342/manager/subordinates">
+            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+            My Subordinate
+        </a>
+        <a class="nav-link" href="https://localhost:44342/manager/approval">
+            <div class="sb-nav-link-icon"><i class="far fa-edit"></i></div>
+            Manage Request
+        </a>
+    </div>
+}
+
+<div class="table-responsive mt-4">
+    <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Request Id</th>
+                <th>Requested On</th>
+                <th>From</th>
+                <th>Until</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Request Id</th>
+                <th>Requested On</th>
+                <th>From</th>
+                <th>Until</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </tfoot>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<!-- Start Modal -->
+<div class="modal fade" id="detailsModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Request Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="5">
+                    <tr>
+                        <td>Request Id</td>
+                        <td>:</td>
+                        <td id="setId"></td>
+                    </tr>
+                    <tr>
+                        <td>Requested On</td>
+                        <td>:</td>
+                        <td id="setRequestDate"></td>
+                    </tr>
+                    <tr>
+                        <td>From</td>
+                        <td>:</td>
+                        <td id="setFromDate"></td>
+                    </tr>
+                    <tr>
+                        <td>Until</td>
+                        <td>:</td>
+                        <td id="setUntilDate"></td>
+                    </tr>                                     
+                </table>
+                <hr>
+                <h5>Items List</h5>
+                <ol id="itemList">                    
+                </ol>                
+            </div>         
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
+
+
+@section ScriptsLink{
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+}
+
+@section ScriptsDocReady{    
+   table = $('#myTable').DataTable({
+            "ajax": {
+                "url": "https://localhost:44329/api/request/details/"+@ViewBag.EmployeeId,
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "searchable": true,
+                    "orderable": true,
+                },
+                {
+                    "targets": [1,2,3,4,5],
+                    "searchable": false,
+                    "orderable": false
+                }
+            ],
+            "columns": [
+                {
+                    "data": 'id'                    
+                },
+                {                  
+                    "render": function (data, type, row, meta) {
+                       return moment(row.loanDate, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }
+                },
+                {
+                    "render": function (data, type, row, meta) {
+                       return moment(row.requestDate, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }                   
+                },               
+                {
+                    "render": function (data, type, row, meta) {
+                       return moment(row.returnDate, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }
+                },
+                {
+                    "render": function (data, type, row, meta) {
+                        if(row.invoice==null){
+                            return '<span class="badge badge-sm text-danger">'+
+                                '<i class="far fa-times-circle"></i> Unfinished'+
+                                '</span>';
+                        }else if(row.invoice.status=="1"){
+                            return '<span class="badge badge-sm text-success">'+
+                                '<i class="far fa-check-circle"></i> Finished Fine'+
+                                '</span>';
+                        }else if(row.invoice.status=="2"){
+                            return '<span class="badge badge-sm text-warning">'+
+                                '<i class="fas fa-exclamation-circle"></i> Finished With Problem'+
+                                '</span>';
+                        }else{
+                            return '<span class="badge badge-sm text-primary">'+
+                                '<i class="fas fa-paper-plane"></i> Finished With Problem'+
+                                '</span>';
+                        }                       
+                    }
+                },
+                {
+                    "data": 'id',
+                    "render": function (data, type, row, meta) {
+                        return '<a href="javascript:void(0)" class="btn btn-sm btn-light" onclick="Details(\'' + data + '\')"><i class="far fa-check-square"></i></a>';
+                    }         
+                }
+            ]
+        });  
+
+        $("#closeModal").click(function(){
+            ClearForm();
+        });       
+
+}
+
+@section Scripts{
+    function Details(id){
+        $.ajax({
+                type:'GET',
+                url: 'https://localhost:44329/api/Request/'+id,
+                data: 'data'
+            }).done((result) => {                
+                if (result.status == "Ok") {
+                    let hasil="";
+                    $('#detailsModal').modal('show');
+                    $('#setId').html('#'+result.data.id);
+                    $('#setRequestDate').html(moment(result.data.requestDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $('#setFromDate').html(moment(result.data.loanDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $('#setUntilDate').html(moment(result.data.returnDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $.each( result.data.itemRequest, function( key, field ) {
+                        hasil+='<li>#'+field.asset.id+' - '+field.asset.name+'</li>';                                        
+                    });
+                    $('#itemList').html(hasil);                        
+                } 
+                else {
+                      swal("Failed to get data", {
+                        icon: "warning",
+                    });               
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+    }
+
+    function ClearForm(){
+         $('#setId').html('');
+         $('#setRequestDate').html('');
+         $('#setFromDate').html('');
+         $('#setUntilDate').html('');
+         $('#itemList').html('');                           
+    }
+
+}

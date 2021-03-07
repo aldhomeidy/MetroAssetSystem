@@ -22,7 +22,7 @@
             <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
             Request
         </a>
-        <a class="nav-link disabled" href="https://localhost:44342/employee/invoice">
+        <a class="nav-link" href="https://localhost:44342/employee/invoice">
             <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
             Invoice
         </a>
@@ -120,210 +120,235 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 }
 
-@section ScriptsDocReady{
-    table = $('#myTable').DataTable({
-    "ajax": {
-    "url": "https://localhost:44329/api/Asset/GetAsset/available",
-    "datatype": "json",
-    "dataSrc": "data"
-    },
-    "columnDefs": [
-    {
-    "targets": [0, 1],
-    "searchable": true,
-    "orderable": true,
-    },
-    {
-    "targets": [2, 3, 4, 5, 6],
-    "searchable": false,
-    "orderable": false
-    }
-    ],
-    "columns": [
-    {
-    "data": 'id'
-    },
-    {
-    "data": 'name'
-    },
-    {
-    "data": 'pinalty.lowPinalty'
-    },
-    {
-    "data": 'pinalty.middlePinalty'
-    },
-    {
-    "data": 'pinalty.highPinalty'
-    },
-    {
-    "data": 'pinalty.lostPinalty'
-    },
-    {
-    "render": function (data, type, row, meta) {
-    if(row.loanStatus==0){
-    return '<a href="javascript:void(0)" class="btn btn-sm btn-light"><i class="far fa-plus-square" onclick="Add(\'' + row.id + '\')"></i></a>'
-    }else{
-    return 'Not Available'
-    }
-    }
-    }
-    ]
-    });
+@section ScriptsDocReady{        
 
-    $("#available-btn").click(function(){
-    table.ajax.url( 'https://localhost:44329/api/Asset/GetAsset/available').load();
-    });
-    $("#unavailable-btn").click(function(){
-    table.ajax.url( 'https://localhost:44329/api/Asset/GetAsset/unavailable').load();
-    });
+        table = $('#myTable').DataTable({
+            "ajax": {
+                "url": "https://localhost:44329/api/Asset/GetAsset/available",
+                "datatype": "json",
+                "dataSrc": "data"
+            },
+            "columnDefs": [
+                {
+                    "targets": [0, 1],
+                    "searchable": true,
+                    "orderable": true,
+                },
+                {
+                    "targets": [2, 3, 4, 5, 6],
+                    "searchable": false,
+                    "orderable": false
+                }
+            ],
+            "columns": [
+                {
+                    "data": 'id'
+                },
+                {
+                    "data": 'name'
+                },
+                {
+                    "data": 'pinalty.lowPinalty'
+                },
+                {
+                    "data": 'pinalty.middlePinalty'
+                },
+                {
+                    "data": 'pinalty.highPinalty'
+                },
+                {
+                    "data": 'pinalty.lostPinalty'
+                },
+                {
+                    "render": function (data, type, row, meta) {
+                        if (row.loanStatus == 0) {
+                            return '<a href="javascript:void(0)" class="btn btn-sm btn-light"><i class="far fa-plus-square" onclick="Add(\'' + row.id + '\')"></i></a>'
+                        } else {
+                            return 'Not Available'
+                        }
+                    }
+                }
+            ]
+        });
 
-    $(function () {
-    $(".date-input").datepicker({
-    format: 'dd/mm/yyyy',
-    autoclose: true,
-    todayHighlight: true,
-    leftArrow: '<i class="far fa-arrow-alt-circle-left"></i>',
-    rightArrow: '<i class="far fa-arrow-alt-circle-right"></i>'
-    });
-    });
+        $("#available-btn").click(function () {
+            table.ajax.url('https://localhost:44329/api/Asset/GetAsset/available').load();
+        });
+        $("#unavailable-btn").click(function () {
+            table.ajax.url('https://localhost:44329/api/Asset/GetAsset/unavailable').load();
+        });
 
-    $("#submit-btn").click(function (e) {
-    e.preventDefault();
-    let listCheck = $('#listCheck').val();
-    if (listCheck=='') {
-    swal("Warning!", "Please choose at least 1 items!", "warning");
-    }else if(requestForm.valid()){
-    Request();
-    }
-    });
+        $(function () {
+            $(".date-input").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                leftArrow: '<i class="far fa-arrow-alt-circle-left"></i>',
+                rightArrow: '<i class="far fa-arrow-alt-circle-right"></i>'
+            });
+        });
+     
+        $('#start').datepicker('setDate', new Date());
 
-    $("#reset-btn").click(function (e) {
-    ClearForm();
-    });
+        $("#submit-btn").click(function (e) {
+            e.preventDefault();
+            let listCheck = $('#listCheck').val();
+            let startDate = new Date($('#start').val());
+            let endDate = new Date($('#end').val());          
+            if (listCheck == '') {
+                swal("Warning!", "Please choose at least 1 items!", "warning");
+            } 
+            else if(endDate<=startDate){
+                swal("Warning!", "Until date should be more than from date", "warning");
+            }
+            else if(requestForm.valid()) {                       
+                Request();               
+            }
+        });
 
-    let requestForm = $("#requestForm");
+        $("#reset-btn").click(function(e) {                        
+            ClearForm();
+        });
 
-    requestForm.validate({
-    rules: {
-    start: {
-    required: true,
-    maxLoan: true
-    },
-    end: {
-    required: true
-    },
-    agreement: "required"
-    },
-    highlight: function (element) {
-    $(element).closest('.form-control').addClass('is-invalid');
-    $(element).closest('.form-control').removeClass('is-valid');
-    },
-    unhighlight: function (element) {
-    $(element).closest('.form-control').removeClass('is-invalid');
-    $(element).closest('.form-control').addClass('is-valid');
-    }, errorPlacement: function (error, element) {
-    if (element.is(":checkbox")) {
-    error.appendTo(element.parents(".agree"));
-    } else {
-    error.insertAfter(element)
-    }
-    }
-    })
+        let requestForm = $("#requestForm");
 
-    $.validator.addMethod("maxLoan", function (value, element) {
-    let start = new Date(value);
-    let now = new Date();
-    let maxDate = new Date(now);
-    maxDate.setDate(maxDate.getDate() + 5);
+        requestForm.validate({
+            rules: {
+                start: {
+                    required: true,
+                    maxLoan: true
+                },
+                end: {
+                    required: true                    
+                },
+                agreement: "required"
+            },
+            highlight: function (element) {
+                $(element).closest('.form-control').addClass('is-invalid');
+                $(element).closest('.form-control').removeClass('is-valid');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-control').removeClass('is-invalid');
+                $(element).closest('.form-control').addClass('is-valid');
+            }, errorPlacement: function (error, element) {
+                if (element.is(":checkbox")) {
+                    error.appendTo(element.parents(".agree"));
+                } else {
+                    error.insertAfter(element)
+                }
+            }
+        })
 
-    if (start > maxDate) {
-    return false;
-    } else {
-    return true;
-    }
-    }, "You only can loan for 5 days forward from now!");
+        $.validator.addMethod("maxLoan", function (value, element) {
+            let start = new Date(value);
+            let now = new Date();
+            let maxDate = new Date(now);
+            maxDate.setDate(maxDate.getDate() + 7);
+
+            if (start > maxDate) {
+                return false;
+            } else {
+                return true;
+            }
+        }, "You only can loan for 7 days forward from now!");        
+    
 
 }
 @section Scripts{
-    let countItems = 0;
-    let itemList = [];
-    var output = "";
-    function Add(id) {
-    if (itemList.includes(id)){
-    swal({
-    title: "Abort",
-    text: "You have add this item",
-    icon: "warning",
-    button: "I got it",
-    });
-    }else if(countItems>=3){
-    swal({
-    title: "Abort",
-    text: "You cann't add more than 3 items",
-    icon: "warning",
-    button: "I got it",
-    });
-    }
-    else{
-    CountItems(id);
-    DisplayItems(id);
-    $('#listCheck').val("true");
-    }
-    }
+    
+        let countItems = 0;
+        let itemList = [];
+        var output = "";
+        function Add(id) {
+            if (itemList.includes(id)) {
+                swal({
+                    title: "Abort",
+                    text: "You have add this item",
+                    icon: "warning",
+                    button: "I got it",
+                });
+            } else if (countItems >= 3) {
+                swal({
+                    title: "Abort",
+                    text: "You cann't add more than 3 items",
+                    icon: "warning",
+                    button: "I got it",
+                });
+            }
+            else {
+                CountItems(id);
+                DisplayItems(id);
+                $('#listCheck').val("true");
+            }
+        }
 
-    function CountItems(id){
-    itemList.push(id);
-    countItems+=1;
-    }
+        function CountItems(id) {
+            itemList.push(id);
+            countItems += 1;
+        }
 
-    function DisplayItems(id){
-    output+='<li>#'+id+'</li>';
-    $("#itemsList").html(output);
-    }
+        function DisplayItems(id) {
+            output += '<li>#' + id + '</li>';
+            $("#itemsList").html(output);
+        }
 
-    function ClearForm(){
-    $('#start').val('').removeClass("is-valid");
-    $('#end').val('').removeClass("is-valid");
-    $('#agreement').prop('checked', false);
-    $("#itemsList").empty();
-    $('#listCheck').val('');
-    countItems = 0;
-    itemList=[];
-    }
+        function ClearForm() {            
+            $('#start').val('').removeClass("is-valid");
+            $('#end').val('').removeClass("is-valid");
+            $('#agreement').prop('checked', false);
+            $('#itemsList').html('');
+            $('listCheck').val('');
+            countItems = 0;
+            itemList = [];
+            output="";
+        }
 
-    function Request(){
-    swal({
-    title: "Requesting...",
-    text: "Please wait",
-    button: false,
-    closeOnClickOutside: false,
-    });
-    var Request = new Object();
-    Request.StartDate = $('#start').val();
-    Request.EndDate = $('#end').val();
-    Request.Assets = itemList;
-    $.ajax({
-    type:'POST',
-    url: 'https://localhost:44342/employee/create',
-    data: Request
-    }).done((result) => {
-    if (result == 200) {
-    swal({
-    title: "Success!",
-    text: "Your request has been created",
-    icon: "success"
-    });
-    ClearForm();
-    $('#myTable').ajax.url( 'https://localhost:44329/api/Asset/GetAsset/available').load();
-    }
-    else {
-    swal("Failed to create request", {
-    icon: "warning",
-    });
-    }
-    }).fail((error) => {
-    console.log(error);
-    });
-    }
-
+        function Request() {
+            swal({
+                  title: 'Are you sure want to create this request?',
+                  text: "You cann't undo this action",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+                })
+                .then((ok) => {
+                  if (ok) {
+                    swal({
+                        title: "Requesting...",
+                        text: "Please wait",
+                        button: false,
+                        closeOnClickOutside: false,
+                    });
+                    var Request = new Object();
+                    Request.StartDate = $('#start').val();
+                    Request.EndDate = $('#end').val();
+                    Request.Assets = itemList;
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://localhost:44342/employee/create',
+                        data: Request
+                    }).done((result) => {
+                        if (result == 200) {
+                            swal({
+                                title: "Success!",
+                                text: "Your request has been created",
+                                icon: "success"
+                            });
+                            ClearForm();
+                            table.ajax.url('https://localhost:44329/api/Asset/GetAsset/available').load();
+                        }
+                        else {
+                            swal("Failed to create request", {
+                                icon: "warning",
+                            });
+                        }
+                    }).fail((error) => {
+                        console.log(error);
+                    });                    
+                  } else {
+                    swal("Please make sure your decision first!");
+                  }
+                });                    
+        }
+   
 }

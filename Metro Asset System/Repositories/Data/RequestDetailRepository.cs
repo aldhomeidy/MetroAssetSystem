@@ -30,6 +30,8 @@ namespace Metro_Asset_System.Repositories.Data
             this.Configuration = configuration;
         }
 
+        #region Transaction 
+
         public int ManageRequest(bool accepted, ManageRequestVM manageRequestVM)
         {
             Request request = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();            
@@ -53,7 +55,7 @@ namespace Metro_Asset_System.Repositories.Data
 
             if (resultCreateDetail > 0 && resultUpdateStatus > 0) 
             {
-                transactionContent.ManageRequest(identity,request);
+                //transactionContent.ManageRequest(identity,request);
                 return 1;
             }
             else
@@ -93,5 +95,26 @@ namespace Metro_Asset_System.Repositories.Data
                 return 0;
             }
         }
+
+        #endregion
+
+        #region Get Data
+        public IEnumerable<RequestDetail> GetByCondition(string condition, string requesterId) { //for requester 
+            if (condition == "rejected")
+            {
+                var data = myContext.RequestDetails.Where(rd => rd.Request.RequesterId == requesterId && rd.Status == StatusRequestDetail.Rejected);
+                return data;
+            }
+            else if (condition == "accepted")
+            {
+                var data = myContext.RequestDetails.Where(rd => rd.Request.RequesterId == requesterId && rd.Status == StatusRequestDetail.Accepted);
+                return data;
+            }
+            else {
+                var data = myContext.RequestDetails.Where(rd => rd.Request.RequesterId == requesterId && rd.Status == StatusRequestDetail.NotSet);
+                return data;
+            }
+        }
+        #endregion
     }
 }

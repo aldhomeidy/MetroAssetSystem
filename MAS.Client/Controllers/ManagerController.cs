@@ -29,9 +29,9 @@ namespace MAS.Client.Controllers
             }
         }
 
-        [Route("manager/approving")]
+        //[Route("manager/approving")]
         [HttpPost]
-        public HttpStatusCode CreateRequest(ManageRequestVM manageRequestVM)
+        public HttpStatusCode Approving(ManageRequestVM manageRequestVM)
         {
             manageRequestVM.EmployeeId = HttpContext.Session.GetString("Id");
             var httpClient = new HttpClient();
@@ -39,6 +39,27 @@ namespace MAS.Client.Controllers
 
             var result = httpClient.PutAsync("https://localhost:44329/api/Employee/ManageRequest", content).Result;
             return result.StatusCode;            
+        }
+
+        public ActionResult Subordinates()
+        {
+            if (HttpContext.Session.GetInt32("Role") != 1) //belum login dan tidak ada hak akses
+            {
+                return RedirectToAction("Index", "Auth");
+            }
+            return View("~/Views/RequesterManager/Subordinate.cshtml");
+        }
+
+        
+        [HttpGet("manager/details/{employeeId}")]
+        public ActionResult EmployeeDetails(string employeeId)
+        {
+            ViewBag.EmployeeId = employeeId;
+            return View("~/Views/RequesterManager/EmployeeDetails.cshtml");
+        }
+
+        public ActionResult Employee() {
+            return View("~/Views/ProcurementManager/Employee.cshtml");
         }
     }
 }

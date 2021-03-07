@@ -12,15 +12,14 @@ namespace Metro_Asset_System.Handler
 
         public void Send(string[] data)
         {
-            var time24 = DateTime.Now.ToString("ddMMyy");
-
+            var time24 = DateTime.Now.ToString("ddMMyy");            
             var message = "";
-            message += "<img src='./ images / logo.jpg' alt='#' style='display: inline-block; max-width: 7%; margin-right: 10px;'>" +
-                        "<div style =' display: inline-block;'>"+
-                        "< h3 style ='margin: 0;' > METROASSETS </ h3 >"+
-                              "< p style ='padding: 0;' > APL Tower, Podomoro City Jl.Let.Jend.S.Parman Kav. 28.Jakarta 11470 </ p >"+
-                        "</div >"+
-                        "< hr > ";
+            message += "<img src='https://simonas.kominfo.go.id/filedownload?tipeFile=single&namaFile=gambar_105.jpg' alt='#' style='display: inline-block; max-width: 12%; margin-right: 10px;'>" +
+                        "<div style ='display: inline-block;'>"+
+                        "<h3 style ='margin: 0;'> METROASSETS </h3>"+
+                              "<p style ='padding: 0;'> APL Tower, Podomoro City Jl.Let.Jend.S.Parman Kav. 28.Jakarta 11470 </p>"+
+                        "</div>"+
+                        "<hr> ";
             message += data[2];
 
             MailMessage mm = new MailMessage("1997HelloWorld1997@gmail.com", data[0])

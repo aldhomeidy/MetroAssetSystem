@@ -123,3 +123,10 @@ C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\net
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementManager\MyProfile.cshtml.g.cs
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\RequesterManager\MyProfile.cshtml.g.cs
 C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\MyProfile.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\Requester\Invoice.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementEmployee\Index.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementManager\Index.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\RequesterManager\Index.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\RequesterManager\Subordinate.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\RequesterManager\EmployeeDetails.cshtml.g.cs
+C:\RepoGithub\MCC\FINALPROJECT\PROJECT\MetroAssetSystem\MAS.Client\obj\Debug\netcoreapp3.1\Razor\Views\ProcurementManager\Employee.cshtml.g.cs

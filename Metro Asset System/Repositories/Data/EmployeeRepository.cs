@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Metro_Asset_System.Repositories.Data
 {
     public class EmployeeRepository : GeneralRepository<Employee, MyContext, string>
-    {       
+    {
         private readonly MyContext myContext;
         private readonly DbSet<Employee> employees;
 
@@ -23,6 +23,16 @@ namespace Metro_Asset_System.Repositories.Data
 
         public Employee GetByUsername(string username) {
             var data = myContext.Employees.Include(e => e.Account).Where(a => a.Account.Username == username).FirstOrDefault();
+            return data;
+        }
+
+        public List<Employee> GetSubordinate(string managerId) {
+            var data = myContext.Employees.Where(e => e.ManagerId == managerId).ToList();
+            return data;
+        }
+
+        public List<Employee> GetRequester() {
+            var data = myContext.Employees.Where(e => e.Role == EmployeeRole.Employee).ToList();
             return data;
         }
     }

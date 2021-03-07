@@ -23,23 +23,31 @@ namespace MAS.Client.Controllers
             }
             else if (HttpContext.Session.GetInt32("Role") == 1)//emp manager
             {
-                return View("~/Views/Requester/Index.cshtml");
+                return View("~/Views/RequesterManager/Index.cshtml");
             }
             else if (HttpContext.Session.GetInt32("Role") == 2)//proc manager
             {
-                return View("~/Views/Requester/Index.cshtml");
+                return View("~/Views/ProcurementManager/Index.cshtml");
             }
             else if (HttpContext.Session.GetInt32("Role") == 3)//proc emp
             {
-                return View("~/Views/Requester/Index.cshtml");
+                return View("~/Views/ProcurementEmployee/Index.cshtml");
             }
             else //belum login
             {
                 return RedirectToAction("Index","Auth");
             }
             
-        }
+        }        
 
+        public ActionResult Invoice()
+        {
+            if (HttpContext.Session.GetInt32("Role") != 0) //belum login dan tidak ada hak akses
+            {
+                return RedirectToAction("Index", "Auth");
+            }
+            return View("~/Views/Requester/Invoice.cshtml");
+        }
         public new ActionResult Request()
         {
             if(HttpContext.Session.GetInt32("Role") != 0 ) //belum login dan tidak ada hak akses

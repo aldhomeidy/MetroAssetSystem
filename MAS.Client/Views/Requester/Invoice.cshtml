@@ -1,0 +1,209 @@
+﻿@{
+    Layout = "~/Views/Template/DashboardBase.cshtml";
+}
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@section Styles{
+    <link rel="stylesheet" href="/vendor/datatables/css/dataTables.bootstrap4.min.css">
+}
+
+@section Menu{
+    <div class="nav">
+        <div class="sb-sidenav-menu-heading">Employee</div>
+        <a class="nav-link" href="https://localhost:44342/employee">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Dashboard
+        </a>
+        <a class="nav-link" href="https://localhost:44342/employee/request">
+            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+            Request
+        </a>
+        <a class="nav-link" href="https://localhost:44342/employee/invoice">
+            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+            Invoice
+        </a>
+    </div>
+}
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link text-dark active" id="ongoing-btn" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">On Going</a>
+        <a class="nav-link text-dark" id="finished-btn" data-toggle="tab" href="#data-tables"
+           role="tab" aria-controls="card-data" aria-selected="true">Finished</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="data-tables" role="tabpanel" aria-labelledby="data-tables-tab">
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Invoice Id</th>
+                        <th>Request Id</th>
+                        <th>Total Items</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>Invoice Id</th>
+                        <th>Request Id</th>
+                        <th>Total Items</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Start Modal -->
+<div class="modal fade" id="detailsModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Request Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ClearForm()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="5">
+                    <tr>
+                        <td>Invoice Id</td>
+                        <td>:</td>
+                        <td id="setId"></td>
+                    </tr>
+                </table>
+                <hr>
+                <h5>Items List</h5>
+                <ol id="itemList">
+                </ol>
+                <hr>          
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal" onclick="ClearForm()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
+
+@section ScriptsLink{
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+}
+
+@section ScriptsDocReady{    
+        table = $('#myTable').DataTable({
+            "ajax": {
+                "url": "https://localhost:44329/api/Invoice/history/"+@HttpContextAccessor.HttpContext.Session.GetString("Id")+"/ongoing",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columnDefs": [
+                {
+                    "targets": [0, 1, 2, 3],
+                    "searchable": true,
+                    "orderable": true,
+                },
+                {
+                    "targets": [4],
+                    "searchable": false,
+                    "orderable": false
+                }
+            ],
+            "columns": [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    "data": 'id'
+                },
+                {
+                    "data": 'requestId'
+                },
+                {
+                    "data": 'request.itemRequest.length'
+                },
+                {
+                    "data": 'id',
+                    "render": function (data, type, row, meta) {
+                        if(row.status=="0"){
+                            return '<span class="badge badge-sm text-primary">'+
+                                    '<i class="fas fa-location-arrow"></i> On Going'+
+                                   '</span>';
+                        }else if(row.status=="1"){
+                             return '<span class="badge badge-sm text-success">'+
+                                    '<i class="far fa-check-circle"></i> Finished Fine'+
+                                   '</span>';
+                        }
+                        else{
+                             return '<span class="badge badge-sm text-warning">'+
+                                    '<i class="fas fa-exclamation-circle"></i> Finished With Problem'+
+                                   '</span>';
+                        }
+                    }
+                },
+                {
+                    "data": 'id',
+                    "render": function (data, type, row, meta) {
+                        return '<a href="javascript:void(0)" class="btn btn-sm btn-light" onclick="Details(\'' + data + '\')"><i class="far fa-check-square"></i></a>';                        
+                    }
+                }
+            ]
+        });
+
+        $("#ongoing-btn").click(function () {
+            table.ajax.url("https://localhost:44329/api/Invoice/history/"+@HttpContextAccessor.HttpContext.Session.GetString("Id")+"/ongoing").load();
+        });
+        $("#finished-btn").click(function () {
+            table.ajax.url("https://localhost:44329/api/Invoice/history/"+@HttpContextAccessor.HttpContext.Session.GetString("Id")+"/finished").load();
+        });             
+}
+
+@section Scripts{
+   
+        function Details(id) {           
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:44329/api/Invoice/' + id,
+                data: 'data'
+            }).done((result) => {
+                if (result.status == "Ok") {
+                    let hasil = "";                   
+                    $('#setId').html('#' + result.data.id);
+                    $.each(result.data.request.itemRequest, function (i, field) {
+                        hasil += '<li>#' + field.asset.id + ' - ' + field.asset.name + '</li>';                      
+                    });
+                    $('#itemList').html(hasil);                                         
+                    $('#detailsModal').modal('show');
+                }
+                else {
+                    swal("Failed to get data", {
+                        icon: "warning",
+                    });
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+        }
+
+
+        function ClearForm() {
+            $('#setId').html('');        
+            $('#itemList').html('');            
+        }                
+   
+} 

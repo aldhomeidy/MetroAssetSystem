@@ -12,7 +12,7 @@
             <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
             Dashboard
         </a>
-        <a class="nav-link disabled" href="/manager/subordinates">
+        <a class="nav-link" href="https://localhost:44342/manager/subordinates">
             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
             My Subordinate
         </a>
@@ -105,21 +105,14 @@
                 <form id="approvalForm">
                     <div class="form-group mb-3">
                         <label for="notes">Notes</label>
-                        <textarea class="form-control" id="notes" placeholder="Say something about this request..." maxlength="20"></textarea>
+                        <textarea class="form-control" id="notes" placeholder="Notes..." maxlength="20"></textarea>
                     </div>
-                    <input hidden id="requestId" name="requestId" />
-                    <div class="form-group">
-                        <label for="approval">Approval</label>
-                        <select class="form-control" id="approval" name="approval">
-                            <option value="" selected>Choose...</option>
-                            <option value="1">Approve</option>
-                            <option value="2">Reject</option>
-                        </select>
-                    </div>
+                    <input hidden id="requestId" name="requestId" />                    
                 </form>
             </div>
-            <div class="modal-footer">                
-                <button type="button" class="btn btn-sm btn-dark" id="submit-btn">Submit</button>
+            <div class="modal-footer">                                
+                <button type="button" class="btn btn-sm btn-danger" id="rejected-submit">Rejected</button>
+                <button type="button" class="btn btn-sm btn-success" id="approved-submit">Approved</button>
             </div>
         </div>
     </div>
@@ -202,15 +195,11 @@
       ClearForm();
     }); 
 
-    $("#submit-btn").click(function(e){
-        e.preventDefault();
-        if($('#approval').val()==''){
-            swal("Please select approval first", {
-                 icon: "warning",
-            });
-        }else{
-            Submit();
-        }
+    $("#rejected-submit").click(function(){        
+        Submit(1);       
+    });
+    $("#approved-submit").click(function(){        
+        Submit(2);       
     });
 } 
 
@@ -251,44 +240,63 @@
          $('#setUntilDate').html('');
          $('#itemList').html('');
          $('#notes').val('');
-         $('#requestId').val('');
-         $('#approval').val('');
+         $('#requestId').val('');         
     }
 
-    function Submit(){
+    function Submit(condition){
+        let state = "";
+        if(condition==2){
+            state = "approve";
+        }else{
+            state = "reject";
+        }
         swal({
-            title: "Processing...",
-            text: "Please wait",
-            button: false,
-            closeOnClickOutside: false,
-        });        
-        var Approve = new Object();
-        Approve.RequestDetailStatus = $('#approval').val();
-        Approve.Note = $('#notes').val();
-        Approve.RequestId = $('#requestId').val();
-            $.ajax({
-                type:'POST',
-                url: 'https://localhost:44342/manager/approving',
-                data: Approve
-            }).done((result) => {
-                console.log(result);
-                if (result == 200) {
-                    swal({
-                        title: "Success!",
-                        text: "Success managing this request",
-                        icon: "success"                        
-                    });
-                    ClearForm();
-                    $('#detailsModal').modal('hide');
-                    table.ajax.url( 'https://localhost:44342/Request/manager/1/incoming').load();                    
-                } 
-                else {
-                      swal("Failed to create request", {
-                        icon: "warning",
-                    });               
-                }
-            }).fail((error) => {
-                console.log(error);
-            });
+          title: 'Are you sure want to '+state+' this request?',
+          text: "You cann't undo this action",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((ok) => {
+          if (ok) {
+            swal({
+                title: "Processing...",
+                text: "Please wait",
+                button: false,
+                closeOnClickOutside: false,
+            });        
+            var Approve = new Object();
+            Approve.RequestDetailStatus = condition;
+            Approve.Note = $('#notes').val();
+            Approve.RequestId = $('#requestId').val();
+                $.ajax({
+                    type:'POST',
+                    url: 'https://localhost:44342/manager/approving',
+                    data: Approve
+                }).done((result) => {
+                    console.log(result);
+                    if (result == 200) {
+                        swal({
+                            title: "Success!",
+                            text: "Success managing this request",
+                            icon: "success"                        
+                        });
+                        ClearForm();
+                        $('#detailsModal').modal('hide');
+                        table.ajax.url( 'https://localhost:44342/Request/manager/1/incoming').load();                    
+                    } 
+                    else {
+                          swal("Failed to create request", {
+                            icon: "warning",
+                        });               
+                    }
+                }).fail((error) => {
+                    console.log(error);
+                });
+
+          } else {
+            swal("Please make sure your decision first!");
+          }
+        });
     }    
 } 

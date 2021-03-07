@@ -7,14 +7,14 @@
 
 @section Menu{
     <div class="nav">
-        <div class="sb-sidenav-menu-heading">Manager</div>
+        <div class="sb-sidenav-menu-heading">Procurement Manager</div>
         <a class="nav-link" href="https://localhost:44342/employee">
             <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
             Dashboard
         </a>
-        <a class="nav-link disabled" href="/manager/subordinate">
+        <a class="nav-link" href="https://localhost:44342/manager/employee">
             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-            My Subordinate
+            Employee
         </a>
         <a class="nav-link" href="https://localhost:44342/manager/approval">
             <div class="sb-nav-link-icon"><i class="far fa-edit"></i></div>
@@ -105,21 +105,14 @@
                 <form id="approvalForm">
                     <div class="form-group mb-3">
                         <label for="notes">Notes</label>
-                        <textarea class="form-control" id="notes" placeholder="Say something about this request..." maxlength="20"></textarea>
+                        <textarea class="form-control" id="notes" placeholder="Notes..." maxlength="20"></textarea>
                     </div>
-                    <input hidden id="requestId" name="requestId" />
-                    <div class="form-group">
-                        <label for="approval">Approval</label>
-                        <select class="form-control" id="approval" name="approval">
-                            <option value="" selected>Choose...</option>
-                            <option value="1">Approve</option>
-                            <option value="2">Reject</option>
-                        </select>
-                    </div>
+                    <input hidden id="requestId" name="requestId" />                  
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-dark" id="submit-btn">Submit</button>
+                <button type="button" class="btn btn-sm btn-danger" id="rejected-submit">Rejected</button>
+                <button type="button" class="btn btn-sm btn-success" id="approved-submit">Approved</button>
             </div>
         </div>
     </div>
@@ -132,163 +125,180 @@
 }
 
 @section ScriptsDocReady{
-    table = $('#myTable').DataTable({
-    "ajax": {
-    "url": "https://localhost:44342/Request/manager/2/incoming",
-    "datatype": "json",
-    "dataSrc": ""
-    },
-    "columnDefs": [
-    {
-    "targets": [0, 1],
-    "searchable": true,
-    "orderable": true,
-    },
-    {
-    "targets": [2, 3, 4, 5],
-    "searchable": false,
-    "orderable": false
-    }
-    ],
-    "columns": [
-    {
-    "data": 'id'
-    },
-    {
-    "data":'requestDate',
-    "render": function (data, type, row, meta) {
-    return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
-    }
-    },
-    {
-    "data": 'loanDate',
-    "render": function (data, type, row, meta) {
-    return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
-    }
-    },
-    {
-    "data": 'returnDate',
-    "render": function (data, type, row, meta) {
-    return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
-    }
-    },
-    {
-    "data": 'itemRequest.length',
-    },
-    {
-    "data": 'id',
-    "render": function (data, type, row, meta) {
-    if(row.requestStatus==1 && row.status==1){
-    return '<a href="javascript:void(0)" class="btn btn-sm btn-light" onclick="Details(\'' + data + '\')"><i class="far fa-check-square"></i></a>';
-    }else{
-    return '-';
-    }
-    }
-    }
-    ]
-    });
 
-    $("#incoming-btn").click(function(){
-    table.ajax.url( 'https://localhost:44342/Request/manager/2/incoming').load();
-    });
-    $("#approved-btn").click(function(){
-    table.ajax.url( 'https://localhost:44342/Request/manager/2/approved').load();
-    });
-    $("#rejected-btn").click(function(){
-    table.ajax.url( 'https://localhost:44342/Request/manager/2/rejected').load();
-    });
+        table = $('#myTable').DataTable({
+            "ajax": {
+                "url": "https://localhost:44342/Request/manager/2/incoming",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columnDefs": [
+                {
+                    "targets": [0, 1],
+                    "searchable": true,
+                    "orderable": true,
+                },
+                {
+                    "targets": [2, 3, 4, 5],
+                    "searchable": false,
+                    "orderable": false
+                }
+            ],
+            "columns": [
+                {
+                    "data": 'id'
+                },
+                {
+                    "data": 'requestDate',
+                    "render": function (data, type, row, meta) {
+                        return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }
+                },
+                {
+                    "data": 'loanDate',
+                    "render": function (data, type, row, meta) {
+                        return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }
+                },
+                {
+                    "data": 'returnDate',
+                    "render": function (data, type, row, meta) {
+                        return moment(data, "YYYY-MM-DD").format("DD MMMM YYYY");
+                    }
+                },
+                {
+                    "data": 'itemRequest.length',
+                },
+                {
+                    "data": 'id',
+                    "render": function (data, type, row, meta) {
+                        if (row.requestStatus == 1 && row.status == 1) {
+                            return '<a href="javascript:void(0)" class="btn btn-sm btn-light" onclick="Details(\'' + data + '\')"><i class="far fa-check-square"></i></a>';
+                        } else {
+                            return '-';
+                        }
+                    }
+                }
+            ]
+        });
 
-    $("#closeModal").click(function(){
-    ClearForm();
-    });
+        $("#incoming-btn").click(function () {
+            table.ajax.url('https://localhost:44342/Request/manager/2/incoming').load();
+        });
+        $("#approved-btn").click(function () {
+            table.ajax.url('https://localhost:44342/Request/manager/2/approved').load();
+        });
+        $("#rejected-btn").click(function () {
+            table.ajax.url('https://localhost:44342/Request/manager/2/rejected').load();
+        });
 
-    $("#submit-btn").click(function(e){
-    e.preventDefault();
-    if($('#approval').val()==''){
-    swal("Please select approval first", {
-    icon: "warning",
-    });
-    }else{
-    Submit();
-    }
-    });
+        $("#closeModal").click(function () {
+            ClearForm();
+        });
+
+       $("#rejected-submit").click(function(){        
+        Submit(1);       
+       });
+       $("#approved-submit").click(function(){        
+            Submit(2);       
+       });
 }
 
 @section Scripts{
-    function Details(id){
-    $.ajax({
-    type:'GET',
-    url: 'https://localhost:44329/api/Request/'+id,
-    data: 'data'
-    }).done((result) => {
-    if (result.status == "Ok") {
-    let hasil="";
-    $('#detailsModal').modal('show');
-    $('#setId').html('#'+result.data.id);
-    $('#setRequestDate').html(moment(result.data.requestDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
-    $('#setFromDate').html(moment(result.data.loanDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
-    $('#setUntilDate').html(moment(result.data.returnDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
-    $.each( result.data.itemRequest, function( key, field ) {
-    hasil+='<li>#'+field.asset.id+' - '+field.asset.name+'</li>';
-    });
-    $('#itemList').html(hasil);
-    $('#requestId').val(result.data.id);
-    }
-    else {
-    swal("Failed to get data", {
-    icon: "warning",
-    });
-    }
-    }).fail((error) => {
-    console.log(error);
-    });
-    }
+    
+        function Details(id) {
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:44329/api/Request/' + id,
+                data: 'data'
+            }).done((result) => {
+                if (result.status == "Ok") {
+                    let hasil = "";
+                    $('#detailsModal').modal('show');
+                    $('#setId').html('#' + result.data.id);
+                    $('#setRequestDate').html(moment(result.data.requestDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $('#setFromDate').html(moment(result.data.loanDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $('#setUntilDate').html(moment(result.data.returnDate, "YYYY-MM-DD").format("DD MMMM YYYY"));
+                    $.each(result.data.itemRequest, function (key, field) {
+                        hasil += '<li>#' + field.asset.id + ' - ' + field.asset.name + '</li>';
+                    });
+                    $('#itemList').html(hasil);
+                    $('#requestId').val(result.data.id);
+                }
+                else {
+                    swal("Failed to get data", {
+                        icon: "warning",
+                    });
+                }
+            }).fail((error) => {
+                console.log(error);
+            });
+        }
 
-    function ClearForm(){
-    $('#setId').html('');
-    $('#setRequestDate').html('');
-    $('#setFromDate').html('');
-    $('#setUntilDate').html('');
-    $('#itemList').html('');
-    $('#notes').val('');
-    $('#requestId').val('');
-    $('#approval').val('');
-    }
+        function ClearForm() {
+            $('#setId').html('');
+            $('#setRequestDate').html('');
+            $('#setFromDate').html('');
+            $('#setUntilDate').html('');
+            $('#itemList').html('');
+            $('#notes').val('');
+            $('#requestId').val('');           
+        }        
+        
+        function Submit(condition){
+            let state = "";
+            if(condition==2){
+                state = "approve";
+            }else{
+                state = "reject";
+            }
+            swal({
+              title: 'Are you sure want to '+state+' this request?',
+              text: "You cann't undo this submit",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((ok) => {
+              if (ok) {
+                swal({
+                    title: "Processing...",
+                    text: "Please wait",
+                    button: false,
+                    closeOnClickOutside: false,
+                });        
+                var Approve = new Object();
+                Approve.RequestDetailStatus = condition;
+                Approve.Note = $('#notes').val();
+                Approve.RequestId = $('#requestId').val();
+                    $.ajax({
+                        type:'POST',
+                        url: 'https://localhost:44342/manager/approving',
+                        data: Approve
+                    }).done((result) => {
+                        console.log(result);
+                        if (result == 200) {
+                            swal({
+                                title: "Success!",
+                                text: "Success managing this request",
+                                icon: "success"                        
+                            });
+                            ClearForm();
+                            $('#detailsModal').modal('hide');
+                            window.table.ajax.url('https://localhost:44342/Request/manager/2/incoming').load();                    
+                        } 
+                        else {
+                              swal("Failed to create request", {
+                                icon: "warning",
+                            });               
+                        }
+                    }).fail((error) => {
+                        console.log(error);
+                    });
 
-    function Submit(){
-    swal({
-    title: "Processing...",
-    text: "Please wait",
-    button: false,
-    closeOnClickOutside: false,
-    });
-    var Approve = new Object();
-    Approve.RequestDetailStatus = $('#approval').val();
-    Approve.Note = $('#notes').val();
-    Approve.RequestId = $('#requestId').val();
-    $.ajax({
-    type:'POST',
-    url: 'https://localhost:44342/manager/approving',
-    data: Approve
-    }).done((result) => {
-    console.log(result);
-    if (result == 200) {
-    swal({
-    title: "Success!",
-    text: "Success managing this request",
-    icon: "success"
-    });
-    ClearForm();
-    $('#detailsModal').modal('hide');
-    table.ajax.url( 'https://localhost:44342/Request/manager/2/incoming').load();
-    }
-    else {
-    swal("Failed to create request", {
-    icon: "warning",
-    });
-    }
-    }).fail((error) => {
-    console.log(error);
-    });
-    }
+              } else {
+                swal("Please make sure your decision first!");
+              }
+            });
+        }  
 } 

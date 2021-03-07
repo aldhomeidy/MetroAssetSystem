@@ -21,6 +21,7 @@ namespace MAS.Client.Controllers
             {
                 Condition = condition,
                 RequesterId = HttpContext.Session.GetString("Id")
+                //RequesterId = "1159208"
             };          
             var httpClient = new HttpClient();
             StringContent content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
@@ -31,6 +32,7 @@ namespace MAS.Client.Controllers
 
             return dataJson;
         }
+
 
         [HttpGet("Request/data/{condition}")]
         public List<Request> GetDataRequest(string condition)//for procurement employee

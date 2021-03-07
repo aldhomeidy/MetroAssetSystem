@@ -92,7 +92,7 @@ namespace Metro_Asset_System.Repositories.Data
 
             if (resultRequest > 0 && success==sumAsset)
             {
-                transactionContent.Request(emailIdentity,reqData, listItem);
+                transactionContent.Request(emailIdentity, reqData, listItem);
                 return 1;
             }
             else {
@@ -105,17 +105,18 @@ namespace Metro_Asset_System.Repositories.Data
             Request request = myContext.Requests.Where(r => r.Id == manageRequestVM.RequestId).FirstOrDefault();
             Employee employee = myContext.Employees.Where(e => e.NIK == manageRequestVM.EmployeeId).FirstOrDefault();
 
-            if (manageRequestVM.RequestDetailStatus == "2")
+
+            if (manageRequestVM.RequestDetailStatus == "1") //jika di reject
             {
                 request.Status = Status.Inactive;
-            }
-            else 
+            }           
+            else //jika approve
             {
-                if (employee.Role == EmployeeRole.Employee_Manager)
+                if (employee.Role == EmployeeRole.Employee_Manager)//jika manager lev 1
                 {
                     request.RequestStatus = RequestStatus.Approve_Level_2;
                 }
-                else if (employee.Role == EmployeeRole.Procurement_Manager)
+                else if (employee.Role == EmployeeRole.Procurement_Manager) //jika manager lev 2
                 {
                     request.RequestStatus = RequestStatus.Approved;
                 }
@@ -152,18 +153,18 @@ namespace Metro_Asset_System.Repositories.Data
             else {
                 if (condition == "current") //current
                 {
-                    var data = myContext.Requests.Where(r => r.Employee.NIK == requesterid && r.Status == Status.Active && r.RequestStatus != RequestStatus.Processed);
+                    var data = myContext.Requests.Where(r => r.RequesterId == requesterid && r.Status == Status.Active && r.RequestStatus != RequestStatus.Processed);
                     return data;
                 }
                 else if (condition == "ongoing") //ongoing
                 {
-                    var data = myContext.Requests.Where(r => r.Employee.NIK == requesterid && r.Status == Status.Active && r.RequestStatus == RequestStatus.Processed);
+                    var data = myContext.Requests.Where(r => r.RequesterId == requesterid && r.Status == Status.Active && r.RequestStatus == RequestStatus.Processed);
                     return data;
                 }
                 else //rejected
                 {
-                    var data = myContext.Requests.Where(r => r.Employee.NIK == requesterid && r.Status == Status.Inactive);
-                    return data;
+                    var data = myContext.Requests.Include(rd => rd.RequestDetails).Where(r => r.RequesterId == requesterid && r.Status == Status.Inactive);
+                    return data;                   
                 }
             }           
         }
@@ -205,6 +206,12 @@ namespace Metro_Asset_System.Repositories.Data
                 var data = myContext.Requests.Where(r => r.Employee.NIK == managerid && r.Status == Status.Inactive);
                 return data;
             }
+        }
+
+        public IEnumerable<Request> GetRequestHistory(string employeeId) 
+        {
+            var data = myContext.Requests.Where(r => r.Employee.NIK == employeeId);
+            return data;
         }
     }
 }

@@ -14,9 +14,11 @@ namespace Metro_Asset_System.Controllers
     public class RequestController : BaseController<Request, RequestRepository, string>
     {
         private readonly RequestRepository requestRepository;
-        public RequestController(RequestRepository requestRepository):base(requestRepository)
+        private readonly RequestDetailRepository requestDetailRepository;
+        public RequestController(RequestRepository requestRepository, RequestDetailRepository requestDetailRepository):base(requestRepository)
         {
             this.requestRepository = requestRepository;
+            this.requestDetailRepository = requestDetailRepository;
         }
 
         [HttpPost("GetRequest")]
@@ -39,6 +41,34 @@ namespace Metro_Asset_System.Controllers
         {
             var requesterId = historyRequest.RequesterId;
             var data = requestRepository.GetByConditionManager(historyRequest.Level,historyRequest.Condition, requesterId);
+            if (data != null)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return StatusCode(500, data);
+            }
+        }
+
+        [HttpGet("History/{condition}/{id}")]
+        public ActionResult GetRequestHistory(string condition, string id) //for requester
+        {
+            var data = requestDetailRepository.GetByCondition(condition,id);
+            if(data!=null)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return StatusCode(500, data);
+            }
+        }
+
+        [HttpGet("details/{employeeId}")]
+        public ActionResult GetEmployeeHistory(string employeeId) //for requester manager
+        {
+            var data = requestRepository.GetRequestHistory(employeeId);
             if (data != null)
             {
                 return Ok(data);

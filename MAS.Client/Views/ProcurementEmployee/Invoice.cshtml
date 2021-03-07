@@ -8,21 +8,29 @@
 
 @section Menu{
     <div class="nav">
-        <div class="sb-sidenav-menu-heading">Manager</div>
+        <div class="sb-sidenav-menu-heading">Employee</div>
         <a class="nav-link" href="https://localhost:44342/employee">
             <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
             Dashboard
         </a>
-        <a class="nav-link" href="https://localhost:44342/master/asset">
-            <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
-            Asset
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#master" aria-expanded="false" aria-controls="master">
+            <div class="sb-nav-link-icon"><i class="fas fa-server"></i></div>
+            Master Data
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
         </a>
-        <a class="nav-link" href="https://localhost:44342/master/employee">
+        <div class="collapse" id="master" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" href="javascript:void(0)">Asset</a>
+                <a class="nav-link" href="javascript:void(0)">Category</a>
+                <a class="nav-link" href="javascript:void(0)">Department</a>
+            </nav>
+        </div>
+        <a class="nav-link" href="javascript:void(0)">
             <div class="sb-nav-link-icon"><i class="fas fa-users-cog"></i></div>
-            Requester
+            Account Management
         </a>
         <a class="nav-link" href="https://localhost:44342/master/request">
-            <div class="sb-nav-link-icon"><i class="far fa-newspaper"></i></div>
+            <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
             Request
         </a>
         <a class="nav-link" href="https://localhost:44342/master/invoice">
@@ -210,9 +218,9 @@
                                             '<select id="pinalty'+field.asset.id +'" class="form-control">'+
                                                 '<option value="" selected>Choose...</option>'+
                                                 '<option value="0">Fine</option>'+
-                                                '<option value="1">Low Damaged</option>'+
-                                                '<option value="2">Middle Damaged</option>'+
-                                                '<option value="3">High Damaged</option>'+
+                                                '<option value="1">Low Damaged (Outside Damage)</option>'+
+                                                '<option value="2">Middle Damaged (Not Working Properly)</option>'+
+                                                '<option value="3">High Damaged (Didnt work at all)</option>'+
                                                 '<option value="4">Asset Lost</option>'+
                                             '</select>'+
                                         '</div>'+

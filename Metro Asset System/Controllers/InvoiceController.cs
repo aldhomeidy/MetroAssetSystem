@@ -32,5 +32,20 @@ namespace Metro_Asset_System.Controllers
                 return StatusCode(500, data);
             }
         }
+
+        [HttpGet("history/{requesterId}/{condition}")]
+        public ActionResult GetByRequester(string requesterId,string condition)
+        {
+
+            var data = invoiceRepository.GetByRequester(requesterId, condition);
+            if(data!=null)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return StatusCode(500, data);
+            }
+        }
     }
 }
